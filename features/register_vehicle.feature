@@ -1,5 +1,12 @@
 Feature: Register a vehicle
-#    TODO: Example to remove later
-    Scenario: Adding simple integers
-        When I add 2 and 2
-        Then The result is 4
+
+    In order to follow many vehicles with my application
+    As an application user
+    I should be able to register my vehicle
+
+    @critical
+    Scenario: I can register a vehicle
+        Given my fleet
+        And a vehicle
+        When I register this vehicle into my fleet
+        Then this vehicle should be part of my vehicle fleet

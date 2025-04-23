@@ -1,10 +1,19 @@
-import {Then, When} from "@cucumber/cucumber";
+import {Given, Then, When} from "@cucumber/cucumber";
 import assert from "node:assert";
 
-When('I add {int} and {int}', function (member1, member2) {
-    this.result = member1 + member2;
+Given('my fleet', function () {
+    const initializeFleetCommand = new InitializeFleetCommand();
+    const fleet = initializeFleetCommand.handle();
 });
 
-Then('The result is {int}', function (expectedAnswer) {
-    assert.equal(this.result, expectedAnswer);
+Given('a vehicle', function () {
+    throw new Error("Not implemented")
+});
+
+When('I register this vehicle into my fleet', function () {
+    throw new Error("Not implemented")
+});
+
+Then('this vehicle should be part of my vehicle fleet', function () {
+    throw new Error("Not implemented")
 });

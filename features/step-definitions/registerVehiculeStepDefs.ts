@@ -1,9 +1,14 @@
 import {Given, Then, When} from "@cucumber/cucumber";
-import assert from "node:assert";
+
+class InitializeFleetCommand {
+    handle(): void {
+        throw new Error("Not implemented");
+    }
+}
 
 Given('my fleet', function () {
     const initializeFleetCommand = new InitializeFleetCommand();
-    const fleet = initializeFleetCommand.handle();
+    initializeFleetCommand.handle();
 });
 
 Given('a vehicle', function () {

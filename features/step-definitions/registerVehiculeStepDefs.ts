@@ -1,14 +1,10 @@
 import {Given, Then, When} from "@cucumber/cucumber";
-
-class InitializeFleetCommand {
-    handle(): void {
-        throw new Error("Not implemented");
-    }
-}
+import {InitializeFleet, InitializeFleetHandler} from "../../src/App/Commands/initializeFleet.js";
 
 Given('my fleet', function () {
-    const initializeFleetCommand = new InitializeFleetCommand();
-    initializeFleetCommand.handle();
+    const initializeFleet = new InitializeFleet();
+    const handler = new InitializeFleetHandler();
+    handler.handle(initializeFleet);
 });
 
 Given('a vehicle', function () {

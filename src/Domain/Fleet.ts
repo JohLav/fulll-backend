@@ -1,12 +1,17 @@
 import { Vehicle } from "./Vehicle.js";
+import { randomUUID } from "node:crypto";
 
 export class Fleet {
-  constructor(
-    public id: string,
+  private constructor(
+    public readonly id: string,
     public vehicles: Vehicle[] = [],
   ) {}
 
-  static initializeWithVehicles(id: string): Fleet {
-    return new Fleet("1", [new Vehicle("1", "car"), new Vehicle("2", "car")]);
+  static initializeFleet() {
+    return new Fleet(randomUUID(), []);
+  }
+
+  registerVehicle(vehicle: Vehicle) {
+    this.vehicles.push(vehicle);
   }
 }

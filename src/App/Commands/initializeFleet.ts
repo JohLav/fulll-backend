@@ -1,14 +1,19 @@
-interface Command {
-}
+import { Fleet } from "../../Domain/Fleet.js";
+import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
 
-export class InitializeFleet implements Command {
-}
+interface Command {}
 
 interface CommandHandler {
-    handle(command: Command): void;
+  handle(command: Command): void;
 }
 
+export class InitializeFleet implements Command {}
+
 export class InitializeFleetHandler implements CommandHandler {
-    handle(command: InitializeFleet) {
-    }
+  constructor(private repository: FleetRepository) {}
+
+  handle(command: InitializeFleet) {
+    const fleet = Fleet.initializeWithVehicles("fleet-001");
+    this.repository.save(fleet);
+  }
 }

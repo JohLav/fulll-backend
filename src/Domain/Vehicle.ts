@@ -1,12 +1,18 @@
 import { randomUUID } from "node:crypto";
 
+export enum VehicleType {
+  CAR = "car",
+  TRUCK = "truck",
+  MOTORCYCLE = "motorcycle",
+}
+
 export class Vehicle {
   constructor(
-    public readonly id: string, // Value Object VehicleId & FleetId
-    public type: string, // Value Object VehicleType avec string OU plutôt enum
+    public readonly id: string,
+    public type: VehicleType,
   ) {}
 
-  static create(type: string): Vehicle {
+  static create(type: VehicleType): Vehicle {
     return new Vehicle(randomUUID(), type);
   }
 

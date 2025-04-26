@@ -4,7 +4,7 @@ import {
   InitializeFleetHandler,
 } from "../../src/App/Commands/initializeFleet.js";
 import { InMemoryFleetRepository } from "../../src/Infra/InMemoryFleetRepository.js";
-import { Vehicle } from "../../src/Domain/Vehicle.js";
+import { Vehicle, VehicleType } from "../../src/Domain/Vehicle.js";
 import {
   RegisterVehicle,
   RegisterVehicleHandler,
@@ -27,7 +27,7 @@ Given("my fleet", function (): void {
 });
 
 Given("a vehicle", function (): void {
-  vehicle = Vehicle.create("Car");
+  vehicle = Vehicle.create(VehicleType.CAR);
 });
 
 function registerVehicleCommandFleet(

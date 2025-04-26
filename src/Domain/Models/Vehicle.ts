@@ -1,10 +1,5 @@
 import { randomUUID } from "node:crypto";
-
-export enum VehicleType {
-  CAR = "car",
-  TRUCK = "truck",
-  MOTORCYCLE = "motorcycle",
-}
+import { VehicleType } from "../Types/VehicleType.js";
 
 export class Vehicle {
   constructor(

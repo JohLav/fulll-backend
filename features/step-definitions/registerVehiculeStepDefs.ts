@@ -1,17 +1,27 @@
+// First group: Testing framework
 import { Given, Then, When } from "@cucumber/cucumber";
+import { expect } from "expect";
+
+// Second group: Domain
+import { Fleet } from "../../src/Domain/Models/Fleet";
+import { Vehicle } from "../../src/Domain/Models/Vehicle.js";
+import { VehicleType } from "../../src/Domain/Types/VehicleType.js";
+
+// Third group: Commands
 import {
   InitializeFleet,
   InitializeFleetHandler,
 } from "../../src/App/Commands/initializeFleet.js";
-import { InMemoryFleetRepository } from "../../src/Infra/InMemoryFleetRepository.js";
-import { Vehicle, VehicleType } from "../../src/Domain/Vehicle.js";
 import {
   RegisterVehicle,
   RegisterVehicleHandler,
 } from "../../src/App/Commands/registerVehicle.js";
-import { Fleet } from "../../src/Domain/Fleet.js";
+
+// Fourth group: Queries
 import { GetFleet, GetFleetHandler } from "../../src/App/Queries/getFleet.js";
-import { expect } from "expect";
+
+// Fifth group: Infrastructure
+import { InMemoryFleetRepository } from "../../src/Infra/InMemoryFleetRepository.js";
 
 let fleetId;
 let vehicle;
@@ -76,6 +86,7 @@ When("I try to register this vehicle into my fleet", function () {
     this.registrationError = error;
   }
 });
+
 Then(
   "I should be informed that this vehicle has already been registered into my fleet",
   function (): void {

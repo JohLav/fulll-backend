@@ -1,6 +1,6 @@
+import { Fleet } from "../../Domain/Models/Fleet";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
-import { Fleet } from "../../Domain/Fleet.js";
-import { Query, QueryHandler } from "./query.js";
+import { Query, QueryHandler } from "./query";
 
 export class GetFleet implements Query {
   constructor(public readonly id: string) {}

@@ -1,4 +1,4 @@
-import { Vehicle } from "./Vehicle.js";
+import { Vehicle } from "./Vehicle";
 import { randomUUID } from "node:crypto";
 
 export class Fleet {

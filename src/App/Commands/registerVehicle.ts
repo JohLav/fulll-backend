@@ -1,7 +1,7 @@
+import { Fleet } from "../../Domain/Models/Fleet.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
-import { Command, CommandHandler } from "./command.js";
-import { Vehicle } from "../../Domain/Vehicle.js";
-import { Fleet } from "../../Domain/Fleet";
+import { Vehicle } from "../../Domain/Models/Vehicle.js";
+import { Command, CommandHandler } from "./command";
 
 export class RegisterVehicle implements Command {
   constructor(

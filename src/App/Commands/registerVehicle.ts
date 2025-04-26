@@ -6,6 +6,7 @@ import { Command, CommandHandler } from "./command";
 export class RegisterVehicle implements Command {
   constructor(
     public fleetId: string,
+    public userId: string,
     public vehicle: Vehicle,
   ) {}
 }

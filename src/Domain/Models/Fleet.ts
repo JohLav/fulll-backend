@@ -1,14 +1,16 @@
 import { Vehicle } from "./Vehicle";
 import { randomUUID } from "node:crypto";
 
+// Aggregate root
 export class Fleet {
   private constructor(
     public readonly id: string,
+    public readonly userId: string,
     public vehicles: Vehicle[] = [],
   ) {}
 
-  static initializeFleet(): Fleet {
-    return new Fleet(randomUUID(), []);
+  static initializeFleet(userId: string): Fleet {
+    return new Fleet(randomUUID(), userId, []);
   }
 
   registerVehicle(vehicle: Vehicle): void {

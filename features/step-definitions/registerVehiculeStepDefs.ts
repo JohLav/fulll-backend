@@ -4,6 +4,7 @@ import { expect } from "expect";
 
 // Second group: Domain
 import { Fleet } from "../../src/Domain/Models/Fleet";
+import { User } from "../../src/Domain/Models/User.js";
 import { Vehicle } from "../../src/Domain/Models/Vehicle.js";
 import { VehicleType } from "../../src/Domain/Types/VehicleType.js";
 
@@ -24,16 +25,23 @@ import { GetFleet, GetFleetHandler } from "../../src/App/Queries/getFleet.js";
 import { InMemoryFleetRepository } from "../../src/Infra/InMemoryFleetRepository.js";
 
 let fleetId;
-let vehicle;
+let otherFleetId;
+const user: User = User.create();
+const otherUser: User = User.create();
+let vehicle: Vehicle;
 const repository = new InMemoryFleetRepository();
+
+function createFleet(userObj: User) {
+  const initializeFleet = new InitializeFleet(userObj.id);
+  const handler = new InitializeFleetHandler(repository);
+  return handler.handle(initializeFleet);
+}
 
 /**
  * Scenario: I can register a vehicule
  */
 Given("my fleet", function (): void {
-  const initializeFleet = new InitializeFleet();
-  const handler = new InitializeFleetHandler(repository);
-  fleetId = handler.handle(initializeFleet);
+  fleetId = createFleet(user);
 });
 
 Given("a vehicle", function (): void {
@@ -42,16 +50,17 @@ Given("a vehicle", function (): void {
 
 function registerVehicleCommandFleet(
   fleetId: string,
+  userId: string,
   vehicle: Vehicle,
   repository: InMemoryFleetRepository,
 ): void {
-  const registerCommand = new RegisterVehicle(fleetId, vehicle);
+  const registerCommand = new RegisterVehicle(fleetId, userId, vehicle);
   const handler = new RegisterVehicleHandler(repository);
   handler.handle(registerCommand);
 }
 
 When("I register this vehicle into my fleet", function (): void {
-  registerVehicleCommandFleet(fleetId, vehicle, repository);
+  registerVehicleCommandFleet(fleetId, user.id, vehicle, repository);
 });
 
 function getFleet(): Fleet {
@@ -73,12 +82,12 @@ Then("this vehicle should be part of my vehicle fleet", function (): void {
  * Scenario: I can't register same vehicle twice
  */
 Given("I have registered this vehicle into my fleet", function () {
-  registerVehicleCommandFleet(fleetId, vehicle, repository);
+  registerVehicleCommandFleet(fleetId, user.id, vehicle, repository);
 });
 
 When("I try to register this vehicle into my fleet", function () {
   try {
-    registerVehicleCommandFleet(fleetId, vehicle, repository);
+    registerVehicleCommandFleet(fleetId, user.id, vehicle, repository);
     this.registrationSucceeded = true;
     this.registrationError = null;
   } catch (error) {
@@ -96,3 +105,10 @@ Then(
     );
   },
 );
+
+/**
+ * Scenario: Same vehicle can belong to more than one fleet
+ */
+Given("the fleet of another user", function () {
+  otherFleetId = createFleet(otherUser);
+});

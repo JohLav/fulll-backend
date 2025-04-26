@@ -1,6 +1,7 @@
+import { Fleet } from "../../Domain/Models/Fleet.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
-import { Command, CommandHandler } from "./command.js";
-import { Vehicle } from "../../Domain/Vehicle";
+import { Vehicle } from "../../Domain/Models/Vehicle.js";
+import { Command, CommandHandler } from "./command";
 
 export class RegisterVehicle implements Command {
   constructor(
@@ -12,9 +13,8 @@ export class RegisterVehicle implements Command {
 export class RegisterVehicleHandler implements CommandHandler {
   constructor(private repository: FleetRepository) {}
 
-  handle(command: RegisterVehicle) {
-    const fleet = this.repository.findById(command.fleetId);
-
+  handle(command: RegisterVehicle): void {
+    const fleet: Fleet = this.repository.findById(command.fleetId);
     fleet.registerVehicle(command.vehicle);
     this.repository.save(fleet);
   }

@@ -1,5 +1,5 @@
-import { FleetRepository } from "../Domain/Repositories/FleetRepository.js";
-import { Fleet } from "../Domain/Fleet.js";
+import { Fleet } from "../Domain/Models/Fleet";
+import { FleetRepository } from "../Domain/Repositories/FleetRepository";
 
 // Secondary Adapter
 export class InMemoryFleetRepository implements FleetRepository {

@@ -9,4 +9,8 @@ export class Vehicle {
   static create(type: string): Vehicle {
     return new Vehicle(randomUUID(), type);
   }
+
+  equals(other: Vehicle): boolean {
+    return this.id === other.id;
+  }
 }

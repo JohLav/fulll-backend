@@ -7,11 +7,15 @@ export class Fleet {
     public vehicles: Vehicle[] = [],
   ) {}
 
-  static initializeFleet() {
+  static initializeFleet(): Fleet {
     return new Fleet(randomUUID(), []);
   }
 
-  registerVehicle(vehicle: Vehicle) {
+  registerVehicle(vehicle: Vehicle): void {
+    if (this.vehicles.some((v: Vehicle): boolean => v.equals(vehicle))) {
+      throw new Error("Vehicle is already registered in the fleet");
+    }
+
     this.vehicles.push(vehicle);
   }
 }

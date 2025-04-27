@@ -1,9 +1,10 @@
-import { Given } from "@cucumber/cucumber";
+// First group: Testing framework
+import { Given, When } from "@cucumber/cucumber";
 
 Given("a location", function () {
-  this.context.location = {
+  this.context.vehicle.location = {
     latitude: 48.8566,
     longitude: 2.3522,
   };
-  //   TODO: add location to vehicle
 });
+When("I park my vehicle at this location", function () {});

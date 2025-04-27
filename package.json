@@ -20,7 +20,8 @@
     "typescript-eslint": "^8.31.0"
   },
   "scripts": {
-    "test": "jest",
-    "lint": "eslint ."
+    "cucumber": "cucumber-js --config cucumber.json",
+    "lint": "eslint .",
+    "test": "jest"
   }
 }

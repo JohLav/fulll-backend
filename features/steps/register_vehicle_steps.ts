@@ -17,7 +17,7 @@ import { registerVehicleInFleet } from "./shared/registerVehicleInFleet.js";
 import { retrieveFleet } from "./shared/retrieveFleet.js";
 
 // --------------------------------------------------
-// Step Definitions
+// Steps
 // --------------------------------------------------
 
 Given("my fleet", function (): void {

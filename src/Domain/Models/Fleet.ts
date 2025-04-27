@@ -1,4 +1,5 @@
-import { Vehicle } from "./Vehicle";
+import { Vehicle } from "./Vehicle.js";
+import { VehicleAlreadyRegisteredError } from "../Errors/VehicleAlreadyRegisteredError.js";
 import { randomUUID } from "node:crypto";
 
 // Aggregate root
@@ -15,7 +16,7 @@ export class Fleet {
 
   registerVehicle(vehicle: Vehicle): void {
     if (this.vehicles.some((v: Vehicle): boolean => v.equals(vehicle))) {
-      throw new Error("Vehicle is already registered in the fleet");
+      throw new VehicleAlreadyRegisteredError(vehicle.id);
     }
 
     this.vehicles.push(vehicle);

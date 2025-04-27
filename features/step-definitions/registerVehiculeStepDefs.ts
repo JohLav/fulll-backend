@@ -24,14 +24,8 @@ import { GetFleet, GetFleetHandler } from "../../src/App/Queries/getFleet.js";
 // Fifth group: Infrastructure
 import { InMemoryFleetRepository } from "../../src/Infra/InMemoryFleetRepository.js";
 
-let fleetId;
-let otherFleetId;
-const user: User = User.create();
-const otherUser: User = User.create();
-let vehicle;
-
 // --------------------------------------------------
-// Global Setup
+// Setup
 // --------------------------------------------------
 
 const repository = new InMemoryFleetRepository();
@@ -66,64 +60,78 @@ function retrieveFleet(fleetId: string): Fleet {
  * Scenario: I can register a vehicule
  */
 Given("my fleet", function (): void {
-  fleetId = initializeFleetForUser(user);
+  const user: User = User.create();
+  this.context = { user };
+  this.context.fleetId = initializeFleetForUser(user);
+});
+
+Given("the fleet of another user", function () {
+  const otherUser: User = User.create();
+  this.context.otherUser = otherUser;
+  this.context.otherFleetId = initializeFleetForUser(otherUser);
 });
 
 Given("a vehicle", function (): void {
-  vehicle = Vehicle.create(VehicleType.CAR);
+  this.context.vehicle = Vehicle.create(VehicleType.CAR);
 });
 
-When("I register this vehicle into my fleet", function (): void {
-  registerVehicleInFleet(fleetId, user.id, vehicle);
-});
-
-Then("this vehicle should be part of my vehicle fleet", function (): void {
-  const fleet: Fleet = retrieveFleet(fleetId);
-
-  expect(fleet.id).toBe(fleetId);
-  expect(fleet.vehicles).toEqual(
-    expect.arrayContaining([expect.objectContaining(vehicle)]),
-  );
-});
-
-/**
- * Scenario: I can't register same vehicle twice
- */
 Given("I have registered this vehicle into my fleet", function () {
-  registerVehicleInFleet(fleetId, user.id, vehicle);
-});
-
-When("I try to register this vehicle into my fleet", function () {
-  try {
-    registerVehicleInFleet(fleetId, user.id, vehicle);
-    this.registrationSucceeded = true;
-    this.registrationError = null;
-  } catch (error) {
-    this.registrationSucceeded = false;
-    this.registrationError = error;
-  }
-});
-
-Then(
-  "I should be informed that this vehicle has already been registered into my fleet",
-  function (): void {
-    expect(this.registrationSucceeded).toBe(false);
-    expect(this.registrationError.message).toMatch(
-      "Vehicle is already registered in the fleet",
-    );
-  },
-);
-
-/**
- * Scenario: Same vehicle can belong to more than one fleet
- */
-Given("the fleet of another user", function () {
-  otherFleetId = initializeFleetForUser(otherUser);
+  registerVehicleInFleet(
+    this.context.fleetId,
+    this.context.user.id,
+    this.context.vehicle,
+  );
 });
 
 Given(
   "this vehicle has been registered into the other user's fleet",
   function () {
-    registerVehicleInFleet(otherFleetId, otherUser.id, vehicle);
+    registerVehicleInFleet(
+      this.context.otherFleetId,
+      this.context.otherUser.id,
+      this.context.vehicle,
+    );
+  },
+);
+
+When("I register this vehicle into my fleet", function (): void {
+  registerVehicleInFleet(
+    this.context.fleetId,
+    this.context.user.id,
+    this.context.vehicle,
+  );
+});
+
+When("I try to register this vehicle into my fleet", function () {
+  try {
+    registerVehicleInFleet(
+      this.context.fleetId,
+      this.context.user.id,
+      this.context.vehicle,
+    );
+    this.context.registrationSucceeded = true;
+    this.context.registrationError = null;
+  } catch (error) {
+    this.context.registrationSucceeded = false;
+    this.context.registrationError = error;
+  }
+});
+
+Then("this vehicle should be part of my vehicle fleet", function (): void {
+  const fleet: Fleet = retrieveFleet(this.context.fleetId);
+
+  expect(fleet.id).toBe(this.context.fleetId);
+  expect(fleet.vehicles).toEqual(
+    expect.arrayContaining([expect.objectContaining(this.context.vehicle)]),
+  );
+});
+
+Then(
+  "I should be informed that this vehicle has already been registered into my fleet",
+  function (): void {
+    expect(this.context.registrationSucceeded).toBe(false);
+    const expectedMessage = `Vehicle with ID ${this.context.vehicle.id} is already registered in the fleet`;
+
+    expect(this.context.registrationError.message).toMatch(expectedMessage);
   },
 );

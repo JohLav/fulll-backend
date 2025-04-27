@@ -1,15 +1,22 @@
-import { Fleet } from "../../Domain/Models/Fleet";
+import { Fleet } from "../../Domain/Models/Fleet.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
-import { Query, QueryHandler } from "./query";
+import { FleetNotFoundError } from "../Errors/FleetNotFoundError.js";
+import { Query, QueryHandler } from "./query.js";
 
 export class GetFleet implements Query {
-  constructor(public readonly id: string) {}
+  constructor(public readonly fleetId: string) {}
 }
 
 export class GetFleetHandler implements QueryHandler<Fleet> {
   constructor(private repository: FleetRepository) {}
 
   handle(getFleetQuery: GetFleet): Fleet {
-    return this.repository.findById(getFleetQuery.id);
+    const fleet = this.repository.findById(getFleetQuery.fleetId);
+
+    if (!fleet) {
+      throw new FleetNotFoundError(getFleetQuery.fleetId);
+    }
+
+    return fleet;
   }
 }

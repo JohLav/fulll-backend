@@ -5,4 +5,5 @@ Given("a location", function () {
     latitude: 48.8566,
     longitude: 2.3522,
   };
+  //   TODO: add location to vehicle
 });

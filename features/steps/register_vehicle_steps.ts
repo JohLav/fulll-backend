@@ -101,6 +101,7 @@ Then(
   "I should be informed that this vehicle has already been registered into my fleet",
   function (): void {
     expect(this.context.registrationSucceeded).toBe(false);
+
     const expectedMessage = `Vehicle with ID ${this.context.vehicle.id} is already registered in the fleet`;
 
     expect(this.context.registrationError.message).toMatch(expectedMessage);

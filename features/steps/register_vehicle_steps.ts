@@ -4,53 +4,17 @@ import { expect } from "expect";
 
 // Second group: Domain
 import { Fleet } from "../../src/Domain/Models/Fleet.js";
-import { FleetRepository } from "../../src/Domain/Repositories/FleetRepository.js";
 import { User } from "../../src/Domain/Models/User.js";
 import { Vehicle } from "../../src/Domain/Models/Vehicle.js";
 import { VehicleType } from "../../src/Domain/Types/VehicleType.js";
 
-// Third group: Commands
-import {
-  InitializeFleet,
-  InitializeFleetHandler,
-} from "../../src/App/Commands/initializeFleet.js";
-import {
-  RegisterVehicle,
-  RegisterVehicleHandler,
-} from "../../src/App/Commands/registerVehicle.js";
-
-// Fourth group: Queries
-import { GetFleet, GetFleetHandler } from "../../src/App/Queries/getFleet.js";
-
-// Fifth group: Infrastructure
+// Third group: Infrastructure
 import { InMemoryFleetRepository } from "../../src/Infra/InMemoryFleetRepository.js";
 
-// --------------------------------------------------
-// Setup
-// --------------------------------------------------
-
-function initializeFleetForUser(repository: FleetRepository, user: User) {
-  const initializeFleet = new InitializeFleet(user.id);
-  const handler = new InitializeFleetHandler(repository);
-  return handler.handle(initializeFleet);
-}
-
-function registerVehicleInFleet(
-  repository: FleetRepository,
-  fleetId: string,
-  userId: string,
-  vehicle: Vehicle,
-): void {
-  const registerCommand = new RegisterVehicle(fleetId, userId, vehicle);
-  const handler = new RegisterVehicleHandler(repository);
-  handler.handle(registerCommand);
-}
-
-function retrieveFleet(repository: FleetRepository, fleetId: string): Fleet {
-  const getFleetQuery = new GetFleet(fleetId);
-  const handler = new GetFleetHandler(repository);
-  return handler.handle(getFleetQuery);
-}
+// Fourth group: Helpers
+import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
+import { registerVehicleInFleet } from "./shared/registerVehicleInFleet.js";
+import { retrieveFleet } from "./shared/retrieveFleet.js";
 
 // --------------------------------------------------
 // Step Definitions

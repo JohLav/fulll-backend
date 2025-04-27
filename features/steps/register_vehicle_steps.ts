@@ -56,9 +56,6 @@ function retrieveFleet(repository: FleetRepository, fleetId: string): Fleet {
 // Step Definitions
 // --------------------------------------------------
 
-/**
- * Scenario: I can register a vehicule
- */
 Given("my fleet", function (): void {
   const user: User = User.create();
   this.context = { user, repository: new InMemoryFleetRepository() };

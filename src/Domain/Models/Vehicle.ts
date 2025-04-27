@@ -1,19 +1,23 @@
 import { randomUUID } from "node:crypto";
 import { VehicleType } from "../Types/VehicleType.js";
-import { LocationType } from "../Types/LocationType.js";
+import { Location } from "./Location.js";
 
 export class Vehicle {
   constructor(
     public readonly id: string,
     public type: VehicleType,
-    public location?: LocationType,
+    public location?: Location,
   ) {}
 
-  static create(type: VehicleType, location?: LocationType): Vehicle {
-    return new Vehicle(randomUUID(), type, location);
+  static create(type: VehicleType): Vehicle {
+    return new Vehicle(randomUUID(), type);
   }
 
   equals(other: Vehicle): boolean {
     return this.id === other.id;
+  }
+
+  parkVehicle(location: Location): void {
+    this.location = location;
   }
 }

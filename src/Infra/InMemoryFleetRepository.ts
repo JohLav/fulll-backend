@@ -13,7 +13,7 @@ export class InMemoryFleetRepository implements FleetRepository {
     return this.fleets.get(fleetId);
   }
 
-  findByUserId(ownerId: string): Fleet | undefined {
-    return this.fleets.get(ownerId);
+  findByUserId(userId: string): Fleet | undefined {
+    return this.fleets.get(userId);
   }
 }

@@ -28,7 +28,10 @@ Given("my fleet", function (): void {
 
 Given("the fleet of another user", function () {
   const otherUser: User = User.create();
-  this.context.otherUser = otherUser;
+  this.context.otherUser = {
+    otherUser,
+    repository: new InMemoryFleetRepository(),
+  };
   this.context.otherFleetId = initializeFleetForUser(
     this.context.repository,
     otherUser,

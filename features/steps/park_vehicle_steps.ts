@@ -1,6 +1,5 @@
 // First group: Testing framework
 import { Given, Then, When } from "@cucumber/cucumber";
-import { expect } from "expect";
 
 // Second group: Domain
 import { Location } from "../../src/Domain/Models/Location.js";
@@ -17,6 +16,7 @@ import {
 
 // Fourth group: Infrastructure
 import { InMemoryVehicleRepository } from "../../src/Infra/InMemoryVehicleRepository.js";
+import { expect } from "chai";
 
 Given("a location", function () {
   this.context.location = Location.create(48.8566, 2.3522);
@@ -47,7 +47,7 @@ Then(
       );
     }
 
-    expect(this.context.vehicle.location).toEqual(this.context.location);
+    expect(this.context.vehicle.location).to.equal(this.context.location);
 
     // const expectedMessage =
     //   `The known location for vehicle with ID ${this.context.vehicle.id} is verified`;

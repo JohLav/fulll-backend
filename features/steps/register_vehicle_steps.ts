@@ -1,6 +1,6 @@
 // First group: Testing framework
 import { Given, Then, When } from "@cucumber/cucumber";
-import { expect } from "expect";
+import { expect } from "chai";
 
 // Second group: Domain
 import { Fleet } from "../../src/Domain/Models/Fleet.js";
@@ -94,19 +94,17 @@ Then("this vehicle should be part of my vehicle fleet", function (): void {
     this.context.fleetId,
   );
 
-  expect(fleet.id).toBe(this.context.fleetId);
-  expect(fleet.vehicles).toEqual(
-    expect.arrayContaining([expect.objectContaining(this.context.vehicle)]),
-  );
+  expect(fleet.id).to.equal(this.context.fleetId);
+  expect(fleet.vehicles).to.deep.include(this.context.vehicle);
 });
 
 Then(
   "I should be informed that this vehicle has already been registered into my fleet",
   function (): void {
-    expect(this.context.registrationSucceeded).toBe(false);
+    expect(this.context.registrationSucceeded).to.equal(false);
 
     const expectedMessage = `Vehicle with ID ${this.context.vehicle.id} is already registered in the fleet`;
 
-    expect(this.context.registrationError.message).toMatch(expectedMessage);
+    expect(this.context.registrationError.message).to.equal(expectedMessage);
   },
 );

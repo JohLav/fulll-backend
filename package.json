@@ -25,6 +25,6 @@
   "scripts": {
     "cucumber": "cucumber-js --config cucumber.json",
     "lint": "eslint .",
-    "test": "jest"
+    "test": "mocha"
   }
 }

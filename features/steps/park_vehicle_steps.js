@@ -1,0 +1,33 @@
+// First group: Testing framework
+import { Given, Then, When } from "@cucumber/cucumber";
+// Second group: Domain
+import { Location } from "../../src/Domain/Models/Location.js";
+// Third group: Commands & Queries
+import { ParkVehicle, ParkVehicleHandler, } from "../../src/App/Commands/parkVehicle.js";
+import { GetLocation, GetLocationHandler, } from "../../src/App/Queries/getLocation.js";
+// Fourth group: Infrastructure
+import { InMemoryVehicleRepository } from "../../src/Infra/InMemoryVehicleRepository.js";
+import { expect } from "chai";
+Given("a location", function () {
+    this.context.location = Location.create(48.8566, 2.3522);
+});
+When("I park my vehicle at this location", function () {
+    this.context.repository = new InMemoryVehicleRepository();
+    this.context.repository.save(this.context.vehicle);
+    var parkVehicle = new ParkVehicle(this.context.vehicle, this.context.location);
+    var handler = new ParkVehicleHandler(this.context.repository);
+    handler.handle(parkVehicle);
+});
+Then("the known location of my vehicle should verify this location", function () {
+    var getLocationQuery = new GetLocation(this.context.vehicle.id);
+    var handler = new GetLocationHandler(this.context.repository);
+    var actualLocation = handler.handle(getLocationQuery);
+    if (!actualLocation.equals(this.context.location)) {
+        throw new Error("Expected location ".concat(this.context.location.toString(), " but got ").concat(actualLocation.toString()));
+    }
+    expect(this.context.vehicle.location).to.equal(this.context.location);
+    // const expectedMessage =
+    //   `The known location for vehicle with ID ${this.context.vehicle.id} is verified`;
+    //
+    // expect(this.context.location.message).toMatch(expectedMessage);
+});

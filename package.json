@@ -23,6 +23,7 @@
     "typescript-eslint": "^8.31.0"
   },
   "scripts": {
+    "build": "tsc",
     "cucumber": "cucumber-js --config cucumber.json",
     "lint": "eslint .",
     "test": "mocha"

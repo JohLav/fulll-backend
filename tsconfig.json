@@ -1,8 +1,14 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "outDir": "build",
+    "rootDir": ".",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["features",
-    "test", "src"]
+  "include": ["features/**/*", "test/**/*", "src/**/*"],
+  "exclude": ["node_modules"]
 }

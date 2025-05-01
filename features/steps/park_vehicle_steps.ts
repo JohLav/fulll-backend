@@ -48,10 +48,26 @@ Then(
     }
 
     expect(this.context.vehicle.location).to.equal(this.context.location);
-
-    // const expectedMessage =
-    //   `The known location for vehicle with ID ${this.context.vehicle.id} is verified`;
-    //
-    // expect(this.context.location.message).toMatch(expectedMessage);
+  },
+);
+Given("my vehicle has been parked into this location", function () {
+  // Implementation would typically:
+  // 1. Create/update parking record in database
+  // 2. Set parking status to 'occupied'
+  // 3. Store vehicle ID and location mapping
+});
+When("I try to park my vehicle at this location", function () {
+  // Implementation would typically:
+  // 1. Receive parking request
+  // 2. Validate location availability
+  // 3. Trigger validation check
+});
+Then(
+  "I should be informed that my vehicle is already parked at this location",
+  function () {
+    // Implementation would typically:
+    // 1. Verify error message is displayed
+    // 2. Confirm location status remains unchanged
+    // 3. Assert no duplicate parking record created
   },
 );

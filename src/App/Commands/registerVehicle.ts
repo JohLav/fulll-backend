@@ -1,4 +1,3 @@
-import { FleetNotFoundError } from "../Errors/FleetNotFoundError.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
 import { Vehicle } from "../../Domain/Models/Vehicle.js";
 import { Command, CommandHandler } from "./command.js";

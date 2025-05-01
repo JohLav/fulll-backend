@@ -5,6 +5,7 @@ import { expect } from "chai";
 // Second group: Domain
 import { Fleet } from "../../src/Domain/Models/Fleet.js";
 import { User } from "../../src/Domain/Models/User.js";
+import { VehicleAlreadyRegisteredError } from "../../src/Domain/Errors/VehicleAlreadyRegisteredError.js";
 
 // Third group: Infrastructure
 import { InMemoryFleetRepository } from "../../src/Infra/InMemoryFleetRepository.js";
@@ -70,7 +71,7 @@ Then("this vehicle should be part of my vehicle fleet", function (): void {
   );
 
   expect(fleet.id).to.equal(this.context.fleetId);
-  expect(fleet.vehicles).to.deep.include(this.context.vehicle);
+  expect(fleet.vehicles).to.include(this.context.vehicle);
 });
 
 Then(
@@ -78,8 +79,8 @@ Then(
   function (): void {
     expect(this.context.registrationSuccess).to.equal(false);
 
-    const expectedMessage = `Vehicle with ID ${this.context.vehicle.id} is already registered in the fleet`;
+    const expected = new VehicleAlreadyRegisteredError(this.context.vehicle.id);
 
-    expect(this.context.registrationError.message).to.equal(expectedMessage);
+    expect(this.context.registrationError.message).to.equal(expected.message);
   },
 );

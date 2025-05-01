@@ -4,6 +4,7 @@ import { expect } from "chai";
 
 // Second group: Domain
 import { Location } from "../../src/Domain/Models/Location.js";
+import { VehicleAlreadyParkedError } from "../../src/Domain/Errors/VehicleAlreadyParkedError.js";
 
 // Fourth group: Infrastructure
 import { InMemoryVehicleRepository } from "../../src/Infra/InMemoryVehicleRepository.js";
@@ -70,10 +71,10 @@ Then(
 Then(
   "I should be informed that my vehicle is already parked at this location",
   function () {
-    expect(this.context.parkingSuccess).to.equal(false);
+    expect(this.context.parkingAttempt).to.equal(false);
 
-    const expectedMessage = `Vehicle with ID ${this.context.vehicle.id} is already parked at this location`;
+    const expected = new VehicleAlreadyParkedError(this.context.vehicle.id);
 
-    expect(this.context.parkingSuccess.message).to.equal(expectedMessage);
+    expect(this.context.parkingAttemptError.message).to.equal(expected.message);
   },
 );

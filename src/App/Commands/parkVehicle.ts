@@ -16,8 +16,11 @@ export class ParkVehicleHandler implements CommandHandler {
 
   handle(command: ParkVehicle): void {
     const vehicle = this.repository.findById(command.vehicle.id);
+
     if (!vehicle) throw new VehicleNotFoundError(command.vehicle.id);
+
     vehicle.parkVehicle(command.location);
+
     this.repository.save(vehicle);
   }
 }

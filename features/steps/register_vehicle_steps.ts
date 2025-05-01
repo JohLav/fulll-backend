@@ -55,10 +55,10 @@ When("I try to register this vehicle into my fleet", function () {
       this.context.user.id,
       this.context.vehicle,
     );
-    this.context.registrationSucceeded = true;
+    this.context.registrationSuccess = true;
     this.context.registrationError = null;
   } catch (error) {
-    this.context.registrationSucceeded = false;
+    this.context.registrationSuccess = false;
     this.context.registrationError = error;
   }
 });
@@ -76,7 +76,7 @@ Then("this vehicle should be part of my vehicle fleet", function (): void {
 Then(
   "I should be informed that this vehicle has already been registered into my fleet",
   function (): void {
-    expect(this.context.registrationSucceeded).to.equal(false);
+    expect(this.context.registrationSuccess).to.equal(false);
 
     const expectedMessage = `Vehicle with ID ${this.context.vehicle.id} is already registered in the fleet`;
 

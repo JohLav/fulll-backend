@@ -1,8 +1,8 @@
 import { Location } from "../../Domain/Models/Location.js";
 import { Vehicle } from "../../Domain/Models/Vehicle.js";
+import { VehicleNotFoundError } from "../Errors/VehicleNotFoundError.js";
 import { VehicleRepository } from "../../Domain/Repositories/VehicleRepository.js";
 import { Command, CommandHandler } from "./command.js";
-import { VehicleNotFoundError } from "../Errors/VehicleNotFoundError";
 
 export class ParkVehicle implements Command {
   constructor(

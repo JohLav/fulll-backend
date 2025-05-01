@@ -9,10 +9,10 @@ export class GetLocation implements Query {
 }
 
 export class GetLocationHandler implements QueryHandler<Location> {
-  constructor(private repository: VehicleRepository) {}
+  constructor(private vehicleRepository: VehicleRepository) {}
 
   handle(getLocationQuery: GetLocation): Location {
-    const vehicle = this.repository.findById(getLocationQuery.vehicleId);
+    const vehicle = this.vehicleRepository.findById(getLocationQuery.vehicleId);
 
     if (!vehicle) {
       throw new VehicleNotFoundError(getLocationQuery.vehicleId);

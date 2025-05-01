@@ -7,7 +7,7 @@ export class InMemoryVehicleRepository implements VehicleRepository {
 
   save(vehicle: Vehicle): void {
     this.vehicles.set(vehicle.id, vehicle);
-  } // TODO: method to keep?
+  }
 
   findById(vehicleId: string): Vehicle | undefined {
     return this.vehicles.get(vehicleId);

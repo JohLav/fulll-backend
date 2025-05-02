@@ -18,9 +18,9 @@ export class Vehicle {
     return this.id === other.id;
   }
 
-  parkVehicle(location: Location): void {
-    if (this.location == location) throw new VehicleAlreadyParkedError(this.id);
+  parkVehicle(other: Location): void {
+    if (this.location == other) throw new VehicleAlreadyParkedError(this.id);
 
-    this.location = location;
+    this.location = other;
   }
 }

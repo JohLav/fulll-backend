@@ -71,7 +71,7 @@ Then("this vehicle should be part of my vehicle fleet", function (): void {
   );
 
   expect(fleet.id).to.equal(this.context.fleetId);
-  expect(fleet.vehicles).to.include(this.context.vehicle);
+  expect(fleet.vehicles).to.deep.include(this.context.vehicle);
 });
 
 Then(

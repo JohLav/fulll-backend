@@ -3,13 +3,13 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
 import { createFleetCommand } from "./Commands/create.js";
+import { localizeVehicleCommand } from "./Commands/localizeVehicleCommand.js";
 import { registerVehicleCommand } from "./Commands/registerVehicleCommand.js";
-// import { localizeVehicleCommand } from "./commands/localizeVehicle";
 
 yargs(hideBin(process.argv))
   .command(createFleetCommand)
   .command(registerVehicleCommand)
-  // .command(localizeVehicleCommand)
+  .command(localizeVehicleCommand)
   .demandCommand()
   .strict()
   .help()

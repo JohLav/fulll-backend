@@ -16,4 +16,10 @@ export class InMemoryVehicleRepository implements VehicleRepository {
   findByUserId(userId: string): Vehicle | undefined {
     return this.vehicles.get(userId);
   }
+
+  findByPlateNumber(plateNumber: string): Vehicle | undefined {
+    return Array.from(this.vehicles.values()).find(
+      (v) => v.plateNumber === plateNumber,
+    );
+  }
 }

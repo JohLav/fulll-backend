@@ -6,16 +6,17 @@ import { VehicleAlreadyParkedError } from "../Errors/VehicleAlreadyParkedError.j
 export class Vehicle {
   constructor(
     public readonly id: string,
+    public readonly plateNumber: string,
     public type: VehicleType,
     public location?: Location,
   ) {}
 
-  static create(type: VehicleType): Vehicle {
-    return new Vehicle(randomUUID(), type);
+  static create(plateNumber: string, type: VehicleType): Vehicle {
+    return new Vehicle(randomUUID(), plateNumber, type);
   }
 
   equals(other: Vehicle): boolean {
-    return this.id === other.id;
+    return this.plateNumber === other.plateNumber;
   }
 
   parkVehicle(other: Location): void {

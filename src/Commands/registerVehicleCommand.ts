@@ -2,11 +2,11 @@ import { CommandModule } from "yargs";
 import { Vehicle } from "../Domain/Models/Vehicle.js";
 import { VehicleType } from "../Domain/Types/VehicleType.js";
 import { InMemoryFleetRepository } from "../Infra/Repositories/InMemoryFleetRepository.js";
+import { generateFrenchPlateNumber } from "../Utils/generateFrenchPlateNumber.js";
 import { registerVehicleInFleet } from "../../features/steps/shared/registerVehicleInFleet.js";
 
-// TODO: Implement VehiclePlateNumber
 export const registerVehicleCommand: CommandModule = {
-  command: "register-vehicle <fleetId> <vehicleType>",
+  command: "register-vehicle <fleetId> <vehiclePlateNumber> <vehicleType>",
   describe: "Register a vehicle into a fleet",
   builder: (yargs) =>
     yargs
@@ -14,21 +14,26 @@ export const registerVehicleCommand: CommandModule = {
         type: "string",
         describe: "Fleet ID",
       })
+      .positional("vehiclePlateNumber", {
+        type: "string",
+        describe: "Plate number of the vehicle",
+      })
       .positional("vehicleType", {
         type: "string",
         describe: "Vehicle type (e.g., CAR, MOTORCYCLE, TRUCK)",
         choices: Object.keys(VehicleType),
       }),
-  // .positional("vehiclePlateNumber", {
-  //   type: "string",
-  //   describe: "Plate number of the vehicle",
-  // }),
   handler: (argv) => {
-    const { fleetId, vehicleType } = argv;
+    const { fleetId, vehiclePlateNumber, vehicleType } = argv;
+
+    const fleetRepository = new InMemoryFleetRepository();
 
     try {
-      const fleetRepository = new InMemoryFleetRepository();
-      const vehicle = Vehicle.create(vehicleType as VehicleType);
+      const plateNumber = vehiclePlateNumber || generateFrenchPlateNumber();
+      const vehicle = Vehicle.create(
+        plateNumber as string,
+        vehicleType as VehicleType,
+      );
       registerVehicleInFleet(
         fleetRepository,
         fleetId as string,
@@ -36,7 +41,7 @@ export const registerVehicleCommand: CommandModule = {
         vehicle,
       );
       console.log(
-        `Vehicle with ID ${vehicle.id} registered in fleet ${fleetId}`,
+        `Vehicle with ID ${vehicle.id} and plate ${vehiclePlateNumber} is registered in fleet ${fleetId}`,
       );
     } catch (error) {
       if (error instanceof Error) {

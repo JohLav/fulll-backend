@@ -3,6 +3,7 @@ import { User } from "../../src/Domain/Models/User.js";
 import { Vehicle } from "../../src/Domain/Models/Vehicle.js";
 import { VehicleType } from "../../src/Domain/Types/VehicleType.js";
 import { InMemoryFleetRepository } from "../../src/Infra/Repositories/InMemoryFleetRepository.js";
+import { generateFrenchPlateNumber } from "../../src/Utils/generateFrenchPlateNumber.js";
 import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
 import { registerVehicleInFleet } from "./shared/registerVehicleInFleet.js";
 import { randomUUID } from "node:crypto";
@@ -17,7 +18,8 @@ Given("my fleet", function (): void {
 });
 
 Given("a vehicle", function (): void {
-  this.context.vehicle = Vehicle.create(VehicleType.CAR);
+  const plateNumber = generateFrenchPlateNumber();
+  this.context.vehicle = Vehicle.create(plateNumber, VehicleType.CAR);
 });
 
 Given("I have registered this vehicle into my fleet", function () {

@@ -16,15 +16,15 @@ export class ParkVehicle implements Command {
  * TODO: Ask PO if this could happen and how it should be handled
  */
 export class ParkVehicleHandler implements CommandHandler {
-  constructor(private repository: VehicleRepository) {}
+  constructor(private vehicleRepository: VehicleRepository) {}
 
   handle(command: ParkVehicle): void {
-    const vehicle = this.repository.findById(command.vehicle.id);
+    const vehicle = this.vehicleRepository.findById(command.vehicle.id);
 
     if (!vehicle) throw new VehicleNotFoundError(command.vehicle.id);
 
     vehicle.parkVehicle(command.location);
 
-    this.repository.save(vehicle);
+    this.vehicleRepository.save(vehicle);
   }
 }

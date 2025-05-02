@@ -2,12 +2,13 @@ import { Given } from "@cucumber/cucumber";
 import { User } from "../../src/Domain/Models/User.js";
 import { Vehicle } from "../../src/Domain/Models/Vehicle.js";
 import { VehicleType } from "../../src/Domain/Types/VehicleType.js";
-import { InMemoryFleetRepository } from "../../src/Infra/Repositories/InMemoryFleetRepository";
+import { InMemoryFleetRepository } from "../../src/Infra/Repositories/InMemoryFleetRepository.js";
 import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
 import { registerVehicleInFleet } from "./shared/registerVehicleInFleet.js";
+import { randomUUID } from "node:crypto";
 
 Given("my fleet", function (): void {
-  const user: User = User.create();
+  const user: User = User.create(randomUUID());
   this.context = { user, fleetRepository: new InMemoryFleetRepository() };
   this.context.fleetId = initializeFleetForUser(
     this.context.fleetRepository,

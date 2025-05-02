@@ -29,9 +29,7 @@
     "build": "tsc",
     "cucumber": "cucumber-js --config cucumber.json",
     "lint": "eslint .",
-    "test": "vitest"
-  },
-  "bin": {
-    "fleet": "./src/cli.ts"
+    "test": "vitest",
+    "fleet": "ts-node ./build/src/cli.js"
   }
 }

@@ -8,15 +8,16 @@ import { User } from "../../src/Domain/Models/User.js";
 import { VehicleAlreadyRegisteredError } from "../../src/Domain/Errors/VehicleAlreadyRegisteredError.js";
 
 // Third group: Infrastructure
-import { InMemoryFleetRepository } from "../../src/Infra/Repositories/InMemoryFleetRepository";
+import { InMemoryFleetRepository } from "../../src/Infra/Repositories/InMemoryFleetRepository.js";
 
 // Fourth group: Helpers
 import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
 import { registerVehicleInFleet } from "./shared/registerVehicleInFleet.js";
 import { retrieveFleet } from "./shared/retrieveFleet.js";
+import { randomUUID } from "node:crypto";
 
 Given("the fleet of another user", function () {
-  const otherUser: User = User.create();
+  const otherUser: User = User.create(randomUUID());
   this.context.otherUser = {
     otherUser,
     fleetRepository: new InMemoryFleetRepository(),

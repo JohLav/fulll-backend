@@ -1,7 +1,7 @@
 import { CommandModule } from "yargs";
-import { initializeFleetForUser } from "../../features/steps/shared/initializeFleetForUser";
-import { InMemoryFleetRepository } from "../Infra/Repositories/InMemoryFleetRepository";
-import { User } from "../Domain/Models/User";
+import { initializeFleetForUser } from "../../features/steps/shared/initializeFleetForUser.js";
+import { InMemoryFleetRepository } from "../Infra/Repositories/InMemoryFleetRepository.js";
+import { User } from "../Domain/Models/User.js";
 
 export const createFleetCommand: CommandModule = {
   command: "create <userId>",
@@ -11,8 +11,9 @@ export const createFleetCommand: CommandModule = {
       type: "string",
       describe: "User ID",
     }),
-  handler: () => {
-    const user: User = User.create();
+  handler: (argv) => {
+    const { userId } = argv;
+    const user: User = User.create(userId as string);
     const fleetRepository = new InMemoryFleetRepository();
     const fleetId = initializeFleetForUser(fleetRepository, user);
     console.log(fleetId);

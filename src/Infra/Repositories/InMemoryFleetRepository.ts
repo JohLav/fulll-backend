@@ -1,5 +1,5 @@
-import { Fleet } from "../Domain/Models/Fleet";
-import { FleetRepository } from "../Domain/Repositories/FleetRepository";
+import { Fleet } from "../../Domain/Models/Fleet";
+import { FleetRepository } from "../../Domain/Repositories/FleetRepository";
 
 // Secondary Adapter
 export class InMemoryFleetRepository implements FleetRepository {
@@ -13,7 +13,7 @@ export class InMemoryFleetRepository implements FleetRepository {
     return this.fleets.get(fleetId);
   }
 
-  findByUserId(ownerId: string): Fleet | undefined {
-    return this.fleets.get(ownerId);
+  findByUserId(userId: string): Fleet | undefined {
+    return this.fleets.get(userId);
   }
 }

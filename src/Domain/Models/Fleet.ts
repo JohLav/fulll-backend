@@ -15,9 +15,8 @@ export class Fleet {
   }
 
   registerVehicle(vehicle: Vehicle): void {
-    if (this.vehicles.some((v: Vehicle): boolean => v.equals(vehicle))) {
+    if (this.vehicles.some((v: Vehicle): boolean => v.equals(vehicle)))
       throw new VehicleAlreadyRegisteredError(vehicle.id);
-    }
 
     this.vehicles.push(vehicle);
   }

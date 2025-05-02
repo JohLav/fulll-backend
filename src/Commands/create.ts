@@ -1,7 +1,7 @@
 import { CommandModule } from "yargs";
-import { initializeFleetForUser } from "../../features/steps/shared/initializeFleetForUser.js";
-import { InMemoryFleetRepository } from "../Infra/Repositories/InMemoryFleetRepository.js";
 import { User } from "../Domain/Models/User.js";
+import { InMemoryFleetRepository } from "../Infra/Repositories/InMemoryFleetRepository.js";
+import { initializeFleetForUser } from "../../features/steps/shared/initializeFleetForUser.js";
 
 export const createFleetCommand: CommandModule = {
   command: "create <userId>",

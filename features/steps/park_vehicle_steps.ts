@@ -7,7 +7,7 @@ import { Location } from "../../src/Domain/Models/Location.js";
 import { VehicleAlreadyParkedError } from "../../src/Domain/Errors/VehicleAlreadyParkedError.js";
 
 // Fourth group: Infrastructure
-import { InMemoryVehicleRepository } from "../../src/Infra/InMemoryVehicleRepository.js";
+import { InMemoryVehicleRepository } from "../../src/Infra/Repositories/InMemoryVehicleRepository";
 
 // Fifth group: Helpers
 import { parkVehicleAtLocation } from "./shared/parkVehicleAtLocation.js";

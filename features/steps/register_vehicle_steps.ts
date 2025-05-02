@@ -8,7 +8,7 @@ import { User } from "../../src/Domain/Models/User.js";
 import { VehicleAlreadyRegisteredError } from "../../src/Domain/Errors/VehicleAlreadyRegisteredError.js";
 
 // Third group: Infrastructure
-import { InMemoryFleetRepository } from "../../src/Infra/InMemoryFleetRepository.js";
+import { InMemoryFleetRepository } from "../../src/Infra/Repositories/InMemoryFleetRepository";
 
 // Fourth group: Helpers
 import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";

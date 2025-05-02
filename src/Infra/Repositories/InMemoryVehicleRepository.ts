@@ -1,5 +1,5 @@
-import { Vehicle } from "../Domain/Models/Vehicle.js";
-import { VehicleRepository } from "../Domain/Repositories/VehicleRepository.js";
+import { Vehicle } from "../../Domain/Models/Vehicle";
+import { VehicleRepository } from "../../Domain/Repositories/VehicleRepository";
 
 // Secondary Adapter
 export class InMemoryVehicleRepository implements VehicleRepository {

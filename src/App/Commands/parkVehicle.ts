@@ -11,6 +11,10 @@ export class ParkVehicle implements Command {
   ) {}
 }
 
+/**
+ * Does not handle the case where vehicle is not in a fleet
+ * TODO: Ask PO if this could happen and how it should be handled
+ */
 export class ParkVehicleHandler implements CommandHandler {
   constructor(private repository: VehicleRepository) {}
 

@@ -2,7 +2,7 @@ import { Given } from "@cucumber/cucumber";
 import { User } from "../../src/Domain/Models/User.js";
 import { Vehicle } from "../../src/Domain/Models/Vehicle.js";
 import { VehicleType } from "../../src/Domain/Types/VehicleType.js";
-import { InMemoryFleetRepository } from "../../src/Infra/InMemoryFleetRepository.js";
+import { InMemoryFleetRepository } from "../../src/Infra/Repositories/InMemoryFleetRepository";
 import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
 import { registerVehicleInFleet } from "./shared/registerVehicleInFleet.js";
 

@@ -15,9 +15,13 @@ export class RegisterVehicleHandler implements CommandHandler {
   constructor(private fleetRepository: FleetRepository) {}
 
   handle(command: RegisterVehicle): void {
+    // TODO: Change Query to findById (repository)
     const getFleetQuery = new GetFleet(command.fleetId);
     const getFleetHandler = new GetFleetHandler(this.fleetRepository);
     const fleet = getFleetHandler.handle(getFleetQuery);
+
+    fleet.registerVehicle(command.vehicle);
+
     this.fleetRepository.save(fleet);
   }
 }

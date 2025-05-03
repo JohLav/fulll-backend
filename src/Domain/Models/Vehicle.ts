@@ -16,6 +16,7 @@ export class Vehicle {
   }
 
   equals(other: Vehicle): boolean {
+    if (!other) return false;
     return this.plateNumber === other.plateNumber;
   }
 

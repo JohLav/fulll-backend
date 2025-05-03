@@ -5,7 +5,7 @@ import { InMemoryVehicleRepository } from "../Infra/Repositories/InMemoryVehicle
 
 export const localizeVehicleCommand: CommandModule = {
   command:
-    "localize-vehicle <fleetId> <vehiclePlateNumber> <latitude> <longitude> [alt]",
+    "localize-vehicle <fleetId> <vehiclePlateNumber> <latitude> <longitude> [altitude]",
   describe: "Update the GPS position of a vehicle in a fleet",
   builder: (yargs) => {
     return yargs
@@ -25,25 +25,31 @@ export const localizeVehicleCommand: CommandModule = {
         type: "number",
         describe: "Longitude of the vehicle's location",
       })
-      .positional("alt", {
+      .positional("altitude", {
         type: "number",
         describe: "Altitude (optional)",
         default: 0,
       });
   },
   handler: (argv) => {
-    const { fleetId, vehiclePlateNumber, latitude, longitude, alt } = argv;
+    const { fleetId, vehiclePlateNumber, latitude, longitude, altitude } = argv;
 
     const vehicleRepository = new InMemoryVehicleRepository();
 
     const location = Location.create(
       latitude as number,
       longitude as number,
-      alt as number,
+      altitude as number,
     );
     const vehicle = vehicleRepository.findByPlateNumber(
       vehiclePlateNumber as string,
     );
+    if (!vehicle) {
+      console.error(
+        `Vehicle with plate number "${vehiclePlateNumber}" not found.`,
+      );
+      return;
+    }
 
     try {
       parkVehicleAtLocation(vehicleRepository, vehicle, location);

@@ -1,7 +1,7 @@
 import { Command, CommandHandler } from "./command";
 import { Location } from "../../Domain/Models/Location.js";
-import { FleetNotFoundError } from "../Errors/FleetNotFoundError.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
+import { FleetNotFoundError } from "../Errors/FleetNotFoundError.js";
 
 export class LocalizeVehicle implements Command {
   constructor(
@@ -14,10 +14,10 @@ export class LocalizeVehicle implements Command {
 }
 
 export class LocalizeVehicleHandler implements CommandHandler {
-  constructor(private fleetRepository: FleetRepository) {}
+  constructor(private repository: FleetRepository) {}
 
   handle(command: LocalizeVehicle): void {
-    const fleet = this.fleetRepository.findById(command.fleetId);
+    const fleet = this.repository.findById(command.fleetId);
     if (!fleet) throw new FleetNotFoundError(command.fleetId);
 
     const location = Location.create(
@@ -28,6 +28,6 @@ export class LocalizeVehicleHandler implements CommandHandler {
 
     fleet.localizeVehicle(command.vehiclePlateNumber, location);
 
-    this.fleetRepository.save(fleet);
+    this.repository.save(fleet);
   }
 }

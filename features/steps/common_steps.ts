@@ -9,11 +9,8 @@ import { registerVehicleInFleet } from "./shared/registerVehicleInFleet.js";
 
 Given("my fleet", function (): void {
   const user: User = User.create(crypto.randomUUID());
-  this.context = { user, fleetRepository: new InMemoryFleetRepository() };
-  this.context.fleetId = initializeFleetForUser(
-    this.context.fleetRepository,
-    user,
-  );
+  this.context = { user, repository: new InMemoryFleetRepository() };
+  this.context.fleetId = initializeFleetForUser(this.context.repository, user);
 });
 
 Given("a vehicle", function (): void {
@@ -23,7 +20,7 @@ Given("a vehicle", function (): void {
 
 Given("I have registered this vehicle into my fleet", function () {
   registerVehicleInFleet(
-    this.context.fleetRepository,
+    this.context.repository,
     this.context.fleetId,
     this.context.user.id,
     this.context.vehicle,

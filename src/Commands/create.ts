@@ -14,8 +14,8 @@ export const createFleetCommand: CommandModule = {
   handler: (argv) => {
     const { userId } = argv;
     const user: User = User.create(userId as string);
-    const fleetRepository = new InMemoryFleetRepository();
-    const fleetId = initializeFleetForUser(fleetRepository, user);
+    const repository = new InMemoryFleetRepository();
+    const fleetId = initializeFleetForUser(repository, user);
     console.log(fleetId);
   },
 };

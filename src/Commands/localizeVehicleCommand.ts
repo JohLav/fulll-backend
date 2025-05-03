@@ -1,7 +1,7 @@
 import { CommandModule } from "yargs";
 import { Location } from "../Domain/Models/Location.js";
 import { parkVehicleAtLocation } from "../../features/steps/shared/parkVehicleAtLocation.js";
-import { InMemoryVehicleRepository } from "../Infra/Repositories/InMemoryVehicleRepository.js";
+import { InMemoryFleetRepository } from "../Infra/Repositories/InMemoryFleetRepository.js";
 
 export const localizeVehicleCommand: CommandModule = {
   command:
@@ -34,14 +34,15 @@ export const localizeVehicleCommand: CommandModule = {
   handler: (argv) => {
     const { fleetId, vehiclePlateNumber, latitude, longitude, altitude } = argv;
 
-    const vehicleRepository = new InMemoryVehicleRepository();
+    const repository = new InMemoryFleetRepository();
 
-    const location = Location.create(
-      latitude as number,
-      longitude as number,
-      altitude as number,
-    );
-    const vehicle = vehicleRepository.findByPlateNumber(
+    const fleet = repository.findById(fleetId as string);
+    if (!fleet) {
+      console.error(`Fleet with ID "${fleetId}" not found.`);
+      return;
+    }
+
+    const vehicle = repository.findVehicleByPlateNumber(
       vehiclePlateNumber as string,
     );
     if (!vehicle) {
@@ -51,8 +52,14 @@ export const localizeVehicleCommand: CommandModule = {
       return;
     }
 
+    const location = Location.create(
+      latitude as number,
+      longitude as number,
+      altitude as number,
+    );
+
     try {
-      parkVehicleAtLocation(vehicleRepository, vehicle, location);
+      parkVehicleAtLocation(repository, fleetId as string, vehicle, location);
       console.log(
         `Localizing vehicle with plate number ${vehiclePlateNumber} from fleet ID ${fleetId} to (${latitude}, ${longitude})`,
       );

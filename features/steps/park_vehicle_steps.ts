@@ -6,22 +6,19 @@ import { expect } from "chai";
 import { Location } from "../../src/Domain/Models/Location.js";
 import { VehicleAlreadyParkedError } from "../../src/Domain/Errors/VehicleAlreadyParkedError.js";
 
-// Fourth group: Infrastructure
-import { InMemoryVehicleRepository } from "../../src/Infra/Repositories/InMemoryVehicleRepository.js";
-
 // Fifth group: Helpers
 import { parkVehicleAtLocation } from "./shared/parkVehicleAtLocation.js";
 import { retrieveLocation } from "./shared/retrieveLocation.js";
 
 Given("a location", function () {
   this.context.location = Location.create(48.8566, 2.3522);
-  this.context.vehicleRepository = new InMemoryVehicleRepository();
-  this.context.vehicleRepository.save(this.context.vehicle);
+  this.context.repository.save(this.context.vehicle);
 });
 
 Given("my vehicle has been parked in this location", function () {
   parkVehicleAtLocation(
-    this.context.vehicleRepository,
+    this.context.repository,
+    this.context.fleetId,
     this.context.vehicle,
     this.context.location,
   );
@@ -29,7 +26,8 @@ Given("my vehicle has been parked in this location", function () {
 
 When("I park my vehicle at this location", function () {
   parkVehicleAtLocation(
-    this.context.vehicleRepository,
+    this.context.repository,
+    this.context.fleetId,
     this.context.vehicle,
     this.context.location,
   );
@@ -38,7 +36,8 @@ When("I park my vehicle at this location", function () {
 When("I try to park my vehicle at this location", function () {
   try {
     parkVehicleAtLocation(
-      this.context.vehicleRepository,
+      this.context.repository,
+      this.context.fleetId,
       this.context.vehicle,
       this.context.location,
     );
@@ -54,8 +53,9 @@ Then(
   "the known location of my vehicle should verify this location",
   function () {
     const actualLocation = retrieveLocation(
-      this.context.vehicleRepository,
-      this.context.vehicle.id,
+      this.context.repository,
+      this.context.fleetId,
+      this.context.vehicle.plateNumber,
     );
 
     if (!actualLocation.equals(this.context.location)) {

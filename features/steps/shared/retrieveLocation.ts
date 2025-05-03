@@ -1,15 +1,16 @@
 import { Location } from "../../../src/Domain/Models/Location.js";
-import { VehicleRepository } from "../../../src/Domain/Repositories/VehicleRepository.js";
+import { FleetRepository } from "../../../src/Domain/Repositories/FleetRepository.js";
 import {
   GetLocation,
   GetLocationHandler,
 } from "../../../src/App/Queries/getLocation.js";
 
 export function retrieveLocation(
-  vehicleRepository: VehicleRepository,
-  vehicleId: string,
+  repository: FleetRepository,
+  fleetId: string,
+  vehiclePlateNumber: string,
 ): Location {
-  const getLocationQuery = new GetLocation(vehicleId);
-  const handler = new GetLocationHandler(vehicleRepository);
+  const getLocationQuery = new GetLocation(fleetId, vehiclePlateNumber);
+  const handler = new GetLocationHandler(repository);
   return handler.handle(getLocationQuery);
 }

@@ -6,12 +6,12 @@ import {
 } from "../../../src/App/Commands/registerVehicle.js";
 
 export function registerVehicleInFleet(
-  fleetRepository: FleetRepository,
+  repository: FleetRepository,
   fleetId: string,
   userId: string,
   vehicle: Vehicle,
 ): void {
   const registerVehicleCommand = new RegisterVehicle(fleetId, userId, vehicle);
-  const handler = new RegisterVehicleHandler(fleetRepository);
+  const handler = new RegisterVehicleHandler(repository);
   handler.handle(registerVehicleCommand);
 }

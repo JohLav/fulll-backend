@@ -6,10 +6,10 @@ import {
 } from "../../../src/App/Queries/getFleet.js";
 
 export function retrieveFleet(
-  fleetRepository: FleetRepository,
+  repository: FleetRepository,
   fleetId: string,
 ): Fleet {
   const getFleetQuery = new GetFleet(fleetId);
-  const handler = new GetFleetHandler(fleetRepository);
+  const handler = new GetFleetHandler(repository);
   return handler.handle(getFleetQuery);
 }

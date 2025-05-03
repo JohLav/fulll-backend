@@ -1,6 +1,6 @@
-import { VehicleType } from "../Types/VehicleType.js";
 import { Location } from "./Location.js";
 import { VehicleAlreadyParkedError } from "../Errors/VehicleAlreadyParkedError.js";
+import { VehicleType } from "../Types/VehicleType.js";
 
 export class Vehicle {
   constructor(

@@ -26,7 +26,7 @@ export const registerVehicleCommand: CommandModule = {
   handler: (argv) => {
     const { fleetId, vehiclePlateNumber, vehicleType } = argv;
 
-    const fleetRepository = new InMemoryFleetRepository();
+    const repository = new InMemoryFleetRepository();
 
     try {
       const plateNumber = vehiclePlateNumber || generateFrenchPlateNumber();
@@ -35,13 +35,13 @@ export const registerVehicleCommand: CommandModule = {
         vehicleType as VehicleType,
       );
       registerVehicleInFleet(
-        fleetRepository,
+        repository,
         fleetId as string,
         "some-user",
         vehicle,
       );
       console.log(
-        `Vehicle with ID ${vehicle.id} and plate ${vehiclePlateNumber} is registered in fleet ${fleetId}`,
+        `Vehicle with plate number ${vehiclePlateNumber} is registered in fleet ${fleetId}.`,
       );
     } catch (error) {
       if (error instanceof Error) {

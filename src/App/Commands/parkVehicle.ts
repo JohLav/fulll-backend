@@ -1,30 +1,33 @@
+import { Command, CommandHandler } from "./command.js";
 import { Location } from "../../Domain/Models/Location.js";
 import { Vehicle } from "../../Domain/Models/Vehicle.js";
-import { VehicleNotFoundError } from "../Errors/VehicleNotFoundError.js";
-import { VehicleRepository } from "../../Domain/Repositories/VehicleRepository.js";
-import { Command, CommandHandler } from "./command.js";
+import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
+import { FleetNotFoundError } from "../Errors/FleetNotFoundError.js";
+import { VehiclePlateNotFoundError } from "../Errors/VehiclePlateNotFoundError.js";
 
 export class ParkVehicle implements Command {
   constructor(
+    public readonly fleetId: string,
     public vehicle: Vehicle,
     public location: Location,
   ) {}
 }
 
-/**
- * Does not handle the case where vehicle is not in a fleet
- * TODO: Ask PO if this could happen and how it should be handled
- */
 export class ParkVehicleHandler implements CommandHandler {
-  constructor(private vehicleRepository: VehicleRepository) {}
+  constructor(private repository: FleetRepository) {}
 
   handle(command: ParkVehicle): void {
-    const vehicle = this.vehicleRepository.findById(command.vehicle.id);
+    const fleet = this.repository.findById(command.fleetId);
+    if (!fleet) throw new FleetNotFoundError(command.fleetId);
 
-    if (!vehicle) throw new VehicleNotFoundError(command.vehicle.id);
+    const vehicle = fleet?.findVehicleByPlateNumber(
+      command.vehicle.plateNumber,
+    );
+    if (!vehicle)
+      throw new VehiclePlateNotFoundError(command.vehicle.plateNumber);
 
     vehicle.parkVehicle(command.location);
 
-    this.vehicleRepository.save(vehicle);
+    this.repository.save(fleet);
   }
 }

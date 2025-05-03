@@ -1,5 +1,6 @@
 import { Vehicle } from "./Vehicle.js";
 import { VehicleAlreadyRegisteredError } from "../Errors/VehicleAlreadyRegisteredError.js";
+import { VehicleNotFoundError } from "../../App/Errors/VehicleNotFoundError.js";
 
 // Aggregate root
 export class Fleet {
@@ -18,5 +19,17 @@ export class Fleet {
       throw new VehicleAlreadyRegisteredError(vehicle.id);
 
     this.vehicles.push(vehicle);
+  }
+
+  findVehicleByPlateNumber(plateNumber: string): Vehicle | undefined {
+    return this.vehicles.find((v) => v.plateNumber === plateNumber);
+  }
+
+  localizeVehicle(plateNumber: string, location: Location): void {
+    const vehicle = this.findVehicleByPlateNumber(plateNumber);
+
+    if (!vehicle) throw new VehicleNotFoundError(plateNumber);
+
+    vehicle.updateLocation(location);
   }
 }

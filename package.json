@@ -28,6 +28,7 @@
   "scripts": {
     "build": "tsc",
     "cucumber": "cucumber-js --config cucumber.json",
+    "cucumber:critical": "cucumber-js --tags \"@critical\"",
     "lint": "eslint .",
     "test": "vitest",
     "fleet": "ts-node ./build/src/cli.js"

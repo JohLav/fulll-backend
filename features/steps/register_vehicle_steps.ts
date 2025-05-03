@@ -14,10 +14,9 @@ import { InMemoryFleetRepository } from "../../src/Infra/Repositories/InMemoryFl
 import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
 import { registerVehicleInFleet } from "./shared/registerVehicleInFleet.js";
 import { retrieveFleet } from "./shared/retrieveFleet.js";
-import { randomUUID } from "node:crypto";
 
 Given("the fleet of another user", function () {
-  const otherUser: User = User.create(randomUUID());
+  const otherUser: User = User.create(crypto.randomUUID());
   this.context.otherUser = {
     otherUser,
     fleetRepository: new InMemoryFleetRepository(),

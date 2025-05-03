@@ -67,17 +67,14 @@ Feature: Park a vehicle
 
 #### Definitions:
 
-- **Vehicle**: a car, truck, motorcycle, or any transportation mode that can help
-  me to move from point A to point B on planet earth.
+- **Vehicle**: a car, truck, motorcycle, or any transportation mode that can help me to move from point A to point B on planet earth.
 - **Fleet**: a collection a distinct vehicles.
-- **Location**: a way to localize on planet earth, such as GPS coordinates
-  for example.
+- **Location**: a way to localize on planet earth, such as GPS coordinates for example.
 
 #### Guidelines
 
 1. **Do not use any framework at this step!**
-2. Prefer **not** using any production dependency
-   (therefore, for **javascript**
+2. Prefer **not** using any production dependency (therefore, for **javascript**
    [ramda](https://www.npmjs.com/package/ramda) and/or
    [lodash](https://www.npmjs.com/package/lodash) can be used)
 3. Write corresponding bdd tests ([behat](https://behat.org/en/latest/),
@@ -121,7 +118,7 @@ Please wrap Part 1 into a complete application. We want:
 ```
 
 2. Persistence of fleets and vehicles in a real repository/database.
-
+ 
 #### Guidelines
 
 1. Feel free to use frameworks/libraries to manage the CLI.

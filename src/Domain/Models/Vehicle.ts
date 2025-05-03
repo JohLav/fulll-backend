@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto";
 import { VehicleType } from "../Types/VehicleType.js";
 import { Location } from "./Location.js";
 import { VehicleAlreadyParkedError } from "../Errors/VehicleAlreadyParkedError.js";
@@ -12,7 +11,7 @@ export class Vehicle {
   ) {}
 
   static create(plateNumber: string, type: VehicleType): Vehicle {
-    return new Vehicle(randomUUID(), plateNumber, type);
+    return new Vehicle(crypto.randomUUID(), plateNumber, type);
   }
 
   equals(other: Vehicle): boolean {

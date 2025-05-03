@@ -1,6 +1,5 @@
 import { Vehicle } from "./Vehicle.js";
 import { VehicleAlreadyRegisteredError } from "../Errors/VehicleAlreadyRegisteredError.js";
-import { randomUUID } from "node:crypto";
 
 // Aggregate root
 export class Fleet {
@@ -11,7 +10,7 @@ export class Fleet {
   ) {}
 
   static initializeFleet(userId: string): Fleet {
-    return new Fleet(randomUUID(), userId, []);
+    return new Fleet(crypto.randomUUID(), userId, []);
   }
 
   registerVehicle(vehicle: Vehicle): void {

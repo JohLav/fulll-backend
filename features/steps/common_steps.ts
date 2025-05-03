@@ -6,10 +6,9 @@ import { InMemoryFleetRepository } from "../../src/Infra/Repositories/InMemoryFl
 import { generateFrenchPlateNumber } from "../../src/Utils/generateFrenchPlateNumber.js";
 import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
 import { registerVehicleInFleet } from "./shared/registerVehicleInFleet.js";
-import { randomUUID } from "node:crypto";
 
 Given("my fleet", function (): void {
-  const user: User = User.create(randomUUID());
+  const user: User = User.create(crypto.randomUUID());
   this.context = { user, fleetRepository: new InMemoryFleetRepository() };
   this.context.fleetId = initializeFleetForUser(
     this.context.fleetRepository,

@@ -16,7 +16,6 @@ export class RegisterVehicleHandler implements CommandHandler {
 
   handle(command: RegisterVehicle): void {
     const fleet = this.repository.findById(command.fleetId);
-
     if (!fleet) throw new FleetNotFoundError(command.fleetId);
 
     fleet.registerVehicle(command.vehicle);

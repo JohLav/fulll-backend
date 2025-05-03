@@ -4,6 +4,8 @@ import { VehicleType } from "../Domain/Types/VehicleType.js";
 import { InMemoryFleetRepository } from "../Infra/Repositories/InMemoryFleetRepository.js";
 import { generateFrenchPlateNumber } from "../Utils/generateFrenchPlateNumber.js";
 import { registerVehicleInFleet } from "../../features/steps/shared/registerVehicleInFleet.js";
+import { initializeFleetForUser } from "../../features/steps/shared/initializeFleetForUser.js";
+import { User } from "../Domain/Models/User.js";
 
 export const registerVehicleCommand: CommandModule = {
   command: "register-vehicle <fleetId> <vehiclePlateNumber> <vehicleType>",
@@ -28,6 +30,11 @@ export const registerVehicleCommand: CommandModule = {
 
     const repository = new InMemoryFleetRepository();
 
+    const fleet = repository.findById(fleetId as string);
+    if (!fleet) {
+      console.error(`Fleet with ID "${fleetId}" not found.`);
+    }
+
     try {
       const plateNumber = vehiclePlateNumber || generateFrenchPlateNumber();
       const vehicle = Vehicle.create(
@@ -41,7 +48,7 @@ export const registerVehicleCommand: CommandModule = {
         vehicle,
       );
       console.log(
-        `Vehicle with plate number ${vehiclePlateNumber} is registered in fleet ${fleetId}.`,
+        `${vehicleType} with plate number ${vehiclePlateNumber} is registered in fleet ${fleetId}.`,
       );
     } catch (error) {
       if (error instanceof Error) {

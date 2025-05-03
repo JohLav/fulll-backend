@@ -3,14 +3,16 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  const allUsers = await prisma.fleet.findMany();
-  console.log("All users:", allUsers);
+  const allVehicles = await prisma.fleet.findMany();
+  console.log("All vehicles:", allVehicles);
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
-  })
-  .finally(async () => {
+  .then(async () => {
     await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
   });

@@ -2,6 +2,7 @@ import { PrismaClient } from "../../generated/prisma/index";
 
 const prisma = new PrismaClient();
 
+// TODO: remove this when Prisma is working properly
 async function main() {
   const allFleets = await prisma.fleet.findMany();
   console.log("All fleets:", allFleets);

@@ -5,6 +5,7 @@ import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
 import { LocationNotFoundError } from "../../App/Errors/LocationNotFoundError.js";
 import { LocationMapper } from "../Mappers/LocationMapper.js";
 import { VehicleTypeMapper } from "../Mappers/VehicleTypeMapper.js";
+import { PrismaVehicleMapper } from "../Mappers/PrismaVehicleMapper";
 
 // Secondary Adapter
 export class PrismaFleetRepository implements FleetRepository {
@@ -58,7 +59,7 @@ export class PrismaFleetRepository implements FleetRepository {
       }
     } catch (error) {
       console.error("Error saving fleet:", error);
-      throw new Error("Failed to persist fleet");
+      throw error;
     }
   }
 
@@ -88,7 +89,11 @@ export class PrismaFleetRepository implements FleetRepository {
   async findVehicleByPlateNumber(
     plateNumber: string,
   ): Promise<Vehicle | undefined> {
-    // Implement the logic to find a vehicle by its plate number using Prisma
-    return null;
+    const vehicle = await prisma.vehicle.findUnique({
+      where: { plate: plateNumber },
+    });
+    if (!vehicle) return undefined;
+
+    return PrismaVehicleMapper.fromPrisma(vehicle);
   }
 }

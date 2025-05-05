@@ -1,4 +1,4 @@
-import { VehicleType as PrismaVehicleType } from "../../../generated/prisma/index";
+import { VehicleType as PrismaVehicleType } from "../../../generated/prisma/index.js";
 import { VehicleType as DomainVehicleType } from "../../Domain/Types/VehicleType.js";
 
 export class VehicleTypeMapper {

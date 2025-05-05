@@ -2,7 +2,7 @@
 
 ## Overview
 
-This technical test involves building a vehicle fleet management system. The goal is to create an application that manages vehicles and their parking locations within a fleet. Key operations include registering vehicles, parking them at specific locations, and ensuring vehicles cannot be registered or localized multiple times in the same fleet or location.
+This technical test involves building a vehicle fleet management system. The goal was to create an application that manages vehicles and their parking locations within a fleet. Key operations include registering vehicles, parking them at specific locations, and ensuring vehicles cannot be registered or localized multiple times in the same fleet or location.
 
 Please refer to the INSTRUCTIONS.md file for detailed test instructions.
 
@@ -114,3 +114,12 @@ To set up a CI/CD process, I would use GitHub Actions to automate the workflow. 
 - Noticed the immediate benefits of CQRS & DDD, particularly when transitioning from in-memory to database persistence.
 - Both challenging and enjoyable at the same time!
 
+## Next Steps
+1. Clean up and organize imports:
+   - Replace messy relative imports with alias-based or consistent paths.
+   - Ensure all imports follow the same convention across the project.
+2. Fix CLI command parsing warning
+    - Investigate and resolve the warning that appears during CLI command parsing.
+3. Add more tests to cover edge cases
+4. Set up Continuous Integration (CI) pipeline using GitHub Actions to automate testing.
+5. Improve error handling mechanisms to provide clearer feedback in case of failures.

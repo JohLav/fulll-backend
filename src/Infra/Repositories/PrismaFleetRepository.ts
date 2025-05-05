@@ -5,6 +5,7 @@ import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
 import { LocationMapper } from "../Mappers/LocationMapper.js";
 import { VehicleTypeMapper } from "../Mappers/VehicleTypeMapper.js";
 import { PrismaVehicleMapper } from "../Mappers/PrismaVehicleMapper.js";
+import { Vehicle as PrismaVehicle } from "@prisma/client";
 
 // Secondary Adapter
 export class PrismaFleetRepository implements FleetRepository {
@@ -71,13 +72,14 @@ export class PrismaFleetRepository implements FleetRepository {
     });
     if (!fleet) return undefined;
 
-    const vehicles: Vehicle[] = fleet.vehicles.map((v: { vehicle: any }) =>
-      Vehicle.reconstruct(
-        v.vehicle.id,
-        v.vehicle.plate,
-        VehicleTypeMapper.toDomain(v.vehicle.type),
-        LocationMapper.toDomain(v.vehicle.location),
-      ),
+    const vehicles: Vehicle[] = fleet.vehicles.map(
+      (v: { vehicle: PrismaVehicle }): Vehicle =>
+        Vehicle.reconstruct(
+          v.vehicle.id,
+          v.vehicle.plate,
+          VehicleTypeMapper.toDomain(v.vehicle.type),
+          LocationMapper.toDomain(v.vehicle.location ?? undefined),
+        ),
     );
 
     return Fleet.create(fleet.id, fleet.userId, vehicles);

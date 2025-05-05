@@ -2,7 +2,6 @@ import { prisma } from "../client.js";
 import { Fleet } from "../../Domain/Models/Fleet.js";
 import { Vehicle } from "../../Domain/Models/Vehicle.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
-import { LocationNotFoundError } from "../../App/Errors/LocationNotFoundError.js";
 import { LocationMapper } from "../Mappers/LocationMapper.js";
 import { VehicleTypeMapper } from "../Mappers/VehicleTypeMapper.js";
 import { PrismaVehicleMapper } from "../Mappers/PrismaVehicleMapper.js";
@@ -25,34 +24,32 @@ export class PrismaFleetRepository implements FleetRepository {
       }
 
       for (const vehicle of fleet.vehicles) {
-        if (!vehicle.location)
-          throw new LocationNotFoundError(vehicle.plateNumber);
         const vehicleType = VehicleTypeMapper.toPrisma(vehicle.type);
-        const locationString = LocationMapper.toPrisma(vehicle.location);
+        const locationString = vehicle.location
+          ? LocationMapper.toPrisma(vehicle.location)
+          : "Unknown";
 
-        await prisma.vehicle.upsert({
-          where: { id: vehicle.id },
-          update: {
-            plate: vehicle.plateNumber,
-            type: vehicleType,
-            location: locationString,
-          },
+        const dbVehicle = await prisma.vehicle.upsert({
+          where: { plate: vehicle.plateNumber },
+          update: {},
           create: {
+            id: vehicle.id,
             plate: vehicle.plateNumber,
             type: vehicleType,
             location: locationString,
           },
         });
+
         await prisma.vehiclesInFleets.upsert({
           where: {
             vehicleId_fleetId: {
-              vehicleId: vehicle.id,
+              vehicleId: dbVehicle.id,
               fleetId: fleet.id,
             },
           },
           update: {},
           create: {
-            vehicleId: vehicle.id,
+            vehicleId: dbVehicle.id,
             fleetId: fleet.id,
           },
         });

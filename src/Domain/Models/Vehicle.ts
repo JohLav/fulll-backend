@@ -11,6 +11,7 @@ export class Vehicle {
   ) {}
 
   static create(
+    id: string,
     plateNumber: string,
     type: VehicleType,
     location?: Location,

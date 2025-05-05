@@ -17,8 +17,9 @@ Given("my fleet", async function (): Promise<void> {
 });
 
 Given("a vehicle", async function (): Promise<void> {
+  const id = crypto.randomUUID();
   const plateNumber = generateFrenchPlateNumber();
-  this.context.vehicle = Vehicle.create(plateNumber, VehicleType.CAR);
+  this.context.vehicle = Vehicle.create(id, plateNumber, VehicleType.CAR);
 });
 
 Given(

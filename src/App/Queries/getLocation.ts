@@ -19,7 +19,7 @@ export class GetLocationHandler implements QueryHandler<Location> {
     const fleet = await this.repository.findById(getLocationQuery.fleetId);
     if (!fleet) throw new FleetNotFoundError(getLocationQuery.fleetId);
 
-    const vehicle = fleet?.findVehicleByPlateNumber(
+    const vehicle = fleet.findVehicleByPlateNumber(
       getLocationQuery.vehiclePlateNumber,
     );
     if (!vehicle)

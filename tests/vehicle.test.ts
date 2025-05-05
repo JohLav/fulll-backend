@@ -6,8 +6,9 @@ import { generateFrenchPlateNumber } from "../src/Utils/generateFrenchPlateNumbe
 describe("User", () => {
   describe("create", () => {
     test("should create a vehicle", function () {
+      const id = crypto.randomUUID();
       const plateNumber = generateFrenchPlateNumber();
-      const vehicle = Vehicle.create(plateNumber, VehicleType.CAR);
+      const vehicle = Vehicle.create(id, plateNumber, VehicleType.CAR);
 
       expect(vehicle).to.be.instanceOf(Vehicle);
     });

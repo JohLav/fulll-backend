@@ -20,7 +20,7 @@ model Vehicle {
   id       String      @id @default(uuid())
   plate    String      @unique
   type     VehicleType
-  location String
+  location String?
 
   fleets VehiclesInFleets[]
 }

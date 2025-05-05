@@ -8,13 +8,15 @@ export class PrismaVehicleMapper {
     id: string;
     plate: string;
     type: PrismaVehicleType;
-    location: string;
+    location: string | null;
   }): Vehicle {
+    const locationString = vehicle.location || "Unknown";
+
     return Vehicle.reconstruct(
       vehicle.id,
       vehicle.plate,
       VehicleTypeMapper.toDomain(vehicle.type),
-      LocationMapper.toDomain(vehicle.location),
+      LocationMapper.toDomain(locationString),
     );
   }
 }

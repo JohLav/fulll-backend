@@ -1,9 +1,9 @@
 import { CommandModule } from "yargs";
 import { Vehicle } from "../Domain/Models/Vehicle.js";
 import { VehicleType } from "../Domain/Types/VehicleType.js";
-import { InMemoryFleetRepository } from "../Infra/Repositories/InMemoryFleetRepository.js";
 import { generateFrenchPlateNumber } from "../Utils/generateFrenchPlateNumber.js";
 import { registerVehicleInFleet } from "../../features/steps/shared/registerVehicleInFleet.js";
+import { PrismaFleetRepository } from "../Infra/Repositories/PrismaFleetRepository.js";
 
 export const registerVehicleCommand: CommandModule = {
   command: "register-vehicle <fleetId> <vehiclePlateNumber> <vehicleType>",
@@ -26,7 +26,7 @@ export const registerVehicleCommand: CommandModule = {
   handler: async (argv) => {
     const { fleetId, vehiclePlateNumber, vehicleType } = argv;
 
-    const repository = new InMemoryFleetRepository();
+    const repository = new PrismaFleetRepository();
 
     const fleet = await repository.findById(fleetId as string);
     if (!fleet) {
@@ -34,8 +34,10 @@ export const registerVehicleCommand: CommandModule = {
     }
 
     try {
+      const id = crypto.randomUUID();
       const plateNumber = vehiclePlateNumber || generateFrenchPlateNumber();
       const vehicle = Vehicle.create(
+        id as string,
         plateNumber as string,
         vehicleType as VehicleType,
       );

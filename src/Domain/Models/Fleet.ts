@@ -35,8 +35,7 @@ export class Fleet {
 
   localizeVehicle(plateNumber: string, location: Location): void {
     const vehicle = this.findVehicleByPlateNumber(plateNumber);
-    if (!vehicle) throw new VehiclePlateNotFoundError(plateNumber);
 
-    vehicle.parkVehicle(location);
+    vehicle?.parkVehicle(location);
   }
 }

@@ -7,22 +7,28 @@ import { generateFrenchPlateNumber } from "../../src/Utils/generateFrenchPlateNu
 import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
 import { registerVehicleInFleet } from "./shared/registerVehicleInFleet.js";
 
-Given("my fleet", function (): void {
+Given("my fleet", async function (): Promise<void> {
   const user: User = User.create(crypto.randomUUID());
   this.context = { user, repository: new InMemoryFleetRepository() };
-  this.context.fleetId = initializeFleetForUser(this.context.repository, user);
+  this.context.fleetId = await initializeFleetForUser(
+    this.context.repository,
+    user,
+  );
 });
 
-Given("a vehicle", function (): void {
+Given("a vehicle", async function (): Promise<void> {
   const plateNumber = generateFrenchPlateNumber();
   this.context.vehicle = Vehicle.create(plateNumber, VehicleType.CAR);
 });
 
-Given("I have registered this vehicle into my fleet", function () {
-  registerVehicleInFleet(
-    this.context.repository,
-    this.context.fleetId,
-    this.context.user.id,
-    this.context.vehicle,
-  );
-});
+Given(
+  "I have registered this vehicle into my fleet",
+  async function (): Promise<void> {
+    await registerVehicleInFleet(
+      this.context.repository,
+      this.context.fleetId,
+      this.context.user.id,
+      this.context.vehicle,
+    );
+  },
+);

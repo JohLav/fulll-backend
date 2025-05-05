@@ -4,10 +4,6 @@
 
 - Node v20 and later: https://nodejs.org/en
 
-## Install
-
-> To be defined
-
 ## Development
 
 Install the project dependencies:

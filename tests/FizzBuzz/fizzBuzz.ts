@@ -3,7 +3,7 @@ export const BUZZ = "Buzz";
 export const FIZZBUZZ = "FizzBuzz";
 
 export function fizzBuzz(input: number): string {
-  if (typeof input !== "number" || isNaN(input)) {
+  if (isNaN(input)) {
     throw new Error("Invalid input");
   }
 

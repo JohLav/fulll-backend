@@ -10,49 +10,55 @@ import { VehicleAlreadyParkedError } from "../../src/Domain/Errors/VehicleAlread
 import { parkVehicleAtLocation } from "./shared/parkVehicleAtLocation.js";
 import { retrieveLocation } from "./shared/retrieveLocation.js";
 
-Given("a location", function () {
+Given("a location", async function (): Promise<void> {
   this.context.location = Location.create(48.8566, 2.3522);
-  this.context.repository.save(this.context.vehicle);
+  await this.context.repository.save(this.context.vehicle);
 });
 
-Given("my vehicle has been parked in this location", function () {
-  parkVehicleAtLocation(
-    this.context.repository,
-    this.context.fleetId,
-    this.context.vehicle,
-    this.context.location,
-  );
-});
-
-When("I park my vehicle at this location", function () {
-  parkVehicleAtLocation(
-    this.context.repository,
-    this.context.fleetId,
-    this.context.vehicle,
-    this.context.location,
-  );
-});
-
-When("I try to park my vehicle at this location", function () {
-  try {
-    parkVehicleAtLocation(
+Given(
+  "my vehicle has been parked in this location",
+  async function (): Promise<void> {
+    await parkVehicleAtLocation(
       this.context.repository,
       this.context.fleetId,
       this.context.vehicle,
       this.context.location,
     );
-    this.context.parkingAttempt = true;
-    this.context.parkingAttemptError = null;
-  } catch (error) {
-    this.context.parkingAttempt = false;
-    this.context.parkingAttemptError = error;
-  }
+  },
+);
+
+When("I park my vehicle at this location", async function (): Promise<void> {
+  await parkVehicleAtLocation(
+    this.context.repository,
+    this.context.fleetId,
+    this.context.vehicle,
+    this.context.location,
+  );
 });
+
+When(
+  "I try to park my vehicle at this location",
+  async function (): Promise<void> {
+    try {
+      await parkVehicleAtLocation(
+        this.context.repository,
+        this.context.fleetId,
+        this.context.vehicle,
+        this.context.location,
+      );
+      this.context.parkingAttempt = true;
+      this.context.parkingAttemptError = null;
+    } catch (error) {
+      this.context.parkingAttempt = false;
+      this.context.parkingAttemptError = error;
+    }
+  },
+);
 
 Then(
   "the known location of my vehicle should verify this location",
-  function () {
-    const actualLocation = retrieveLocation(
+  async function (): Promise<void> {
+    const actualLocation = await retrieveLocation(
       this.context.repository,
       this.context.fleetId,
       this.context.vehicle.plateNumber,
@@ -70,7 +76,7 @@ Then(
 
 Then(
   "I should be informed that my vehicle is already parked at this location",
-  function () {
+  function (): void {
     expect(this.context.parkingAttempt).to.equal(false);
 
     const expected = new VehicleAlreadyParkedError(this.context.vehicle.id);

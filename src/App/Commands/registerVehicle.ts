@@ -14,12 +14,12 @@ export class RegisterVehicle implements Command {
 export class RegisterVehicleHandler implements CommandHandler {
   constructor(private repository: FleetRepository) {}
 
-  handle(command: RegisterVehicle): void {
-    const fleet = this.repository.findById(command.fleetId);
+  async handle(command: RegisterVehicle): Promise<void> {
+    const fleet = await this.repository.findById(command.fleetId);
     if (!fleet) throw new FleetNotFoundError(command.fleetId);
 
     fleet.registerVehicle(command.vehicle);
 
-    this.repository.save(fleet);
+    await this.repository.save(fleet);
   }
 }

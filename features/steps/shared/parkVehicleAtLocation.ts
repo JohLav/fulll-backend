@@ -6,13 +6,13 @@ import {
   ParkVehicleHandler,
 } from "../../../src/App/Commands/parkVehicle.js";
 
-export function parkVehicleAtLocation(
+export async function parkVehicleAtLocation(
   repository: FleetRepository,
   fleetId: string,
   vehicle: Vehicle,
   location: Location,
-) {
+): Promise<void> {
   const parkVehicleCommand = new ParkVehicle(fleetId, vehicle, location);
   const handler = new ParkVehicleHandler(repository);
-  handler.handle(parkVehicleCommand);
+  await handler.handle(parkVehicleCommand);
 }

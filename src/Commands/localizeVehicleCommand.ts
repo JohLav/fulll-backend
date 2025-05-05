@@ -31,18 +31,18 @@ export const localizeVehicleCommand: CommandModule = {
         default: 0,
       });
   },
-  handler: (argv) => {
+  handler: async (argv) => {
     const { fleetId, vehiclePlateNumber, latitude, longitude, altitude } = argv;
 
     const repository = new InMemoryFleetRepository();
 
-    const fleet = repository.findById(fleetId as string);
+    const fleet = await repository.findById(fleetId as string);
     if (!fleet) {
       console.error(`Fleet with ID "${fleetId}" not found.`);
       return;
     }
 
-    const vehicle = repository.findVehicleByPlateNumber(
+    const vehicle = await repository.findVehicleByPlateNumber(
       vehiclePlateNumber as string,
     );
     if (!vehicle) {

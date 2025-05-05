@@ -16,8 +16,8 @@ export class LocalizeVehicle implements Command {
 export class LocalizeVehicleHandler implements CommandHandler {
   constructor(private repository: FleetRepository) {}
 
-  handle(command: LocalizeVehicle): void {
-    const fleet = this.repository.findById(command.fleetId);
+  async handle(command: LocalizeVehicle): Promise<void> {
+    const fleet = await this.repository.findById(command.fleetId);
     if (!fleet) throw new FleetNotFoundError(command.fleetId);
 
     const location = Location.create(
@@ -28,6 +28,6 @@ export class LocalizeVehicleHandler implements CommandHandler {
 
     fleet.localizeVehicle(command.vehiclePlateNumber, location);
 
-    this.repository.save(fleet);
+    await this.repository.save(fleet);
   }
 }

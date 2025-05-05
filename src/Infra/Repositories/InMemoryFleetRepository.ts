@@ -7,19 +7,21 @@ export class InMemoryFleetRepository implements FleetRepository {
   private fleets: Map<string, Fleet> = new Map();
   private vehicles: Map<string, Vehicle> = new Map();
 
-  save(fleet: Fleet): void {
+  async save(fleet: Fleet): Promise<void> {
     this.fleets.set(fleet.id, fleet);
   }
 
-  findById(fleetId: string): Fleet | undefined {
+  async findById(fleetId: string): Promise<Fleet | undefined> {
     return this.fleets.get(fleetId);
   }
 
-  findByUserId(userId: string): Fleet | undefined {
+  async findByUserId(userId: string): Promise<Fleet | undefined> {
     return this.fleets.get(userId);
   }
 
-  findVehicleByPlateNumber(plateNumber: string): Vehicle | undefined {
+  async findVehicleByPlateNumber(
+    plateNumber: string,
+  ): Promise<Vehicle | undefined> {
     return Array.from(this.vehicles.values()).find(
       (v) => v.plateNumber === plateNumber,
     );

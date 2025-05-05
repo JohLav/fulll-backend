@@ -23,7 +23,10 @@ export class Fleet {
   }
 
   findVehicleByPlateNumber(plateNumber: string): Vehicle | undefined {
-    return this.vehicles.find((v) => v.plateNumber === plateNumber);
+    const vehicle = this.vehicles.find((v) => v.plateNumber === plateNumber);
+    if (!vehicle) throw new VehiclePlateNotFoundError(plateNumber);
+
+    return vehicle;
   }
 
   localizeVehicle(plateNumber: string, location: Location): void {

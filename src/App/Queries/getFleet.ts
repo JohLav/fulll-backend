@@ -7,12 +7,11 @@ export class GetFleet implements Query {
   constructor(public readonly fleetId: string) {}
 }
 
-export class GetFleetHandler implements QueryHandler<Fleet> {
+export class GetFleetHandler implements QueryHandler<Fleet | undefined> {
   constructor(private repository: FleetRepository) {}
 
-  handle(getFleetQuery: GetFleet): Fleet {
-    const fleet = this.repository.findById(getFleetQuery.fleetId);
-
+  async handle(getFleetQuery: GetFleet): Promise<Fleet | undefined> {
+    const fleet = await this.repository.findById(getFleetQuery.fleetId);
     if (!fleet) {
       throw new FleetNotFoundError(getFleetQuery.fleetId);
     }

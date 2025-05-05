@@ -25,12 +25,12 @@ export const registerVehicleCommand: CommandModule = {
         describe: "Vehicle type (e.g., CAR, MOTORCYCLE, TRUCK)",
         choices: Object.keys(VehicleType),
       }),
-  handler: (argv) => {
+  handler: async (argv) => {
     const { fleetId, vehiclePlateNumber, vehicleType } = argv;
 
     const repository = new InMemoryFleetRepository();
 
-    const fleet = repository.findById(fleetId as string);
+    const fleet = await repository.findById(fleetId as string);
     if (!fleet) {
       console.error(`Fleet with ID "${fleetId}" not found.`);
     }

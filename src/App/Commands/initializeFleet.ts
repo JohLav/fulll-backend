@@ -9,9 +9,9 @@ export class InitializeFleet implements Command {
 export class InitializeFleetHandler implements CommandHandler {
   constructor(private repository: FleetRepository) {}
 
-  handle(command: InitializeFleet): string {
+  async handle(command: InitializeFleet): Promise<string> {
     const fleet = Fleet.initializeFleet(command.userId);
-    this.repository.save(fleet);
+    await this.repository.save(fleet);
     return fleet.id;
   }
 }

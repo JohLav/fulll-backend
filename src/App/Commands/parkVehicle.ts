@@ -16,18 +16,16 @@ export class ParkVehicle implements Command {
 export class ParkVehicleHandler implements CommandHandler {
   constructor(private repository: FleetRepository) {}
 
-  handle(command: ParkVehicle): void {
-    const fleet = this.repository.findById(command.fleetId);
+  async handle(command: ParkVehicle): Promise<void> {
+    const fleet = await this.repository.findById(command.fleetId);
     if (!fleet) throw new FleetNotFoundError(command.fleetId);
 
-    const vehicle = fleet?.findVehicleByPlateNumber(
-      command.vehicle.plateNumber,
-    );
+    const vehicle = fleet.findVehicleByPlateNumber(command.vehicle.plateNumber);
     if (!vehicle)
       throw new VehiclePlateNotFoundError(command.vehicle.plateNumber);
 
     vehicle.parkVehicle(command.location);
 
-    this.repository.save(fleet);
+    await this.repository.save(fleet);
   }
 }

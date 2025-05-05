@@ -8,7 +8,6 @@ import { LocationNotFoundError } from "../../App/Errors/LocationNotFoundError.js
 import {retrieveFleet} from "../../../features/steps/shared/retrieveFleet.js";
 
 export class PrismaFleetRepository implements FleetRepository {
-    private repository: FleetRepository;
   async save(fleet: Fleet): Promise<void> {
       const existingFleet = await prisma.fleet.findUnique({ where: { id: fleet.id } });
 

@@ -15,6 +15,10 @@ export class Fleet {
     return new Fleet(crypto.randomUUID(), userId, []);
   }
 
+  static create(id: string, userId: string, vehicles: Vehicle[] = []): Fleet {
+    return new Fleet(id, userId, vehicles);
+  }
+
   registerVehicle(vehicle: Vehicle): void {
     if (this.vehicles.some((v: Vehicle): boolean => v.equals(vehicle)))
       throw new VehicleAlreadyRegisteredError(vehicle.id);

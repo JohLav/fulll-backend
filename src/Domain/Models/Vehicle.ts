@@ -10,8 +10,21 @@ export class Vehicle {
     public location?: Location,
   ) {}
 
-  static create(plateNumber: string, type: VehicleType): Vehicle {
-    return new Vehicle(crypto.randomUUID(), plateNumber, type);
+  static create(
+    plateNumber: string,
+    type: VehicleType,
+    location?: Location,
+  ): Vehicle {
+    return new Vehicle(crypto.randomUUID(), plateNumber, type, location);
+  }
+
+  static reconstruct(
+    id: string,
+    plateNumber: string,
+    type: VehicleType,
+    location?: Location,
+  ): Vehicle {
+    return new Vehicle(id, plateNumber, type, location);
   }
 
   equals(other: Vehicle): boolean {

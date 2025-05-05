@@ -15,10 +15,6 @@ export class InMemoryFleetRepository implements FleetRepository {
     return this.fleets.get(fleetId);
   }
 
-  async findByUserId(userId: string): Promise<Fleet | undefined> {
-    return this.fleets.get(userId);
-  }
-
   async findVehicleByPlateNumber(
     plateNumber: string,
   ): Promise<Vehicle | undefined> {

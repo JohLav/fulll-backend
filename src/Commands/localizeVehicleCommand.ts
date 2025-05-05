@@ -1,6 +1,6 @@
 import { CommandModule } from "yargs";
 import { Location } from "../Domain/Models/Location.js";
-import { InMemoryFleetRepository } from "../Infra/Repositories/InMemoryFleetRepository.js";
+import { PrismaFleetRepository } from "../Infra/Repositories/PrismaFleetRepository.js";
 import { parkVehicleAtLocation } from "../../features/steps/shared/parkVehicleAtLocation.js";
 
 export const localizeVehicleCommand: CommandModule = {
@@ -34,7 +34,7 @@ export const localizeVehicleCommand: CommandModule = {
   handler: async (argv) => {
     const { fleetId, vehiclePlateNumber, latitude, longitude, altitude } = argv;
 
-    const repository = new InMemoryFleetRepository();
+    const repository = new PrismaFleetRepository();
 
     const fleet = await repository.findById(fleetId as string);
     if (!fleet) {
@@ -43,6 +43,7 @@ export const localizeVehicleCommand: CommandModule = {
     }
 
     const vehicle = await repository.findVehicleByPlateNumber(
+      fleet.id as string,
       vehiclePlateNumber as string,
     );
     if (!vehicle) {
@@ -59,7 +60,12 @@ export const localizeVehicleCommand: CommandModule = {
     );
 
     try {
-      parkVehicleAtLocation(repository, fleetId as string, vehicle, location);
+      await parkVehicleAtLocation(
+        repository,
+        fleetId as string,
+        vehicle,
+        location,
+      );
       console.log(
         `Localizing vehicle with plate number ${vehiclePlateNumber} from fleet ID ${fleetId} to (${latitude}, ${longitude})`,
       );

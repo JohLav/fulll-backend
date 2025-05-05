@@ -27,7 +27,7 @@ export class PrismaFleetRepository implements FleetRepository {
         const vehicleType = VehicleTypeMapper.toPrisma(vehicle.type);
         const locationString = vehicle.location
           ? LocationMapper.toPrisma(vehicle.location)
-          : "Unknown";
+          : null;
 
         const dbVehicle = await prisma.vehicle.upsert({
           where: { plate: vehicle.plateNumber },
@@ -84,13 +84,22 @@ export class PrismaFleetRepository implements FleetRepository {
   }
 
   async findVehicleByPlateNumber(
+    fleetId: string,
     plateNumber: string,
   ): Promise<Vehicle | undefined> {
-    const vehicle = await prisma.vehicle.findUnique({
-      where: { plate: plateNumber },
+    const vehicleInFleet = await prisma.vehiclesInFleets.findFirst({
+      where: {
+        fleetId,
+        vehicle: {
+          plate: plateNumber,
+        },
+      },
+      include: {
+        vehicle: true,
+      },
     });
-    if (!vehicle) return undefined;
+    if (!vehicleInFleet || !vehicleInFleet.vehicle) return undefined;
 
-    return PrismaVehicleMapper.fromPrisma(vehicle);
+    return PrismaVehicleMapper.fromPrisma(vehicleInFleet.vehicle);
   }
 }

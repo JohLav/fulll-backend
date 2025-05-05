@@ -10,7 +10,7 @@ yargs(hideBin(process.argv))
   .command(createFleetCommand)
   .command(registerVehicleCommand)
   .command(localizeVehicleCommand)
-  .demandCommand()
   .strict()
+  .demandCommand()
   .help()
   .parse();

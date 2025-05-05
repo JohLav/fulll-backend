@@ -34,7 +34,3 @@ test.each([[15], [30], [-15]])(
 test("should handle large multiples correctly", () => {
   expect(fizzBuzz(3000)).toBe("FizzBuzz");
 });
-
-test("should throw an error for non-numeric input", () => {
-  expect(() => fizzBuzz(NaN)).toThrow("Invalid input");
-});

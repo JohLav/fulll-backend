@@ -1,4 +1,4 @@
-import { prisma } from "../Prisma/client.js";
+import { prisma } from "../client.js";
 import { Fleet } from "../../Domain/Models/Fleet.js";
 import { Vehicle } from "../../Domain/Models/Vehicle.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
@@ -74,7 +74,7 @@ export class PrismaFleetRepository implements FleetRepository {
     });
     if (!fleet) return undefined;
 
-    const vehicles: Vehicle[] = fleet.vehicles.map((v) =>
+    const vehicles: Vehicle[] = fleet.vehicles.map((v: { vehicle: any }) =>
       Vehicle.reconstruct(
         v.vehicle.id,
         v.vehicle.plate,

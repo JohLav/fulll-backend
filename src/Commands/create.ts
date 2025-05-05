@@ -1,7 +1,7 @@
 import { CommandModule } from "yargs";
 import { User } from "../Domain/Models/User.js";
-import { InMemoryFleetRepository } from "../Infra/Repositories/InMemoryFleetRepository.js";
 import { initializeFleetForUser } from "../../features/steps/shared/initializeFleetForUser.js";
+import { PrismaFleetRepository } from "../Infra/Repositories/PrismaFleetRepository.js";
 
 export const createFleetCommand: CommandModule = {
   command: "create <userId>",
@@ -11,11 +11,11 @@ export const createFleetCommand: CommandModule = {
       type: "string",
       describe: "User ID",
     }),
-  handler: (argv) => {
+  handler: async (argv) => {
     const { userId } = argv;
     const user: User = User.create(userId as string);
-    const repository = new InMemoryFleetRepository();
-    const fleetId = initializeFleetForUser(repository, user);
+    const repository = new PrismaFleetRepository();
+    const fleetId = await initializeFleetForUser(repository, user);
     console.log(fleetId);
   },
 };

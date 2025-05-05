@@ -12,7 +12,6 @@ import { retrieveLocation } from "./shared/retrieveLocation.js";
 
 Given("a location", async function (): Promise<void> {
   this.context.location = Location.create(48.8566, 2.3522);
-  await this.context.repository.save(this.context.vehicle);
 });
 
 Given(

@@ -4,8 +4,6 @@ import { VehicleType } from "../Domain/Types/VehicleType.js";
 import { InMemoryFleetRepository } from "../Infra/Repositories/InMemoryFleetRepository.js";
 import { generateFrenchPlateNumber } from "../Utils/generateFrenchPlateNumber.js";
 import { registerVehicleInFleet } from "../../features/steps/shared/registerVehicleInFleet.js";
-import { initializeFleetForUser } from "../../features/steps/shared/initializeFleetForUser.js";
-import { User } from "../Domain/Models/User.js";
 
 export const registerVehicleCommand: CommandModule = {
   command: "register-vehicle <fleetId> <vehiclePlateNumber> <vehicleType>",
@@ -41,7 +39,7 @@ export const registerVehicleCommand: CommandModule = {
         plateNumber as string,
         vehicleType as VehicleType,
       );
-      registerVehicleInFleet(
+      await registerVehicleInFleet(
         repository,
         fleetId as string,
         "some-user",

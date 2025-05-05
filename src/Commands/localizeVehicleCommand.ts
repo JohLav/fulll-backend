@@ -1,7 +1,7 @@
 import { CommandModule } from "yargs";
 import { Location } from "../Domain/Models/Location.js";
-import { parkVehicleAtLocation } from "../../features/steps/shared/parkVehicleAtLocation.js";
 import { InMemoryFleetRepository } from "../Infra/Repositories/InMemoryFleetRepository.js";
+import { parkVehicleAtLocation } from "../../features/steps/shared/parkVehicleAtLocation.js";
 
 export const localizeVehicleCommand: CommandModule = {
   command:

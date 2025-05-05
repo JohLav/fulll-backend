@@ -5,7 +5,7 @@ import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
 import { LocationNotFoundError } from "../../App/Errors/LocationNotFoundError.js";
 import { LocationMapper } from "../Mappers/LocationMapper.js";
 import { VehicleTypeMapper } from "../Mappers/VehicleTypeMapper.js";
-import { PrismaVehicleMapper } from "../Mappers/PrismaVehicleMapper";
+import { PrismaVehicleMapper } from "../Mappers/PrismaVehicleMapper.js";
 
 // Secondary Adapter
 export class PrismaFleetRepository implements FleetRepository {

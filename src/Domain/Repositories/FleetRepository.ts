@@ -1,8 +1,12 @@
-import { Fleet } from "../Models/Fleet";
+import { Fleet } from "../Models/Fleet.js";
+import { Vehicle } from "../Models/Vehicle.js";
 
 // Secondary Port
 export interface FleetRepository {
-  save(fleet: Fleet): void;
-  findById(fleetId: string): Fleet | undefined;
-  findByUserId(userId: string): Fleet | undefined;
+  save(fleet: Fleet): Promise<void>;
+  findById(fleetId: string): Promise<Fleet | undefined>;
+  findVehicleByPlateNumber(
+    fleetId: string,
+    plateNumber: string,
+  ): Promise<Vehicle | undefined>;
 }

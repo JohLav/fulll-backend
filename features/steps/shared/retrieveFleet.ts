@@ -5,11 +5,11 @@ import {
   GetFleetHandler,
 } from "../../../src/App/Queries/getFleet.js";
 
-export function retrieveFleet(
-  fleetRepository: FleetRepository,
+export async function retrieveFleet(
+  repository: FleetRepository,
   fleetId: string,
-): Fleet {
+): Promise<Fleet | undefined> {
   const getFleetQuery = new GetFleet(fleetId);
-  const handler = new GetFleetHandler(fleetRepository);
-  return handler.handle(getFleetQuery);
+  const handler = new GetFleetHandler(repository);
+  return await handler.handle(getFleetQuery);
 }

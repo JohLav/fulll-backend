@@ -1,8 +1,8 @@
-## [back/ddd/cqrs] Vehicle fleet parking management
+# [back/ddd/cqrs] Vehicle fleet parking management
 
-### Instructions
+## Instructions
 
-I have a vehicle fleet and I want to manage where every vehicle is parked.
+I have a vehicle fleet, and I want to manage where every vehicle is parked.
 
 ### Step 1
 
@@ -65,19 +65,16 @@ Feature: Park a vehicle
         Then I should be informed that my vehicle is already parked at this location
 ```
 
-### Definitions:
+#### Definitions:
 
-- **Vehicle**: a car, truck, motocycle, or any transportation mode that can help
-  me to move from point A to point B on planet earth.
+- **Vehicle**: a car, truck, motorcycle, or any transportation mode that can help me to move from point A to point B on planet earth.
 - **Fleet**: a collection a distinct vehicles.
-- **Location**: a way to localize on planet earth, like GPS coordinates
-  for example.
+- **Location**: a way to localize on planet earth, such as GPS coordinates for example.
 
 #### Guidelines
 
-1. **Don't use any framework at this step!**
-2. Prefer **not** using any production dependency
-   (therefore, for **javascript**
+1. **Do not use any framework at this step!**
+2. Prefer **not** using any production dependency (therefore, for **javascript**
    [ramda](https://www.npmjs.com/package/ramda) and/or
    [lodash](https://www.npmjs.com/package/lodash) can be used)
 3. Write corresponding bdd tests ([behat](https://behat.org/en/latest/),
@@ -86,36 +83,33 @@ Feature: Park a vehicle
 
 #### Bonus
 
-We use DDD and suggest its use but all architectures are acceptable for this test
+We use Domain Driven Design (DDD) and encourage its application, but all architectures are acceptable for this test.
 
 - apply [CQRS & DDD principles](https://martinfowler.com/tags/domain%20driven%20design.html).
 
 ```shell
 ./src/
-   App    # Command, Queries and corresponding handlers
-   Domain # Domain model.s/structure.s and value objects
-          # (classes or structures & functions if fp)
-   Infra  # Implementation of repositories and every specific
-          # infrastructure related implementation.s.
+   App    # Command, Queries and their handlers
+   Domain # Domain models/structures and value objects
+          # (classes or structures & functions if FP)
+   Infra  # Implementations of repositories and all infrastructure-specific logic
 ```
 
 #### Tips
 
-- Try to first write bdd/gherkin tests, then implement the code.
-- Ask you: how many entities do I have?
-- Ask you: how many Commands? Queries?
-- At the moment, you don't have to persist data elsewhere than **in memory**.
-- Here's an indication of ≈ expected number of line of codes, for implementations
-  in **php** and **javascript**:
+- Start by writing Behavior Driven Development (BDD)/Gherkin tests before implementing code.
+- Ask yourself: how many entities do I have?
+- Ask yourself: how many Commands? Queries?
+- At this stage, you don't need to persist data anywhere other than **in memory**.
+- Here's an indication of the expected number of line of codes for implementations
+  in **PHP** and **JavaScript**:
 
-## Step 2
+### Step 2
 
-I have a vehicle fleet and I want to manage where every vehicle is parked.
-This is the second part, we now want to expose our work to the world!
+Now we want to expose our work to the world!
+Please wrap Part 1 into a complete application. We want:
 
-Please wrap the part 1 into a complete application. We want:
-
-1. A command line cli with the following commands:
+1. A command-line CLI with the following commands:
 
 ```shell
 ./fleet create <userId> # returns fleetId on the standard output
@@ -123,24 +117,20 @@ Please wrap the part 1 into a complete application. We want:
 ./fleet localize-vehicle <fleetId> <vehiclePlateNumber> lat lng [alt]
 ```
 
-2. To persist fleet and vehicles into a real repository/database.
-
+2. Persistence of fleets and vehicles in a real repository/database.
+ 
 #### Guidelines
 
-1. Feel free to use helpful framework/libs to manage command line cli
-2. Take a look at your **B**ehavior **D**riven **D**evelopment tool (BDD),
-   especially profiles and/or suites and/or tags to only switch pertinent tests
-   on real infrastructure (with persistence) while keeping not critical
-   as they was before.
+1. Feel free to use frameworks/libraries to manage the CLI.
+2. Consider your BDD tool's features (i.e., profiles, suites, tags) to selectively run tests that require real infrastructure (e.g., persistence), while keeping non-critical tests as they were.
 
-## Step 3 (Bonus)
+### Step 3 (Bonus)
 
-- For code quality, you can use some tools : which one and why (in a few words) ?
-- you can consider to setup a ci/cd process : describe the necessary actions in a few words
+- For code quality, you can use tools — name one or more and briefly explain why.
+- You may consider setting up a CI/CD process — describe the necessary steps briefly.
 
+## Evaluation
 
-#### Evaluation
-
-- Quality of the code.
-- Please be careful to not over engineer your solution!
-- Usage of good practices and modern programming language features.
+- Code quality
+- Avoid over-engineering!
+- Use of good practices and modern programming language features

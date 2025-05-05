@@ -1,19 +1,25 @@
-import { Fleet } from "../../Domain/Models/Fleet";
-import { FleetRepository } from "../../Domain/Repositories/FleetRepository";
+import { Fleet } from "../../Domain/Models/Fleet.js";
+import { Vehicle } from "../../Domain/Models/Vehicle.js";
+import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
 
 // Secondary Adapter
 export class InMemoryFleetRepository implements FleetRepository {
   private fleets: Map<string, Fleet> = new Map();
+  private vehicles: Map<string, Vehicle> = new Map();
 
-  save(fleet: Fleet): void {
+  async save(fleet: Fleet): Promise<void> {
     this.fleets.set(fleet.id, fleet);
   }
 
-  findById(fleetId: string): Fleet | undefined {
+  async findById(fleetId: string): Promise<Fleet | undefined> {
     return this.fleets.get(fleetId);
   }
 
-  findByUserId(userId: string): Fleet | undefined {
-    return this.fleets.get(userId);
+  async findVehicleByPlateNumber(
+    plateNumber: string,
+  ): Promise<Vehicle | undefined> {
+    return Array.from(this.vehicles.values()).find(
+      (v) => v.plateNumber === plateNumber,
+    );
   }
 }

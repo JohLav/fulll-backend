@@ -1,12 +1,8 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -14,7 +10,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum VehicleType {
+  CAR
+  TRUCK
+  MOTORCYCLE
+}
+
+model Vehicle {
+  id       String      @id @default(uuid())
+  plate    String      @unique
+  type     VehicleType
+  location String?
+
+  fleets VehiclesInFleets[]
+}
+
 model Fleet {
-  id      String @id @default(cuid())
-  user_id String
+  id     String @id @default(uuid())
+  userId String
+
+  vehicles VehiclesInFleets[]
+}
+
+model VehiclesInFleets {
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
+  vehicleId String
+
+  fleet   Fleet  @relation(fields: [fleetId], references: [id])
+  fleetId String
+
+  @@id([vehicleId, fleetId])
 }

@@ -5,13 +5,13 @@ import {
   RegisterVehicleHandler,
 } from "../../../src/App/Commands/registerVehicle.js";
 
-export function registerVehicleInFleet(
-  fleetRepository: FleetRepository,
+export async function registerVehicleInFleet(
+  repository: FleetRepository,
   fleetId: string,
   userId: string,
   vehicle: Vehicle,
-): void {
+): Promise<void> {
   const registerVehicleCommand = new RegisterVehicle(fleetId, userId, vehicle);
-  const handler = new RegisterVehicleHandler(fleetRepository);
-  handler.handle(registerVehicleCommand);
+  const handler = new RegisterVehicleHandler(repository);
+  await handler.handle(registerVehicleCommand);
 }

@@ -1,26 +1,31 @@
-import { Location } from "../../Domain/Models/Location.js";
-import { LocationNotFoundError } from "../Errors/LocationNotFoundError.js";
-import { VehicleNotFoundError } from "../Errors/VehicleNotFoundError.js";
-import { VehicleRepository } from "../../Domain/Repositories/VehicleRepository.js";
 import { Query, QueryHandler } from "./query.js";
+import { Location } from "../../Domain/Models/Location.js";
+import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
+import { LocationNotFoundError } from "../Errors/LocationNotFoundError.js";
+import { VehiclePlateNotFoundError } from "../Errors/VehiclePlateNotFoundError.js";
+import { FleetNotFoundError } from "../Errors/FleetNotFoundError.js";
 
 export class GetLocation implements Query {
-  constructor(public readonly vehicleId: string) {}
+  constructor(
+    public readonly fleetId: string,
+    public readonly vehiclePlateNumber: string,
+  ) {}
 }
 
 export class GetLocationHandler implements QueryHandler<Location> {
-  constructor(private vehicleRepository: VehicleRepository) {}
+  constructor(private repository: FleetRepository) {}
 
-  handle(getLocationQuery: GetLocation): Location {
-    const vehicle = this.vehicleRepository.findById(getLocationQuery.vehicleId);
+  async handle(getLocationQuery: GetLocation): Promise<Location> {
+    const fleet = await this.repository.findById(getLocationQuery.fleetId);
+    if (!fleet) throw new FleetNotFoundError(getLocationQuery.fleetId);
 
-    if (!vehicle) {
-      throw new VehicleNotFoundError(getLocationQuery.vehicleId);
-    }
-
-    if (!vehicle.location) {
-      throw new LocationNotFoundError(getLocationQuery.vehicleId);
-    }
+    const vehicle = fleet.findVehicleByPlateNumber(
+      getLocationQuery.vehiclePlateNumber,
+    );
+    if (!vehicle)
+      throw new VehiclePlateNotFoundError(getLocationQuery.vehiclePlateNumber);
+    if (!vehicle.location)
+      throw new LocationNotFoundError(getLocationQuery.vehiclePlateNumber);
 
     return vehicle.location;
   }

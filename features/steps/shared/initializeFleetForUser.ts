@@ -5,11 +5,11 @@ import {
   InitializeFleetHandler,
 } from "../../../src/App/Commands/initializeFleet.js";
 
-export function initializeFleetForUser(
+export async function initializeFleetForUser(
   repository: FleetRepository,
   user: User,
-) {
+): Promise<string> {
   const initializeFleet = new InitializeFleet(user.id);
   const handler = new InitializeFleetHandler(repository);
-  return handler.handle(initializeFleet);
+  return await handler.handle(initializeFleet);
 }

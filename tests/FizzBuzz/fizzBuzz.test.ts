@@ -10,22 +10,25 @@ describe("fizzBuzz", () => {
     [1, "1"],
     [2, "2"],
     [7, "7"],
-  ])("should return %s with input %i", (input, expected) => {
-    expect(fizzBuzz(input)).toBe(expected);
-  });
+  ])(
+    "should return %s with input %i",
+    (input: number, expected: string): void => {
+      expect(fizzBuzz(input)).toBe(expected);
+    },
+  );
 
   it.each([
     [3, FIZZ],
     [6, FIZZ],
     [9, FIZZ],
-  ])('should return "Fizz" with input %i', (input) => {
+  ])('should return "Fizz" with input %i', (input: number): void => {
     expect(fizzBuzz(input)).toBe(FIZZ);
   });
 
   it.each([
     [5, BUZZ],
     [10, BUZZ],
-  ])('should return "Buzz" for input %i', (input) => {
+  ])('should return "Buzz" for input %i', (input: number): void => {
     expect(fizzBuzz(input)).toBe(BUZZ);
   });
 
@@ -33,7 +36,7 @@ describe("fizzBuzz", () => {
     [15, FIZZBUZZ],
     [30, FIZZBUZZ],
     [3000, FIZZBUZZ],
-  ])('should return "FizzBuzz" for input %i', (input) => {
+  ])('should return "FizzBuzz" for input %i', (input: number): void => {
     expect(fizzBuzz(input)).toBe("FizzBuzz");
   });
 });

@@ -1,22 +1,17 @@
-export const FIZZ = "Fizz";
-export const BUZZ = "Buzz";
-export const FIZZBUZZ = "FizzBuzz";
+const FIZZ = "Fizz";
+const BUZZ = "Buzz";
+const FIZZBUZZ = "FizzBuzz";
 
-export function fizzBuzz(input: number): string {
-  if (isMultipleOf3And5(input)) return FIZZBUZZ;
+export const fizzBuzz = (input: number): string => {
+  if (isMultipleOf15(input)) return FIZZBUZZ;
   if (isMultipleOf3(input)) return FIZZ;
   if (isMultipleOf5(input)) return BUZZ;
   return input.toString();
-}
+};
 
-function isMultipleOf3And5(input: number) {
-  return isMultipleOf3(input) && isMultipleOf5(input);
-}
-
-function isMultipleOf3(input: number) {
-  return input % 3 === 0;
-}
-
-function isMultipleOf5(input: number) {
-  return input % 5 === 0;
-}
+const isMultipleOf = (divisor: number) => (input: number) =>
+  input % divisor === 0;
+const isMultipleOf3 = isMultipleOf(3);
+const isMultipleOf5 = isMultipleOf(5);
+const isMultipleOf15 = (input: number) =>
+  isMultipleOf3(input) && isMultipleOf5(input);

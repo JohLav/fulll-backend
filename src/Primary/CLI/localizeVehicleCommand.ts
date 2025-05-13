@@ -1,7 +1,10 @@
 import { CommandModule } from "yargs";
-import { Location } from "../Domain/Models/Location.js";
-import { PrismaFleetRepository } from "../Infra/Repositories/PrismaFleetRepository.js";
-import { ParkVehicle, ParkVehicleHandler } from "../App/Commands/parkVehicle";
+import { Location } from "../../Domain/Models/Location.js";
+import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetRepository.js";
+import {
+  ParkVehicle,
+  ParkVehicleHandler,
+} from "../../App/Commands/parkVehicle.js";
 
 export const localizeVehicleCommand: CommandModule = {
   command:

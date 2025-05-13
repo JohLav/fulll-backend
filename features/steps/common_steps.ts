@@ -2,8 +2,8 @@ import { Given } from "@cucumber/cucumber";
 import { User } from "../../src/Domain/Models/User.js";
 import { Vehicle } from "../../src/Domain/Models/Vehicle.js";
 import { VehicleType } from "../../src/Domain/Types/VehicleType.js";
-import { InMemoryFleetRepository } from "../../src/Infra/Repositories/InMemoryFleetRepository.js";
-import { generateFrenchPlateNumber } from "../../src/Utils/generateFrenchPlateNumber.js";
+import { InMemoryFleetRepository } from "../../src/Secondary/Repositories/InMemoryFleetRepository.js";
+import { generateFrenchPlateNumber } from "../../tests/Utils/generateFrenchPlateNumber.js";
 import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
 import { registerVehicle } from "./register_vehicle_steps.js";
 

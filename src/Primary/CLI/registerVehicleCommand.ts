@@ -1,12 +1,12 @@
 import { CommandModule } from "yargs";
-import { Vehicle } from "../Domain/Models/Vehicle.js";
-import { VehicleType } from "../Domain/Types/VehicleType.js";
-import { generateFrenchPlateNumber } from "../Utils/generateFrenchPlateNumber.js";
-import { PrismaFleetRepository } from "../Infra/Repositories/PrismaFleetRepository.js";
+import { Vehicle } from "../../Domain/Models/Vehicle.js";
+import { VehicleType } from "../../Domain/Types/VehicleType.js";
+import { generateFrenchPlateNumber } from "../../../tests/Utils/generateFrenchPlateNumber.js";
+import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetRepository.js";
 import {
   RegisterVehicle,
   RegisterVehicleHandler,
-} from "../App/Commands/registerVehicle";
+} from "../../App/Commands/registerVehicle.js";
 
 export const registerVehicleCommand: CommandModule = {
   command: "register-vehicle <fleetId> <vehiclePlateNumber> <vehicleType>",
@@ -38,10 +38,9 @@ export const registerVehicleCommand: CommandModule = {
 
     try {
       const id = crypto.randomUUID();
-      const plateNumber = vehiclePlateNumber || generateFrenchPlateNumber();
       const vehicle = Vehicle.create(
         id as string,
-        plateNumber as string,
+        vehiclePlateNumber as string,
         vehicleType as VehicleType,
       );
       const registerVehicleCommand1 = new RegisterVehicle(

@@ -8,7 +8,7 @@ import {
 export async function retrieveFleet(
   repository: FleetRepository,
   fleetId: string,
-): Promise<Fleet | undefined> {
+): Promise<Fleet> {
   const getFleetQuery = new GetFleet(fleetId);
   const handler = new GetFleetHandler(repository);
   return await handler.handle(getFleetQuery);

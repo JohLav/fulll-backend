@@ -2,8 +2,11 @@ import { CommandModule } from "yargs";
 import { Vehicle } from "../Domain/Models/Vehicle.js";
 import { VehicleType } from "../Domain/Types/VehicleType.js";
 import { generateFrenchPlateNumber } from "../Utils/generateFrenchPlateNumber.js";
-import { registerVehicleInFleet } from "../../features/steps/shared/registerVehicleInFleet.js";
 import { PrismaFleetRepository } from "../Infra/Repositories/PrismaFleetRepository.js";
+import {
+  RegisterVehicle,
+  RegisterVehicleHandler,
+} from "../App/Commands/registerVehicle";
 
 export const registerVehicleCommand: CommandModule = {
   command: "register-vehicle <fleetId> <vehiclePlateNumber> <vehicleType>",
@@ -41,12 +44,13 @@ export const registerVehicleCommand: CommandModule = {
         plateNumber as string,
         vehicleType as VehicleType,
       );
-      await registerVehicleInFleet(
-        repository,
+      const registerVehicleCommand1 = new RegisterVehicle(
         fleetId as string,
         "some-user",
         vehicle,
       );
+      const handler = new RegisterVehicleHandler(repository);
+      await handler.handle(registerVehicleCommand1);
       console.log(
         `${vehicleType} with plate number ${vehiclePlateNumber} is registered in fleet ${fleetId}.`,
       );

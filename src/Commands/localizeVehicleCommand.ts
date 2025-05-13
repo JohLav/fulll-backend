@@ -1,7 +1,7 @@
 import { CommandModule } from "yargs";
 import { Location } from "../Domain/Models/Location.js";
 import { PrismaFleetRepository } from "../Infra/Repositories/PrismaFleetRepository.js";
-import { parkVehicleAtLocation } from "../../features/steps/shared/parkVehicleAtLocation.js";
+import { ParkVehicle, ParkVehicleHandler } from "../App/Commands/parkVehicle";
 
 export const localizeVehicleCommand: CommandModule = {
   command:
@@ -60,12 +60,13 @@ export const localizeVehicleCommand: CommandModule = {
     );
 
     try {
-      await parkVehicleAtLocation(
-        repository,
+      const parkVehicleCommand = new ParkVehicle(
         fleetId as string,
         vehicle,
         location,
       );
+      const handler = new ParkVehicleHandler(repository);
+      await handler.handle(parkVehicleCommand);
       console.log(
         `Localizing vehicle with plate number ${vehiclePlateNumber} from fleet ID ${fleetId} to (${latitude}, ${longitude})`,
       );

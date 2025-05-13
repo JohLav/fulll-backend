@@ -11,8 +11,12 @@ import { FleetNotFoundError } from "../../src/App/Errors/FleetNotFoundError.js";
 
 // Fourth group: Helpers
 import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
-import { registerVehicleInFleet } from "./shared/registerVehicleInFleet.js";
 import { retrieveFleet } from "./shared/retrieveFleet.js";
+import {
+  RegisterVehicle,
+  RegisterVehicleHandler,
+} from "../../src/App/Commands/registerVehicle.js";
+import { World } from "cucumber";
 
 Given("the fleet of another user", async function (): Promise<void> {
   this.context.otherUser = User.create(crypto.randomUUID());
@@ -25,38 +29,22 @@ Given("the fleet of another user", async function (): Promise<void> {
 Given(
   "this vehicle has been registered into the other user's fleet",
   async function (): Promise<void> {
-    await registerVehicleInFleet(
-      this.context.repository,
-      this.context.otherFleetId,
-      this.context.otherUser.id,
-      this.context.vehicle,
-    );
+    await registerVehicleInOtherUserFleet(this.context);
   },
 );
 
 When("I register this vehicle into my fleet", async function (): Promise<void> {
-  await registerVehicleInFleet(
-    this.context.repository,
-    this.context.fleetId,
-    this.context.user.id,
-    this.context.vehicle,
-  );
+  await registerVehicle(this.context);
 });
 
 When(
   "I try to register this vehicle into my fleet",
   async function (): Promise<void> {
     try {
-      await registerVehicleInFleet(
-        this.context.repository,
-        this.context.fleetId,
-        this.context.user.id,
-        this.context.vehicle,
-      );
-      this.context.registrationSuccess = true;
+      await registerVehicle(this.context);
+
       this.context.registrationError = null;
     } catch (error) {
-      this.context.registrationSuccess = false;
       this.context.registrationError = error;
     }
   },
@@ -69,11 +57,7 @@ Then(
       this.context.repository,
       this.context.fleetId,
     );
-    if (!fleet) {
-      throw new FleetNotFoundError(this.context.fleetId);
-    }
 
-    expect(fleet.id).to.equal(this.context.fleetId);
     expect(fleet.vehicles).to.deep.include(this.context.vehicle);
   },
 );
@@ -81,10 +65,28 @@ Then(
 Then(
   "I should be informed that this vehicle has already been registered into my fleet",
   function (): void {
-    expect(this.context.registrationSuccess).to.equal(false);
-
     const expected = new VehicleAlreadyRegisteredError(this.context.vehicle.id);
 
-    expect(this.context.registrationError.message).to.equal(expected.message);
+    expect(this.context.registrationError).to.deep.equal(expected);
   },
 );
+
+export async function registerVehicle(context: World): Promise<void> {
+  const registerVehicleCommand = new RegisterVehicle(
+    context.fleetId,
+    context.user.id,
+    context.vehicle,
+  );
+  const handler = new RegisterVehicleHandler(context.repository);
+  await handler.handle(registerVehicleCommand);
+}
+
+async function registerVehicleInOtherUserFleet(context: World) {
+  const registerVehicleCommand = new RegisterVehicle(
+    context.otherFleetId,
+    context.otherUser.id,
+    context.vehicle,
+  );
+  const handler = new RegisterVehicleHandler(context.repository);
+  await handler.handle(registerVehicleCommand);
+}

@@ -4,7 +4,7 @@
 
 This technical test involves building a vehicle fleet management system. The goal was to create an application that manages vehicles and their parking locations within a fleet. Key operations include registering vehicles, parking them at specific locations, and ensuring vehicles cannot be registered or localized multiple times in the same fleet or location.
 
-Please refer to the INSTRUCTIONS.md file for detailed test instructions.
+Please refer to the [INSTRUCTIONS.md](INSTRUCTIONS.md) file for detailed test instructions.
 
 ## Setup
 

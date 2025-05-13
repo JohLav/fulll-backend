@@ -3,7 +3,7 @@ import { VehicleAlreadyParkedError } from "../Errors/VehicleAlreadyParkedError.j
 import { VehicleType } from "../Types/VehicleType.js";
 
 export class Vehicle {
-  constructor(
+  private constructor(
     public readonly id: string,
     public readonly plateNumber: string,
     public type: VehicleType,

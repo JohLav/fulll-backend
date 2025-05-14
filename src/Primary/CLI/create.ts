@@ -1,7 +1,10 @@
 import { CommandModule } from "yargs";
 import { User } from "../../Domain/Models/User.js";
 import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetRepository.js";
-import { initializeFleetForUser } from "../../../features/steps/shared/initializeFleetForUser.js";
+import {
+  InitializeFleet,
+  InitializeFleetHandler,
+} from "../../App/Commands/initializeFleet.js";
 
 export const createFleetCommand: CommandModule = {
   command: "create <userId>",
@@ -15,7 +18,9 @@ export const createFleetCommand: CommandModule = {
     const { userId } = argv;
     const user: User = User.create(userId as string);
     const repository = new PrismaFleetRepository();
-    const fleetId = await initializeFleetForUser(repository, user);
+    const initializeFleet = new InitializeFleet(user.id);
+    const handler = new InitializeFleetHandler(repository);
+    const fleetId = await handler.handle(initializeFleet);
     console.log(fleetId);
   },
 };

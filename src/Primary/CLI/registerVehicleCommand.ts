@@ -37,7 +37,7 @@ export const registerVehicleCommand: CommandModule = {
     }
 
     try {
-      const id = crypto.randomUUID();
+      const id = crypto.randomUUID(); // Move to Domain to generate unique ID
       const vehicle = Vehicle.create(
         id as string,
         vehiclePlateNumber as string,

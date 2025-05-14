@@ -9,9 +9,9 @@ export class LocationMapper {
     });
   }
 
-  static toDomain(locationString: string | undefined): Location | undefined {
+  static toDomain(prismaString: string): Location | undefined {
     try {
-      const parsed = JSON.parse(locationString as string);
+      const parsed = JSON.parse(prismaString);
 
       if (
         typeof parsed.latitude === "number" &&
@@ -27,7 +27,7 @@ export class LocationMapper {
 
       console.warn("Invalid location format:", parsed);
     } catch (error) {
-      console.warn("Failed to parse location:", locationString, error);
+      console.warn("Failed to parse location:", prismaString, error);
       return undefined;
     }
   }

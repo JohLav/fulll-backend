@@ -2,20 +2,17 @@ import { Location } from "./Location.js";
 import { Vehicle } from "./Vehicle.js";
 import { VehicleAlreadyRegisteredError } from "../Errors/VehicleAlreadyRegisteredError.js";
 import { VehiclePlateNotFoundError } from "../../App/Errors/VehiclePlateNotFoundError.js";
+import { LocationNotFoundError } from "../../App/Errors/LocationNotFoundError.js";
 
 // Aggregate root
 export class Fleet {
   private constructor(
     public readonly id: string,
     public readonly userId: string,
-    public vehicles: Vehicle[] = [],
+    public vehicles: Vehicle[],
   ) {}
 
-  static initializeFleet(userId: string): Fleet {
-    return new Fleet(crypto.randomUUID(), userId, []);
-  }
-
-  static create(id: string, userId: string, vehicles: Vehicle[] = []): Fleet {
+  static create(id: string, userId: string, vehicles: Vehicle[]): Fleet {
     return new Fleet(id, userId, vehicles);
   }
 
@@ -35,6 +32,7 @@ export class Fleet {
 
   localizeVehicle(plateNumber: string): Location | undefined {
     const vehicle = this.findVehicleByPlateNumber(plateNumber);
+    if (!vehicle.location) throw new LocationNotFoundError(plateNumber);
 
     return vehicle?.location;
   }

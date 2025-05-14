@@ -24,23 +24,6 @@ export const localizeVehicleCommand: CommandModule = {
 
     const repository = new PrismaFleetRepository();
 
-    // const fleet = await repository.findById(fleetId as string);
-    // if (!fleet) {
-    //   console.error(`Fleet with ID "${fleetId}" not found.`);
-    //   return;
-    // }
-    //
-    // const vehicle = await repository.findVehicleByPlateNumber(
-    //   fleet.id as string,
-    //   vehiclePlateNumber as string,
-    // );
-    // if (!vehicle) {
-    //   console.error(
-    //     `Vehicle with plate number "${vehiclePlateNumber}" not found.`,
-    //   );
-    //   return;
-    // }
-
     try {
       const getLocationQuery = new GetLocation(
         fleetId as string,

@@ -4,19 +4,11 @@ import { VehicleAlreadyParkedError } from "../Errors/VehicleAlreadyParkedError.j
 export class Vehicle {
   private constructor(
     public readonly id: string,
-    public readonly plateNumber: string, // TODO: Value Object ?
+    public readonly plateNumber: string,
     public location?: Location,
   ) {}
 
   static create(id: string, plateNumber: string, location?: Location): Vehicle {
-    return new Vehicle(crypto.randomUUID(), plateNumber, location);
-  }
-
-  static reconstruct(
-    id: string,
-    plateNumber: string,
-    location?: Location,
-  ): Vehicle {
     return new Vehicle(id, plateNumber, location);
   }
 

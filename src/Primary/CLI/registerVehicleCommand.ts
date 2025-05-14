@@ -5,9 +5,10 @@ import {
   RegisterVehicle,
   RegisterVehicleHandler,
 } from "../../App/Commands/registerVehicle.js";
+import { generateRandomId } from "../../../tests/Utils/generateRandomId.js"; // TODO: Move to Domain?
 
 export const registerVehicleCommand: CommandModule = {
-  command: "register-vehicle <fleetId> <vehiclePlateNumber> <vehicleType>",
+  command: "register-vehicle <fleetId> <vehiclePlateNumber>",
   describe: "Register a vehicle into a fleet",
   builder: (yargs) =>
     yargs
@@ -24,31 +25,25 @@ export const registerVehicleCommand: CommandModule = {
 
     const repository = new PrismaFleetRepository();
 
-    const fleet = await repository.findById(fleetId as string);
-    if (!fleet) {
-      console.error(`Fleet with ID "${fleetId}" not found.`);
-    }
-
     try {
-      const id = crypto.randomUUID(); // Move to Domain to generate unique ID
+      const randomId = generateRandomId(); // Move to Domain to generate unique ID
       const vehicle = Vehicle.create(
-        id as string,
+        randomId as string,
         vehiclePlateNumber as string,
       );
-      const registerVehicleCommand1 = new RegisterVehicle(
+      const registerVehicleCommand = new RegisterVehicle(
         fleetId as string,
         "some-user",
         vehicle,
       );
       const handler = new RegisterVehicleHandler(repository);
-      await handler.handle(registerVehicleCommand1);
+      await handler.handle(registerVehicleCommand);
       console.log(
         `Vehicle with plate number ${vehiclePlateNumber} is registered in fleet ${fleetId}.`,
       );
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
-      } else console.error("Unknown error occurred: ", error);
+      if (error instanceof Error) console.error(error.message);
+      else console.error("Unknown error occurred: ", error);
     }
   },
 };

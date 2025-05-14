@@ -9,7 +9,7 @@ export class PrismaVehicleMapper {
   }): Vehicle {
     const locationString = vehicle.location ?? undefined;
 
-    return Vehicle.reconstruct(
+    return Vehicle.create(
       vehicle.id,
       vehicle.plate,
       LocationMapper.toDomain(locationString),

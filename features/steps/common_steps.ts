@@ -2,12 +2,13 @@ import { Given } from "@cucumber/cucumber";
 import { User } from "../../src/Domain/Models/User.js";
 import { Vehicle } from "../../src/Domain/Models/Vehicle.js";
 import { InMemoryFleetRepository } from "../../src/Secondary/Repositories/InMemoryFleetRepository.js";
-import { generateFrenchPlateNumber } from "../../tests/Utils/generateFrenchPlateNumber.js";
 import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
 import { registerVehicle } from "./register_vehicle_steps.js";
+import { generateFrenchPlateNumber } from "../../tests/Utils/generateFrenchPlateNumber.js";
+import { generateRandomId } from "../../tests/Utils/generateRandomId.js";
 
 Given("my fleet", async function (): Promise<void> {
-  const user: User = User.create(crypto.randomUUID());
+  const user: User = User.create(generateRandomId());
   this.context = { user, repository: new InMemoryFleetRepository() };
   this.context.fleetId = await initializeFleetForUser(
     this.context.repository,
@@ -16,9 +17,10 @@ Given("my fleet", async function (): Promise<void> {
 });
 
 Given("a vehicle", async function (): Promise<void> {
-  const id = crypto.randomUUID();
-  const plateNumber = generateFrenchPlateNumber();
-  this.context.vehicle = Vehicle.create(id, plateNumber);
+  this.context.vehicle = Vehicle.create(
+    generateRandomId(),
+    generateFrenchPlateNumber(),
+  );
 });
 
 Given(

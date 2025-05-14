@@ -11,9 +11,7 @@ export class LocationMapper {
 
   static toDomain(locationString: string | undefined): Location | undefined {
     try {
-      const parsed =
-        typeof locationString === "string" &&
-        JSON.parse(locationString as string);
+      const parsed = JSON.parse(locationString as string);
 
       if (
         typeof parsed.latitude === "number" &&
@@ -28,7 +26,6 @@ export class LocationMapper {
       }
 
       console.warn("Invalid location format:", parsed);
-      return undefined;
     } catch (error) {
       console.warn("Failed to parse location:", locationString, error);
       return undefined;

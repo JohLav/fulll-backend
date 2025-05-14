@@ -26,16 +26,16 @@ export class Fleet {
     this.vehicles.push(vehicle);
   }
 
-  findVehicleByPlateNumber(plateNumber: string): Vehicle | undefined {
+  findVehicleByPlateNumber(plateNumber: string): Vehicle {
     const vehicle = this.vehicles.find((v) => v.plateNumber === plateNumber);
     if (!vehicle) throw new VehiclePlateNotFoundError(plateNumber);
 
     return vehicle;
   }
 
-  localizeVehicle(plateNumber: string, location: Location): void {
+  localizeVehicle(plateNumber: string): Location | undefined {
     const vehicle = this.findVehicleByPlateNumber(plateNumber);
 
-    vehicle?.parkVehicle(location);
+    return vehicle?.location;
   }
 }

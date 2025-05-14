@@ -71,7 +71,7 @@ export class PrismaFleetRepository implements FleetRepository {
 
     const vehicles: Vehicle[] = fleet.vehicles.map(
       (v: { vehicle: PrismaVehicle }): Vehicle =>
-        Vehicle.reconstruct(
+        Vehicle.create(
           v.vehicle.id,
           v.vehicle.plate,
           LocationMapper.toDomain(v.vehicle.location ?? undefined),

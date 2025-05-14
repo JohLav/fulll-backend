@@ -3,7 +3,6 @@ import { Location } from "../../Domain/Models/Location.js";
 import { Vehicle } from "../../Domain/Models/Vehicle.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
 import { FleetNotFoundError } from "../Errors/FleetNotFoundError.js";
-import { VehiclePlateNotFoundError } from "../Errors/VehiclePlateNotFoundError.js";
 
 export class ParkVehicle implements Command {
   constructor(
@@ -22,8 +21,6 @@ export class ParkVehicleHandler implements CommandHandler {
 
     // Ramener code dans method parkVehicle in Fleet
     const vehicle = fleet.findVehicleByPlateNumber(command.vehicle.plateNumber);
-    if (!vehicle)
-      throw new VehiclePlateNotFoundError(command.vehicle.plateNumber);
 
     vehicle.parkVehicle(command.location); // fleet.parkVehicle(command.vehicle.plateNumber, command.location);
 

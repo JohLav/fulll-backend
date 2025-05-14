@@ -45,10 +45,8 @@ When(
         this.context.vehicle,
         this.context.location,
       );
-      this.context.parkingAttempt = true;
       this.context.parkingAttemptError = null;
     } catch (error) {
-      this.context.parkingAttempt = false;
       this.context.parkingAttemptError = error;
     }
   },
@@ -63,23 +61,15 @@ Then(
       this.context.vehicle.plateNumber,
     );
 
-    if (!actualLocation.equals(this.context.location)) {
-      throw new Error(
-        `Expected location ${this.context.location.toString()} but got ${actualLocation.toString()}`,
-      );
-    }
-
-    expect(this.context.vehicle.location).to.equal(this.context.location);
+    expect(actualLocation).to.deep.equal(this.context.location);
   },
 );
 
 Then(
   "I should be informed that my vehicle is already parked at this location",
   function (): void {
-    expect(this.context.parkingAttempt).to.equal(false);
-
     const expected = new VehicleAlreadyParkedError(this.context.vehicle.id);
 
-    expect(this.context.parkingAttemptError.message).to.equal(expected.message);
+    expect(this.context.parkingAttemptError).to.deep.equal(expected);
   },
 );

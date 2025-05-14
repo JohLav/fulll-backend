@@ -20,11 +20,12 @@ export class ParkVehicleHandler implements CommandHandler {
     const fleet = await this.repository.findById(command.fleetId);
     if (!fleet) throw new FleetNotFoundError(command.fleetId);
 
+    // Ramener code dans method parkVehicle in Fleet
     const vehicle = fleet.findVehicleByPlateNumber(command.vehicle.plateNumber);
     if (!vehicle)
       throw new VehiclePlateNotFoundError(command.vehicle.plateNumber);
 
-    vehicle.parkVehicle(command.location);
+    vehicle.parkVehicle(command.location); // fleet.parkVehicle(command.vehicle.plateNumber, command.location);
 
     await this.repository.save(fleet);
   }

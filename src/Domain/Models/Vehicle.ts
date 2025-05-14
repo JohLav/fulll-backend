@@ -3,9 +3,9 @@ import { VehicleAlreadyParkedError } from "../Errors/VehicleAlreadyParkedError.j
 import { VehicleType } from "../Types/VehicleType.js";
 
 export class Vehicle {
-  constructor(
+  private constructor(
     public readonly id: string,
-    public readonly plateNumber: string,
+    public readonly plateNumber: string, // TODO: Value Object ?
     public type: VehicleType,
     public location?: Location,
   ) {}
@@ -30,7 +30,7 @@ export class Vehicle {
 
   equals(other: Vehicle): boolean {
     if (!other) return false;
-    return this.plateNumber === other.plateNumber;
+    return this.id === other.id;
   }
 
   parkVehicle(other: Location): void {

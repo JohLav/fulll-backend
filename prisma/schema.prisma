@@ -10,16 +10,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum VehicleType {
-  CAR
-  TRUCK
-  MOTORCYCLE
-}
-
 model Vehicle {
-  id       String      @id @default(uuid())
-  plate    String      @unique
-  type     VehicleType
+  id       String  @id @default(uuid())
+  plate    String  @unique
   location String?
 
   fleets VehiclesInFleets[]

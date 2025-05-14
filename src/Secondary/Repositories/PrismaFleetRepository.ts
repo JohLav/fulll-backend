@@ -3,7 +3,6 @@ import { Fleet } from "../../Domain/Models/Fleet.js";
 import { Vehicle } from "../../Domain/Models/Vehicle.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
 import { LocationMapper } from "../Mappers/LocationMapper.js";
-import { VehicleTypeMapper } from "../Mappers/VehicleTypeMapper.js";
 import { PrismaVehicleMapper } from "../Mappers/PrismaVehicleMapper.js";
 import { Vehicle as PrismaVehicle } from "@prisma/client";
 
@@ -25,7 +24,6 @@ export class PrismaFleetRepository implements FleetRepository {
       }
 
       for (const vehicle of fleet.vehicles) {
-        const vehicleType = VehicleTypeMapper.toPrisma(vehicle.type);
         const locationString = vehicle.location
           ? LocationMapper.toPrisma(vehicle.location)
           : null;
@@ -36,7 +34,6 @@ export class PrismaFleetRepository implements FleetRepository {
           create: {
             id: vehicle.id,
             plate: vehicle.plateNumber,
-            type: vehicleType,
             location: locationString,
           },
         });
@@ -77,7 +74,6 @@ export class PrismaFleetRepository implements FleetRepository {
         Vehicle.reconstruct(
           v.vehicle.id,
           v.vehicle.plate,
-          VehicleTypeMapper.toDomain(v.vehicle.type),
           LocationMapper.toDomain(v.vehicle.location ?? undefined),
         ),
     );

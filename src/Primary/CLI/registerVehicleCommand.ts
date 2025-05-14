@@ -1,7 +1,5 @@
 import { CommandModule } from "yargs";
 import { Vehicle } from "../../Domain/Models/Vehicle.js";
-import { VehicleType } from "../../Domain/Types/VehicleType.js";
-import { generateFrenchPlateNumber } from "../../../tests/Utils/generateFrenchPlateNumber.js";
 import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetRepository.js";
 import {
   RegisterVehicle,
@@ -20,14 +18,9 @@ export const registerVehicleCommand: CommandModule = {
       .positional("vehiclePlateNumber", {
         type: "string",
         describe: "Plate number of the vehicle",
-      })
-      .positional("vehicleType", {
-        type: "string",
-        describe: "Vehicle type (e.g., CAR, MOTORCYCLE, TRUCK)",
-        choices: Object.keys(VehicleType),
       }),
   handler: async (argv) => {
-    const { fleetId, vehiclePlateNumber, vehicleType } = argv;
+    const { fleetId, vehiclePlateNumber } = argv;
 
     const repository = new PrismaFleetRepository();
 
@@ -41,7 +34,6 @@ export const registerVehicleCommand: CommandModule = {
       const vehicle = Vehicle.create(
         id as string,
         vehiclePlateNumber as string,
-        vehicleType as VehicleType,
       );
       const registerVehicleCommand1 = new RegisterVehicle(
         fleetId as string,
@@ -51,7 +43,7 @@ export const registerVehicleCommand: CommandModule = {
       const handler = new RegisterVehicleHandler(repository);
       await handler.handle(registerVehicleCommand1);
       console.log(
-        `${vehicleType} with plate number ${vehiclePlateNumber} is registered in fleet ${fleetId}.`,
+        `Vehicle with plate number ${vehiclePlateNumber} is registered in fleet ${fleetId}.`,
       );
     } catch (error) {
       if (error instanceof Error) {

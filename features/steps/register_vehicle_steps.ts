@@ -1,25 +1,23 @@
 // First group: Testing framework
 import { Given, Then, When } from "@cucumber/cucumber";
+import { World } from "cucumber";
 import { expect } from "chai";
 
 // Second group: Domain
 import { User } from "../../src/Domain/Models/User.js";
 import { VehicleAlreadyRegisteredError } from "../../src/Domain/Errors/VehicleAlreadyRegisteredError.js";
 
-// Third group: Application
-import { FleetNotFoundError } from "../../src/App/Errors/FleetNotFoundError.js";
-
-// Fourth group: Helpers
+// Third group: Helpers
 import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
 import { retrieveFleet } from "./shared/retrieveFleet.js";
 import {
   RegisterVehicle,
   RegisterVehicleHandler,
 } from "../../src/App/Commands/registerVehicle.js";
-import { World } from "cucumber";
+import { generateRandomId } from "../../tests/Utils/generateRandomId.js";
 
 Given("the fleet of another user", async function (): Promise<void> {
-  this.context.otherUser = User.create(crypto.randomUUID());
+  this.context.otherUser = User.create(generateRandomId());
   this.context.otherFleetId = await initializeFleetForUser(
     this.context.repository,
     this.context.otherUser,

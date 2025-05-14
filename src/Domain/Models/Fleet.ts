@@ -1,7 +1,7 @@
 import { Location } from "./Location.js";
 import { Vehicle } from "./Vehicle.js";
 import { VehicleAlreadyRegisteredError } from "../Errors/VehicleAlreadyRegisteredError.js";
-import { VehiclePlateNotFoundError } from "../../App/Errors/VehiclePlateNotFoundError.js";
+import { VehiclePlateNotFoundError } from "../Errors/VehiclePlateNotFoundError.js";
 import { LocationNotFoundError } from "../../App/Errors/LocationNotFoundError.js";
 
 // Aggregate root
@@ -30,7 +30,7 @@ export class Fleet {
     return vehicle;
   }
 
-  localizeVehicle(plateNumber: string): Location | undefined {
+  localizeVehicle(plateNumber: string): Location {
     const vehicle = this.findVehicleByPlateNumber(plateNumber);
     if (!vehicle.location) throw new LocationNotFoundError(plateNumber);
 

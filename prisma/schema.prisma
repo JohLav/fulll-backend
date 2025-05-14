@@ -11,9 +11,9 @@ datasource db {
 }
 
 model Vehicle {
-  id       String  @id @default(uuid())
-  plate    String  @unique
-  location String?
+  id       String @id @default(uuid())
+  plate    String @unique
+  location String
 
   fleets VehiclesInFleets[]
 }

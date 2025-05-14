@@ -36,9 +36,8 @@ export const localizeVehicleCommand: CommandModule = {
         `Localizing vehicle with plate number ${vehiclePlateNumber} from fleet ID ${fleetId} to (${location.latitude}, ${location.longitude})`,
       );
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
-      } else console.error("Unknown error occurred: ", error);
+      if (error instanceof Error) console.error(error.message);
+      else console.error("Unknown error occurred: ", error);
     }
   },
 };

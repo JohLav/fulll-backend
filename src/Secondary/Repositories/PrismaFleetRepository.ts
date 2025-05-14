@@ -1,9 +1,10 @@
 import { prisma } from "../client.js";
 import { Fleet } from "../../Domain/Models/Fleet.js";
+import { Location } from "../../Domain/Models/Location.js";
 import { Vehicle } from "../../Domain/Models/Vehicle.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
 import { LocationMapper } from "../Mappers/LocationMapper.js";
-import { VehicleMapper } from "../Mappers/VehicleMapper";
+import { VehicleMapper } from "../Mappers/VehicleMapper.js";
 import { Vehicle as PrismaVehicle } from "@prisma/client";
 
 // Secondary Adapter
@@ -24,9 +25,9 @@ export class PrismaFleetRepository implements FleetRepository {
       }
 
       for (const vehicle of fleet.vehicles) {
-        const locationString = vehicle.location
-          ? LocationMapper.toPrisma(vehicle.location)
-          : null;
+        const locationString = LocationMapper.toPrisma(
+          vehicle.location as Location,
+        );
 
         const dbVehicle = await prisma.vehicle.upsert({
           where: { plate: vehicle.plateNumber },
@@ -74,7 +75,7 @@ export class PrismaFleetRepository implements FleetRepository {
         Vehicle.create(
           v.vehicle.id,
           v.vehicle.plate,
-          LocationMapper.toDomain(v.vehicle.location),
+          LocationMapper.toDomain(v.vehicle.location as string),
         ),
     );
 

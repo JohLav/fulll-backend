@@ -65,7 +65,7 @@ export const updateLocationCommand: CommandModule = {
       const handler = new ParkVehicleHandler(repository);
       await handler.handle(parkVehicleCommand);
       console.log(
-        `Updated vehicle with plate number ${vehiclePlateNumber} from fleet ID ${fleetId} to (latitude: ${latitude}, longitude: ${longitude})`,
+        `Updated vehicle with plate number ${vehiclePlateNumber} from fleet ID ${fleetId} to (latitude: ${latitude}, longitude: ${longitude}, altitude: ${location.altitude})`,
       );
     } catch (error) {
       if (error instanceof Error) {

@@ -2,8 +2,7 @@ import { describe, expect, it } from "vitest";
 import { execSync } from "node:child_process";
 
 const test = (args: string) => {
-  const response = execSync(`node ./build/src/cli.js ${args}`).toString();
-  return response;
+  return execSync(`node ./build/src/cli.js ${args}`).toString();
 };
 
 describe("Fleet", () => {

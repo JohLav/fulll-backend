@@ -31,7 +31,9 @@ export class PrismaFleetRepository implements FleetRepository {
 
         const dbVehicle = await prisma.vehicle.upsert({
           where: { plate: vehicle.plateNumber },
-          update: {},
+          update: {
+            location: locationString,
+          },
           create: {
             id: vehicle.id,
             plate: vehicle.plateNumber,

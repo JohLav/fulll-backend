@@ -33,7 +33,7 @@ export const localizeVehicleCommand: CommandModule = {
       const location = await handler.handle(getLocationQuery);
 
       console.log(
-        `Localizing vehicle with plate number ${vehiclePlateNumber} from fleet ID ${fleetId} to (${location.latitude}, ${location.longitude})`,
+        `Localizing vehicle with plate number ${vehiclePlateNumber} from fleet ID ${fleetId} to (latitude: ${location.latitude}, longitude: ${location.longitude}, altitude: ${location.altitude})`,
       );
     } catch (error) {
       if (error instanceof Error) console.error(error.message);

@@ -77,19 +77,25 @@ prisma migrate reset
 
 You can interact with the fleet management system using the following commands to modify the database.
 
-- **Create a fleet**: Returns a `<fleetId>` along with a random `<userId>`:
+- **Create a fleet**: Returns a `<fleetId>` along with a `<userId>`:
+```shell
+npm run fleet create <userId>
+```
 ```shell
 npm run fleet create 1234
 ```
 
 - **Register a vehicle**: Adds a vehicle to the specified `<fleetId>` with a provided `<vehiclePlateNumber>`:
 ```shell
-npm run fleet register-vehicle 0e0dee68-38df-4b48-897e-d4b09c3bf92a AB-123-CD
+npm run fleet register-vehicle <fleetId> <vehiclePlateNumber>
+```
+```shell
+npm run fleet register-vehicle 1657c9b6-5de2-4bd9-b4e9-ad8896824002 AB-123-CD
 ```
 
 - **Update vehicle's location**: Updates the GPS position of a vehicle in a fleet with the specified `<fleetId>`, `<vehiclePlateNumber>`, `<latitude>`, `<longitude>`, and optional `[altitude]`:
 ```shell
-npm run fleet update-location 0e0dee68-38df-4b48-897e-d4b09c3bf92a AB-123-CD 48.8566 2.3522
+npm run fleet update-location 1657c9b6-5de2-4bd9-b4e9-ad8896824002 AB-123-CD 48.8566 2.3522
 ```
 
 - **Localize a vehicle**: Updates the location of a vehicle with the specified `<fleetId>` and `<vehiclePlateNumber>`:

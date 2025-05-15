@@ -25,9 +25,9 @@ export class PrismaFleetRepository implements FleetRepository {
       }
 
       for (const vehicle of fleet.vehicles) {
-        const locationString = LocationMapper.toPrisma(
-          vehicle.location as Location,
-        );
+        const locationString = vehicle.location
+          ? LocationMapper.toPrisma(vehicle.location)
+          : "";
 
         const dbVehicle = await prisma.vehicle.upsert({
           where: { plate: vehicle.plateNumber },

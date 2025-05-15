@@ -6,8 +6,8 @@ const test = (args: string) => {
   return response;
 };
 
-describe("Create fleet", () => {
-  it("Toto", async (): Promise<void> => {
+describe("Fleet", () => {
+  it("Nominal case", async (): Promise<void> => {
     const fleetId = test("create 6183").trim();
     console.log(fleetId);
     expect(fleetId.length).toBeGreaterThan(0);
@@ -23,5 +23,14 @@ describe("Create fleet", () => {
     expect(updateLocationResponse).toContain("AB-123-CD");
     expect(updateLocationResponse).toContain("latitude: 48.8566");
     expect(updateLocationResponse).toContain("longitude: 2.3522");
+
+    const localizeVehicleResponse = test(
+      `localize-vehicle ${fleetId} AB-123-CD`,
+    );
+    expect(localizeVehicleResponse).toContain(fleetId);
+    expect(localizeVehicleResponse).toContain("AB-123-CD");
+    expect(localizeVehicleResponse).toContain("latitude: 48.8566");
+    expect(localizeVehicleResponse).toContain("longitude: 2.3522");
+    expect(localizeVehicleResponse).toContain("altitude: 0");
   });
 });

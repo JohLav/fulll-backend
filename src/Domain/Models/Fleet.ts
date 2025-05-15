@@ -23,17 +23,23 @@ export class Fleet {
     this.vehicles.push(vehicle);
   }
 
-  findVehicleByPlateNumber(plateNumber: string): Vehicle {
-    const vehicle = this.vehicles.find((v) => v.plateNumber === plateNumber);
-    if (!vehicle) throw new VehiclePlateNotFoundError(plateNumber);
+  parkVehicle(plateNumber: string, location: Location) {
+    const vehicle = this.findVehicleByPlateNumber(plateNumber);
 
-    return vehicle;
+    vehicle.parkVehicle(location);
   }
 
   localizeVehicle(plateNumber: string): Location {
     const vehicle = this.findVehicleByPlateNumber(plateNumber);
     if (!vehicle.location) throw new LocationNotFoundError(plateNumber);
 
-    return vehicle?.location;
+    return vehicle.location;
+  }
+
+  private findVehicleByPlateNumber(plateNumber: string): Vehicle {
+    const vehicle = this.vehicles.find((v) => v.plateNumber === plateNumber);
+    if (!vehicle) throw new VehiclePlateNotFoundError(plateNumber);
+
+    return vehicle;
   }
 }

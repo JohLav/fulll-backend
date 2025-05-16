@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { Vehicle } from "../src/Domain/Models/Vehicle.js";
-import { generateFrenchPlateNumber } from "./Utils/generateFrenchPlateNumber";
-import { generateRandomId } from "./Utils/generateRandomId";
+import { Vehicle } from "../../src/Domain/Models/Vehicle";
+import { generateFrenchPlateNumber } from "../Utils/generateFrenchPlateNumber";
+import { generateRandomId } from "../Utils/generateRandomId";
 
 describe("User", () => {
   it("should create a vehicle", function () {

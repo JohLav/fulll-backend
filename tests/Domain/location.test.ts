@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Location } from "../src/Domain/Models/Location.js";
+import { Location } from "../../src/Domain/Models/Location";
 
 describe("Location", () => {
   it("should create a location without altitude", (): void => {

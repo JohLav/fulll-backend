@@ -1,40 +1,25 @@
 import { Location } from "./Location.js";
-import { VehicleAlreadyParkedError } from "../Errors/VehicleAlreadyParkedError.js";
-import { VehicleType } from "../Types/VehicleType.js";
+import { VehicleAlreadyParkedAtThisLocationError } from "../Errors/VehicleAlreadyParkedAtThisLocationError.js";
 
 export class Vehicle {
   private constructor(
-    public readonly id: string,
-    public readonly plateNumber: string, // TODO: Value Object ?
-    public type: VehicleType,
+    public readonly plateNumber: string,
     public location?: Location,
   ) {}
 
-  static create(
-    id: string,
-    plateNumber: string,
-    type: VehicleType,
-    location?: Location,
-  ): Vehicle {
-    return new Vehicle(crypto.randomUUID(), plateNumber, type, location);
+  static create(plateNumber: string, location?: Location): Vehicle {
+    return new Vehicle(plateNumber, location);
   }
 
-  static reconstruct(
-    id: string,
-    plateNumber: string,
-    type: VehicleType,
-    location?: Location,
-  ): Vehicle {
-    return new Vehicle(id, plateNumber, type, location);
-  }
-
-  equals(other: Vehicle): boolean {
-    if (!other) return false;
-    return this.id === other.id;
-  }
-
-  parkVehicle(other: Location): void {
-    if (this.location == other) throw new VehicleAlreadyParkedError(this.id);
+  parkVehicle(other: Location, fleetId: string): void {
+    if (this.location && this.location.equals(other))
+      throw new VehicleAlreadyParkedAtThisLocationError(
+        this.plateNumber,
+        fleetId,
+        other.latitude,
+        other.longitude,
+        other.altitude,
+      );
 
     this.location = other;
   }

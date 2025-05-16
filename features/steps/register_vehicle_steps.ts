@@ -1,25 +1,24 @@
 // First group: Testing framework
 import { Given, Then, When } from "@cucumber/cucumber";
+import { World } from "cucumber";
 import { expect } from "chai";
 
 // Second group: Domain
 import { User } from "../../src/Domain/Models/User.js";
+import { Vehicle } from "../../src/Domain/Models/Vehicle.js";
 import { VehicleAlreadyRegisteredError } from "../../src/Domain/Errors/VehicleAlreadyRegisteredError.js";
 
-// Third group: Application
-import { FleetNotFoundError } from "../../src/App/Errors/FleetNotFoundError.js";
-
-// Fourth group: Helpers
+// Third group: Helpers
 import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
 import { retrieveFleet } from "./shared/retrieveFleet.js";
 import {
   RegisterVehicle,
   RegisterVehicleHandler,
 } from "../../src/App/Commands/registerVehicle.js";
-import { World } from "cucumber";
+import { generateRandomId } from "../../tests/Utils/generateRandomId.js";
 
 Given("the fleet of another user", async function (): Promise<void> {
-  this.context.otherUser = User.create(crypto.randomUUID());
+  this.context.otherUser = User.create(generateRandomId());
   this.context.otherFleetId = await initializeFleetForUser(
     this.context.repository,
     this.context.otherUser,
@@ -34,14 +33,14 @@ Given(
 );
 
 When("I register this vehicle into my fleet", async function (): Promise<void> {
-  await registerVehicle(this.context);
+  await registerVehicleInUserFleet(this.context);
 });
 
 When(
   "I try to register this vehicle into my fleet",
   async function (): Promise<void> {
     try {
-      await registerVehicle(this.context);
+      await registerVehicleInUserFleet(this.context);
 
       this.context.registrationError = null;
     } catch (error) {
@@ -58,34 +57,44 @@ Then(
       this.context.fleetId,
     );
 
-    expect(fleet.vehicles).to.deep.include(this.context.vehicle);
+    const vehiclePlateNumber: string = fleet.vehicles
+      .map((v: Vehicle): string => v.plateNumber)
+      .toString();
+
+    expect(vehiclePlateNumber).to.deep.include(
+      this.context.vehicle.plateNumber,
+    );
   },
 );
 
 Then(
   "I should be informed that this vehicle has already been registered into my fleet",
   function (): void {
-    const expected = new VehicleAlreadyRegisteredError(this.context.vehicle.id);
+    const expected = new VehicleAlreadyRegisteredError(
+      this.context.vehicle.plateNumber,
+    );
 
     expect(this.context.registrationError).to.deep.equal(expected);
   },
 );
 
-export async function registerVehicle(context: World): Promise<void> {
+export async function registerVehicleInUserFleet(
+  context: World,
+): Promise<void> {
   const registerVehicleCommand = new RegisterVehicle(
     context.fleetId,
     context.user.id,
-    context.vehicle,
+    context.vehicle.plateNumber,
   );
   const handler = new RegisterVehicleHandler(context.repository);
   await handler.handle(registerVehicleCommand);
 }
 
-async function registerVehicleInOtherUserFleet(context: World) {
+async function registerVehicleInOtherUserFleet(context: World): Promise<void> {
   const registerVehicleCommand = new RegisterVehicle(
     context.otherFleetId,
     context.otherUser.id,
-    context.vehicle,
+    context.vehicle.plateNumber,
   );
   const handler = new RegisterVehicleHandler(context.repository);
   await handler.handle(registerVehicleCommand);

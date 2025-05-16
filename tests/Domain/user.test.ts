@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { User } from "../src/Domain/Models/User.js";
+import { User } from "../../src/Domain/Models/User";
 
 describe("User", () => {
   it("should create a user", function () {

@@ -77,18 +77,30 @@ prisma migrate reset
 
 You can interact with the fleet management system using the following commands to modify the database.
 
-- **Create a fleet**: Returns a `<fleetId>` along with a random `<userId>`:
+- **Create a fleet**: Returns a `<fleetId>` along with a `<userId>`:
+```shell
+npm run fleet create <userId>
+```
 ```shell
 npm run fleet create 1234
 ```
 
-- **Register a vehicle**: Adds a vehicle to the specified `<fleetId>` with a provided `<vehiclePlateNumber>` and `<vehicleType>` (e.g., CAR, TRUCK, MOTORCYCLE):
+- **Register a vehicle**: Adds a vehicle to the specified `<fleetId>` with a provided `<vehiclePlateNumber>`:
 ```shell
-npm run fleet register-vehicle ea10ff46-7729-4179-aabb-f3f89bbd2a3b AB-123-CD CAR
+npm run fleet register-vehicle <fleetId> <vehiclePlateNumber>
 ```
-- **Localize a vehicle**: Updates the location of a vehicle with the specified `<fleetId>`, `<vehiclePlateNumber>`, `<latitude>`, `<longitude>`, and optional `[altitude]`:
 ```shell
-npm run fleet localize-vehicle ea10ff46-7729-4179-aabb-f3f89bbd2a3b AB-123-CD 48.8566 2.3522
+npm run fleet register-vehicle 58394350-99b9-4764-8423-8fcda3223d3f AB-123-CD
+```
+
+- **Update vehicle's location**: Updates the GPS position of a vehicle in a fleet with the specified `<fleetId>`, `<vehiclePlateNumber>`, `<latitude>`, `<longitude>`, and optional `[altitude]`:
+```shell
+npm run fleet update-location 58394350-99b9-4764-8423-8fcda3223d3f AB-123-CD 48.8566 2.3522
+```
+
+- **Localize a vehicle**: Updates the location of a vehicle with the specified `<fleetId>` and `<vehiclePlateNumber>`:
+```shell
+npm run fleet localize-vehicle 58394350-99b9-4764-8423-8fcda3223d3f AB-123-CD
 ```
 
 ## Code Quality
@@ -106,7 +118,7 @@ To set up a CI/CD process, I would use GitHub Actions to automate the workflow. 
 - Execute tests (npm test and npm run cucumber).
 - Optionally, build the project and deploy if tests pass.
 
-## Restrospective
+## Retrospective
 - Gained valuable insights into hexagonal architecture, DDD, and CQRS principles.
 - Enjoyed working without a framework, as it provided a deeper understanding of configurations.
 - Experienced some back-and-forth with unit testing setups, initially using Jest, then Mocha, and finally settling on Vitest.

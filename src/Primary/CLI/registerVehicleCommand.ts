@@ -1,7 +1,4 @@
 import { CommandModule } from "yargs";
-import { Vehicle } from "../../Domain/Models/Vehicle.js";
-import { VehicleType } from "../../Domain/Types/VehicleType.js";
-import { generateFrenchPlateNumber } from "../../../tests/Utils/generateFrenchPlateNumber.js";
 import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetRepository.js";
 import {
   RegisterVehicle,
@@ -9,7 +6,7 @@ import {
 } from "../../App/Commands/registerVehicle.js";
 
 export const registerVehicleCommand: CommandModule = {
-  command: "register-vehicle <fleetId> <vehiclePlateNumber> <vehicleType>",
+  command: "register-vehicle <fleetId> <vehiclePlateNumber>",
   describe: "Register a vehicle into a fleet",
   builder: (yargs) =>
     yargs
@@ -20,43 +17,25 @@ export const registerVehicleCommand: CommandModule = {
       .positional("vehiclePlateNumber", {
         type: "string",
         describe: "Plate number of the vehicle",
-      })
-      .positional("vehicleType", {
-        type: "string",
-        describe: "Vehicle type (e.g., CAR, MOTORCYCLE, TRUCK)",
-        choices: Object.keys(VehicleType),
       }),
   handler: async (argv) => {
-    const { fleetId, vehiclePlateNumber, vehicleType } = argv;
+    const { fleetId, vehiclePlateNumber } = argv;
 
     const repository = new PrismaFleetRepository();
 
-    const fleet = await repository.findById(fleetId as string);
-    if (!fleet) {
-      console.error(`Fleet with ID "${fleetId}" not found.`);
-    }
-
     try {
-      const id = crypto.randomUUID(); // Move to Domain to generate unique ID
-      const vehicle = Vehicle.create(
-        id as string,
-        vehiclePlateNumber as string,
-        vehicleType as VehicleType,
-      );
-      const registerVehicleCommand1 = new RegisterVehicle(
+      const registerVehicleCommand = new RegisterVehicle(
         fleetId as string,
         "some-user",
-        vehicle,
+        vehiclePlateNumber as string,
       );
       const handler = new RegisterVehicleHandler(repository);
-      await handler.handle(registerVehicleCommand1);
+      await handler.handle(registerVehicleCommand);
       console.log(
-        `${vehicleType} with plate number ${vehiclePlateNumber} is registered in fleet ${fleetId}.`,
+        `Vehicle with plate number ${vehiclePlateNumber} is registered in fleet ${fleetId}.`,
       );
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
-      } else console.error("Unknown error occurred: ", error);
+      console.log(error);
     }
   },
 };

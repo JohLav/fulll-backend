@@ -17,7 +17,9 @@ export class Location {
   equals(other: Location): boolean {
     if (!other) return false;
     return (
-      this.latitude === other.latitude && this.longitude === other.longitude
+      this.latitude === other.latitude &&
+      this.longitude === other.longitude &&
+      this.altitude === other.altitude
     );
   }
 }

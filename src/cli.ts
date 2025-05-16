@@ -4,11 +4,13 @@ import { hideBin } from "yargs/helpers";
 
 import { createFleetCommand } from "./Primary/CLI/create.js";
 import { registerVehicleCommand } from "./Primary/CLI/registerVehicleCommand.js";
+import { updateLocationCommand } from "./Primary/CLI/updateLocationCommand.js";
 import { localizeVehicleCommand } from "./Primary/CLI/localizeVehicleCommand.js";
 
 yargs(hideBin(process.argv))
   .command(createFleetCommand)
   .command(registerVehicleCommand)
+  .command(updateLocationCommand)
   .command(localizeVehicleCommand)
   .strict()
   .demandCommand()

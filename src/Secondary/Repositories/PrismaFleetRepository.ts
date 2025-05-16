@@ -1,11 +1,9 @@
 import { prisma } from "../client.js";
+import { Vehicle as PrismaVehicle } from "@prisma/client";
 import { Fleet } from "../../Domain/Models/Fleet.js";
 import { Vehicle } from "../../Domain/Models/Vehicle.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
 import { LocationMapper } from "../Mappers/LocationMapper.js";
-import { VehicleTypeMapper } from "../Mappers/VehicleTypeMapper.js";
-import { PrismaVehicleMapper } from "../Mappers/PrismaVehicleMapper.js";
-import { Vehicle as PrismaVehicle } from "@prisma/client";
 
 // Secondary Adapter
 export class PrismaFleetRepository implements FleetRepository {
@@ -25,32 +23,31 @@ export class PrismaFleetRepository implements FleetRepository {
       }
 
       for (const vehicle of fleet.vehicles) {
-        const vehicleType = VehicleTypeMapper.toPrisma(vehicle.type);
         const locationString = vehicle.location
           ? LocationMapper.toPrisma(vehicle.location)
-          : null;
+          : "";
 
         const dbVehicle = await prisma.vehicle.upsert({
           where: { plate: vehicle.plateNumber },
-          update: {},
+          update: {
+            location: locationString,
+          },
           create: {
-            id: vehicle.id,
             plate: vehicle.plateNumber,
-            type: vehicleType,
             location: locationString,
           },
         });
 
         await prisma.vehiclesInFleets.upsert({
           where: {
-            vehicleId_fleetId: {
-              vehicleId: dbVehicle.id,
+            vehiclePlate_fleetId: {
+              vehiclePlate: dbVehicle.plate,
               fleetId: fleet.id,
             },
           },
           update: {},
           create: {
-            vehicleId: dbVehicle.id,
+            vehiclePlate: dbVehicle.plate,
             fleetId: fleet.id,
           },
         });
@@ -74,34 +71,12 @@ export class PrismaFleetRepository implements FleetRepository {
 
     const vehicles: Vehicle[] = fleet.vehicles.map(
       (v: { vehicle: PrismaVehicle }): Vehicle =>
-        Vehicle.reconstruct(
-          v.vehicle.id,
+        Vehicle.create(
           v.vehicle.plate,
-          VehicleTypeMapper.toDomain(v.vehicle.type),
-          LocationMapper.toDomain(v.vehicle.location ?? undefined),
+          LocationMapper.toDomain(v.vehicle.location as string),
         ),
     );
 
     return Fleet.create(fleet.id, fleet.userId, vehicles);
-  }
-
-  async findVehicleByPlateNumber(
-    fleetId: string,
-    plateNumber: string,
-  ): Promise<Vehicle | undefined> {
-    const vehicleInFleet = await prisma.vehiclesInFleets.findFirst({
-      where: {
-        fleetId,
-        vehicle: {
-          plate: plateNumber,
-        },
-      },
-      include: {
-        vehicle: true,
-      },
-    });
-    if (!vehicleInFleet || !vehicleInFleet.vehicle) return undefined;
-
-    return PrismaVehicleMapper.fromPrisma(vehicleInFleet.vehicle);
   }
 }

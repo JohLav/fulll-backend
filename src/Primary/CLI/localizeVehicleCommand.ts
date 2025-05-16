@@ -4,7 +4,6 @@ import {
   GetLocation,
   GetLocationHandler,
 } from "../../App/Queries/getLocation.js";
-import { VehicleAlreadyParkedAtThisLocationError } from "../../Domain/Errors/VehicleAlreadyParkedAtThisLocationError.js";
 
 export const localizeVehicleCommand: CommandModule = {
   command: "localize-vehicle <fleetId> <vehiclePlateNumber>",
@@ -37,8 +36,7 @@ export const localizeVehicleCommand: CommandModule = {
         `Localizing vehicle with plate number ${vehiclePlateNumber} from fleet ID ${fleetId} to (latitude: ${location.latitude}, longitude: ${location.longitude}, altitude: ${location.altitude})`,
       );
     } catch (error) {
-      if (error instanceof Error) console.error(error.message);
-      else console.error("Unknown error occurred: ", error);
+      console.log(error);
     }
   },
 };

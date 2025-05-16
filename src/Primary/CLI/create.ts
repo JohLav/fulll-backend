@@ -15,7 +15,6 @@ export const createFleetCommand: CommandModule = {
     }),
   handler: async (argv) => {
     const { userId } = argv;
-    // const user: User = User.create(userId as string);
 
     const repository = new PrismaFleetRepository();
 
@@ -23,6 +22,6 @@ export const createFleetCommand: CommandModule = {
     const handler = new InitializeFleetHandler(repository);
     const fleetId = await handler.handle(initializeFleet);
 
-    console.log(fleetId);
+    console.log(fleetId); // TODO: Add a sentence to successfully created fleet
   },
 };

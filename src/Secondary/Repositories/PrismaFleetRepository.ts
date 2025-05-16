@@ -1,10 +1,9 @@
 import { prisma } from "../client.js";
+import { Vehicle as PrismaVehicle } from "@prisma/client";
 import { Fleet } from "../../Domain/Models/Fleet.js";
 import { Vehicle } from "../../Domain/Models/Vehicle.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
 import { LocationMapper } from "../Mappers/LocationMapper.js";
-import { VehicleMapper } from "../Mappers/VehicleMapper.js";
-import { Vehicle as PrismaVehicle } from "@prisma/client";
 
 // Secondary Adapter
 export class PrismaFleetRepository implements FleetRepository {
@@ -81,25 +80,5 @@ export class PrismaFleetRepository implements FleetRepository {
     );
 
     return Fleet.create(fleet.id, fleet.userId, vehicles);
-  }
-
-  async findVehicleByPlateNumber(
-    fleetId: string,
-    plateNumber: string,
-  ): Promise<Vehicle | undefined> {
-    const vehicleInFleet = await prisma.vehiclesInFleets.findFirst({
-      where: {
-        fleetId,
-        vehicle: {
-          plate: plateNumber,
-        },
-      },
-      include: {
-        vehicle: true,
-      },
-    });
-    if (!vehicleInFleet || !vehicleInFleet.vehicle) return undefined;
-
-    return VehicleMapper.fromPrisma(vehicleInFleet.vehicle);
   }
 }

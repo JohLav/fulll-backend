@@ -1,7 +1,7 @@
 import { Query, QueryHandler } from "./query.js";
 import { Location } from "../../Domain/Models/Location.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
-import { FleetNotFoundError } from "../Errors/FleetNotFoundError.js";
+import { FleetNotFoundError } from "../../Domain/Errors/FleetNotFoundError";
 
 export class GetLocation implements Query {
   constructor(

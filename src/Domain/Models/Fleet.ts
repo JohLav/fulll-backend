@@ -2,7 +2,7 @@ import { Location } from "./Location.js";
 import { Vehicle } from "./Vehicle.js";
 import { VehicleAlreadyRegisteredError } from "../Errors/VehicleAlreadyRegisteredError.js";
 import { VehiclePlateNotFoundError } from "../Errors/VehiclePlateNotFoundError.js";
-import { LocationNotFoundError } from "../../App/Errors/LocationNotFoundError.js";
+import { LocationNotFoundError } from "../Errors/LocationNotFoundError.js";
 
 // Aggregate root
 export class Fleet {
@@ -16,7 +16,11 @@ export class Fleet {
     return new Fleet(id, userId, vehicles);
   }
 
-  registerVehicle(vehicle: Vehicle): void {
+  registerVehicle(vehiclePlateNumber: string): void {
+    const vehicle = Vehicle.create(
+      this.generateVehicleId() as string,
+      vehiclePlateNumber as string,
+    );
     if (this.vehicles.some((v: Vehicle): boolean => v.equals(vehicle)))
       throw new VehicleAlreadyRegisteredError(vehicle.id);
 
@@ -41,5 +45,9 @@ export class Fleet {
     if (!vehicle) throw new VehiclePlateNotFoundError(plateNumber);
 
     return vehicle;
+  }
+
+  private generateVehicleId() {
+    return crypto.randomUUID(); // TODO: Add a port
   }
 }

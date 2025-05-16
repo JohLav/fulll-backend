@@ -1,6 +1,5 @@
 import { prisma } from "../client.js";
 import { Fleet } from "../../Domain/Models/Fleet.js";
-import { Location } from "../../Domain/Models/Location.js";
 import { Vehicle } from "../../Domain/Models/Vehicle.js";
 import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
 import { LocationMapper } from "../Mappers/LocationMapper.js";

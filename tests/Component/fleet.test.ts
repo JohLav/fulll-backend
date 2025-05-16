@@ -7,7 +7,7 @@ const test = (args: string) => {
 
 describe("Fleet", () => {
   it("Nominal case", async (): Promise<void> => {
-    const fleetId = test("create 6183").trim();
+    const fleetId = test("create 2228").trim();
     console.log(fleetId);
     expect(fleetId.length).toBeGreaterThan(0);
 

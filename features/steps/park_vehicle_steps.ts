@@ -6,7 +6,7 @@ import { expect } from "chai";
 import { Location } from "../../src/Domain/Models/Location.js";
 import { VehicleAlreadyParkedAtThisLocationError } from "../../src/Domain/Errors/VehicleAlreadyParkedAtThisLocationError.js";
 
-// Fifth group: Helpers
+// Third group: Helpers
 import { parkVehicleAtLocation } from "./shared/parkVehicleAtLocation.js";
 import { retrieveLocation } from "./shared/retrieveLocation.js";
 

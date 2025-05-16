@@ -56,7 +56,13 @@ Then(
       this.context.fleetId,
     );
 
-    expect(fleet.vehicles).to.deep.include(this.context.vehicle);
+    const vehiclePlateNumber: string = fleet.vehicles
+      .map((v): string => v.plateNumber)
+      .toString();
+
+    expect(vehiclePlateNumber).to.deep.include(
+      this.context.vehicle.plateNumber,
+    );
   },
 );
 
@@ -73,7 +79,7 @@ export async function registerVehicle(context: World): Promise<void> {
   const registerVehicleCommand = new RegisterVehicle(
     context.fleetId,
     context.user.id,
-    context.vehicle,
+    context.vehicle.plateNumber,
   );
   const handler = new RegisterVehicleHandler(context.repository);
   await handler.handle(registerVehicleCommand);
@@ -83,7 +89,7 @@ async function registerVehicleInOtherUserFleet(context: World) {
   const registerVehicleCommand = new RegisterVehicle(
     context.otherFleetId,
     context.otherUser.id,
-    context.vehicle,
+    context.vehicle.plateNumber,
   );
   const handler = new RegisterVehicleHandler(context.repository);
   await handler.handle(registerVehicleCommand);

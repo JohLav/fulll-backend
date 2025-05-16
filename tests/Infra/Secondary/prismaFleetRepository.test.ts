@@ -27,10 +27,11 @@ describe("PrismaFleetRepository", () => {
 
     const retrievedFleet = await repository.findById(fleet().id);
 
-    expect(sortFleetVehicles(retrievedFleet)).toEqual(
+    expect(sortFleetVehicles(retrievedFleet)).toStrictEqual(
       sortFleetVehicles(fleet()),
     );
   });
+
   it("should update a fleet", async function () {
     const repository = new PrismaFleetRepository();
 
@@ -39,7 +40,7 @@ describe("PrismaFleetRepository", () => {
 
     const retrievedFleet = await repository.findById(fleet().id);
 
-    expect(sortFleetVehicles(retrievedFleet)).toEqual(
+    expect(sortFleetVehicles(retrievedFleet)).toStrictEqual(
       sortFleetVehicles(updatedFleet()),
     );
   });

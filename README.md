@@ -90,17 +90,17 @@ npm run fleet create 1234
 npm run fleet register-vehicle <fleetId> <vehiclePlateNumber>
 ```
 ```shell
-npm run fleet register-vehicle 1657c9b6-5de2-4bd9-b4e9-ad8896824002 AB-123-CD
+npm run fleet register-vehicle 58394350-99b9-4764-8423-8fcda3223d3f AB-123-CD
 ```
 
 - **Update vehicle's location**: Updates the GPS position of a vehicle in a fleet with the specified `<fleetId>`, `<vehiclePlateNumber>`, `<latitude>`, `<longitude>`, and optional `[altitude]`:
 ```shell
-npm run fleet update-location 1657c9b6-5de2-4bd9-b4e9-ad8896824002 AB-123-CD 48.8566 2.3522
+npm run fleet update-location 58394350-99b9-4764-8423-8fcda3223d3f AB-123-CD 48.8566 2.3522
 ```
 
 - **Localize a vehicle**: Updates the location of a vehicle with the specified `<fleetId>` and `<vehiclePlateNumber>`:
 ```shell
-npm run fleet localize-vehicle 0e0dee68-38df-4b48-897e-d4b09c3bf92a AB-123-CD
+npm run fleet localize-vehicle 58394350-99b9-4764-8423-8fcda3223d3f AB-123-CD
 ```
 
 ## Code Quality

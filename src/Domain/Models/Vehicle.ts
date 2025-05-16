@@ -1,5 +1,5 @@
 import { Location } from "./Location.js";
-import { VehicleAlreadyParkedError } from "../Errors/VehicleAlreadyParkedError.js";
+import { VehicleAlreadyParkedAtThisLocationError } from "../Errors/VehicleAlreadyParkedAtThisLocationError.js";
 
 export class Vehicle {
   private constructor(
@@ -17,8 +17,16 @@ export class Vehicle {
     return this.id === other.id;
   }
 
-  parkVehicle(other: Location): void {
-    if (this.location == other) throw new VehicleAlreadyParkedError(this.id);
+  parkVehicle(other: Location, fleetId: string): void {
+    if (this.location && this.location.equals(other))
+      throw new VehicleAlreadyParkedAtThisLocationError(
+        this.id,
+        this.plateNumber,
+        fleetId,
+        other.latitude,
+        other.longitude,
+        other.altitude,
+      );
 
     this.location = other;
   }

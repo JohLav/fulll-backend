@@ -5,6 +5,7 @@ import {
   ParkVehicle,
   ParkVehicleHandler,
 } from "../../App/Commands/parkVehicle.js";
+import { VehicleAlreadyParkedAtThisLocationError } from "../../Domain/Errors/VehicleAlreadyParkedAtThisLocationError.js";
 
 export const updateLocationCommand: CommandModule = {
   command:
@@ -39,17 +40,6 @@ export const updateLocationCommand: CommandModule = {
 
     const repository = new PrismaFleetRepository();
 
-    const vehicle = await repository.findVehicleByPlateNumber(
-      fleetId as string,
-      vehiclePlateNumber as string,
-    );
-    if (!vehicle) {
-      console.error(
-        `Vehicle with plate number "${vehiclePlateNumber}" not found.`,
-      );
-      return;
-    }
-
     const location = Location.create(
       latitude as number,
       longitude as number,
@@ -59,18 +49,16 @@ export const updateLocationCommand: CommandModule = {
     try {
       const parkVehicleCommand = new ParkVehicle(
         fleetId as string,
-        vehicle,
+        vehiclePlateNumber as string,
         location,
       );
       const handler = new ParkVehicleHandler(repository);
       await handler.handle(parkVehicleCommand);
       console.log(
-        `Updated vehicle with plate number ${vehiclePlateNumber} from fleet ID ${fleetId} to (latitude: ${latitude}, longitude: ${longitude}, altitude: ${location.altitude})`,
+        `Updated vehicle with plate number ${vehiclePlateNumber} from fleet ID ${fleetId} to (latitude: ${latitude}, longitude: ${longitude}, altitude: ${altitude})`,
       );
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
-      } else console.error("Unknown error occurred: ", error);
+      console.log(error);
     }
   },
 };

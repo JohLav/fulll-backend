@@ -1,5 +1,4 @@
 import { Location } from "../../../src/Domain/Models/Location.js";
-import { Vehicle } from "../../../src/Domain/Models/Vehicle.js";
 import { FleetRepository } from "../../../src/Domain/Repositories/FleetRepository.js";
 import {
   ParkVehicle,
@@ -9,10 +8,14 @@ import {
 export async function parkVehicleAtLocation(
   repository: FleetRepository,
   fleetId: string,
-  vehicle: Vehicle,
+  vehiclePlateNumber: string,
   location: Location,
 ): Promise<void> {
-  const parkVehicleCommand = new ParkVehicle(fleetId, vehicle, location);
+  const parkVehicleCommand = new ParkVehicle(
+    fleetId,
+    vehiclePlateNumber,
+    location,
+  );
   const handler = new ParkVehicleHandler(repository);
   await handler.handle(parkVehicleCommand);
 }

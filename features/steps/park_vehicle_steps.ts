@@ -4,7 +4,7 @@ import { expect } from "chai";
 
 // Second group: Domain
 import { Location } from "../../src/Domain/Models/Location.js";
-import { VehicleAlreadyParkedError } from "../../src/Domain/Errors/VehicleAlreadyParkedError.js";
+import { VehicleAlreadyParkedAtThisLocationError } from "../../src/Domain/Errors/VehicleAlreadyParkedAtThisLocationError.js";
 
 // Fifth group: Helpers
 import { parkVehicleAtLocation } from "./shared/parkVehicleAtLocation.js";
@@ -20,7 +20,7 @@ Given(
     await parkVehicleAtLocation(
       this.context.repository,
       this.context.fleetId,
-      this.context.vehicle,
+      this.context.vehicle.plateNumber,
       this.context.location,
     );
   },
@@ -30,7 +30,7 @@ When("I park my vehicle at this location", async function (): Promise<void> {
   await parkVehicleAtLocation(
     this.context.repository,
     this.context.fleetId,
-    this.context.vehicle,
+    this.context.vehicle.plateNumber,
     this.context.location,
   );
 });
@@ -42,7 +42,7 @@ When(
       await parkVehicleAtLocation(
         this.context.repository,
         this.context.fleetId,
-        this.context.vehicle,
+        this.context.vehicle.plateNumber,
         this.context.location,
       );
       this.context.parkingAttemptError = null;
@@ -68,7 +68,14 @@ Then(
 Then(
   "I should be informed that my vehicle is already parked at this location",
   function (): void {
-    const expected = new VehicleAlreadyParkedError(this.context.vehicle.id);
+    const expected = new VehicleAlreadyParkedAtThisLocationError(
+      this.context.vehicle.id,
+      this.context.vehicle.plateNumber,
+      this.context.fleetId,
+      this.context.location.latitude,
+      this.context.location.longitude,
+      this.context.location.altitude,
+    );
 
     expect(this.context.parkingAttemptError).to.deep.equal(expected);
   },

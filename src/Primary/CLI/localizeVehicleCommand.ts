@@ -4,6 +4,7 @@ import {
   GetLocation,
   GetLocationHandler,
 } from "../../App/Queries/getLocation.js";
+import { VehicleAlreadyParkedAtThisLocationError } from "../../Domain/Errors/VehicleAlreadyParkedAtThisLocationError.js";
 
 export const localizeVehicleCommand: CommandModule = {
   command: "localize-vehicle <fleetId> <vehiclePlateNumber>",

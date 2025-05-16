@@ -26,7 +26,7 @@ export class Fleet {
   parkVehicle(plateNumber: string, location: Location) {
     const vehicle = this.findVehicleByPlateNumber(plateNumber);
 
-    vehicle.parkVehicle(location);
+    vehicle.parkVehicle(location, this.id);
   }
 
   localizeVehicle(plateNumber: string): Location {

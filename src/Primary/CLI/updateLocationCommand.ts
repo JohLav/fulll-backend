@@ -5,7 +5,6 @@ import {
   ParkVehicle,
   ParkVehicleHandler,
 } from "../../App/Commands/parkVehicle.js";
-import { VehicleAlreadyParkedAtThisLocationError } from "../../Domain/Errors/VehicleAlreadyParkedAtThisLocationError.js";
 
 export const updateLocationCommand: CommandModule = {
   command:

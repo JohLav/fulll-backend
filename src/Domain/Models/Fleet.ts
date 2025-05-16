@@ -48,8 +48,4 @@ export class Fleet {
 
     return vehicle;
   }
-
-  private generateVehicleId() {
-    return crypto.randomUUID(); // TODO: Add a port
-  }
 }

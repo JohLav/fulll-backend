@@ -52,7 +52,7 @@ jobs:
 
       - name: Run unit tests
         env:
-          DATABASE_URL: mysql://root:fulll-backend@localhost:3306/db
+          DATABASE_URL: mysql://root:fulll-backend-root@localhost:3306/db
         run: npm test
 
       - name: Run BDD tests

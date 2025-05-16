@@ -5,6 +5,7 @@ import { expect } from "chai";
 
 // Second group: Domain
 import { User } from "../../src/Domain/Models/User.js";
+import { Vehicle } from "../../src/Domain/Models/Vehicle.js";
 import { VehicleAlreadyRegisteredError } from "../../src/Domain/Errors/VehicleAlreadyRegisteredError.js";
 
 // Third group: Helpers
@@ -32,14 +33,14 @@ Given(
 );
 
 When("I register this vehicle into my fleet", async function (): Promise<void> {
-  await registerVehicle(this.context);
+  await registerVehicleInUserFleet(this.context);
 });
 
 When(
   "I try to register this vehicle into my fleet",
   async function (): Promise<void> {
     try {
-      await registerVehicle(this.context);
+      await registerVehicleInUserFleet(this.context);
 
       this.context.registrationError = null;
     } catch (error) {
@@ -57,7 +58,7 @@ Then(
     );
 
     const vehiclePlateNumber: string = fleet.vehicles
-      .map((v): string => v.plateNumber)
+      .map((v: Vehicle): string => v.plateNumber)
       .toString();
 
     expect(vehiclePlateNumber).to.deep.include(
@@ -69,13 +70,17 @@ Then(
 Then(
   "I should be informed that this vehicle has already been registered into my fleet",
   function (): void {
-    const expected = new VehicleAlreadyRegisteredError(this.context.vehicle.id);
+    const expected = new VehicleAlreadyRegisteredError(
+      this.context.vehicle.plateNumber,
+    );
 
     expect(this.context.registrationError).to.deep.equal(expected);
   },
 );
 
-export async function registerVehicle(context: World): Promise<void> {
+export async function registerVehicleInUserFleet(
+  context: World,
+): Promise<void> {
   const registerVehicleCommand = new RegisterVehicle(
     context.fleetId,
     context.user.id,
@@ -85,7 +90,7 @@ export async function registerVehicle(context: World): Promise<void> {
   await handler.handle(registerVehicleCommand);
 }
 
-async function registerVehicleInOtherUserFleet(context: World) {
+async function registerVehicleInOtherUserFleet(context: World): Promise<void> {
   const registerVehicleCommand = new RegisterVehicle(
     context.otherFleetId,
     context.otherUser.id,

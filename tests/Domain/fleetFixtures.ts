@@ -19,29 +19,17 @@ export function updatedFleet() {
 }
 
 export function vehicleAWithoutLocation() {
-  return Vehicle.create("5810d8f5-3621-4340-9127-1d8ad2cf5a54", "AD-5648-MN");
+  return Vehicle.create("AD-5648-MN");
 }
 
 export function vehicleAWithLocation() {
-  return Vehicle.create(
-    "5810d8f5-3621-4340-9127-1d8ad2cf5a54",
-    "AD-5648-MN",
-    Location.create(35.1234, 3.4567),
-  );
+  return Vehicle.create("AD-5648-MN", Location.create(35.1234, 3.4567));
 }
 
 export function vehicleB() {
-  return Vehicle.create(
-    "83c1b62c-fd42-4f6a-9504-175e08d57800",
-    "BG-5147-AD",
-    Location.create(34.9999, 7.0978),
-  );
+  return Vehicle.create("BG-5147-AD", Location.create(34.9999, 7.0978));
 }
 
 export function vehicleC() {
-  return Vehicle.create(
-    "546b10c4-5349-49a2-b999-7ad288b6e918",
-    "GE-1234-TD",
-    Location.create(48.8566, 2.3522, 105),
-  );
+  return Vehicle.create("GE-1234-TD", Location.create(48.8566, 2.3522, 105));
 }

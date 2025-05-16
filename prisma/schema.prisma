@@ -11,8 +11,7 @@ datasource db {
 }
 
 model Vehicle {
-  id       String  @id @default(uuid())
-  plate    String  @unique
+  plate    String  @id @unique
   location String?
 
   fleets VehiclesInFleets[]
@@ -26,11 +25,12 @@ model Fleet {
 }
 
 model VehiclesInFleets {
-  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
-  vehicleId String
+  vehicle      Vehicle @relation(fields: [vehiclePlate], references: [plate])
+  vehiclePlate String
 
   fleet   Fleet  @relation(fields: [fleetId], references: [id])
   fleetId String
 
-  @@id([vehicleId, fleetId])
+  @@id([vehiclePlate, fleetId])
+  @@unique([vehiclePlate, fleetId], name: "VehiclesInFleets_vehiclePlate_fleetId_unique")
 }

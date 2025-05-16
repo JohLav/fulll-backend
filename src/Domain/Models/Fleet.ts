@@ -17,12 +17,14 @@ export class Fleet {
   }
 
   registerVehicle(vehiclePlateNumber: string): void {
-    const vehicle = Vehicle.create(
-      this.generateVehicleId() as string,
-      vehiclePlateNumber as string,
+    const existingVehicle = this.vehicles.find(
+      (v: Vehicle) => v.plateNumber === vehiclePlateNumber,
     );
-    if (this.vehicles.some((v: Vehicle): boolean => v.equals(vehicle)))
-      throw new VehicleAlreadyRegisteredError(vehicle.id);
+
+    if (existingVehicle)
+      throw new VehicleAlreadyRegisteredError(existingVehicle.plateNumber);
+
+    const vehicle = Vehicle.create(vehiclePlateNumber);
 
     this.vehicles.push(vehicle);
   }

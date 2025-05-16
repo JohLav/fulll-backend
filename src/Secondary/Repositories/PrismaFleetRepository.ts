@@ -33,7 +33,6 @@ export class PrismaFleetRepository implements FleetRepository {
             location: locationString,
           },
           create: {
-            id: vehicle.id,
             plate: vehicle.plateNumber,
             location: locationString,
           },
@@ -41,14 +40,14 @@ export class PrismaFleetRepository implements FleetRepository {
 
         await prisma.vehiclesInFleets.upsert({
           where: {
-            vehicleId_fleetId: {
-              vehicleId: dbVehicle.id,
+            vehiclePlate_fleetId: {
+              vehiclePlate: dbVehicle.plate,
               fleetId: fleet.id,
             },
           },
           update: {},
           create: {
-            vehicleId: dbVehicle.id,
+            vehiclePlate: dbVehicle.plate,
             fleetId: fleet.id,
           },
         });
@@ -73,7 +72,6 @@ export class PrismaFleetRepository implements FleetRepository {
     const vehicles: Vehicle[] = fleet.vehicles.map(
       (v: { vehicle: PrismaVehicle }): Vehicle =>
         Vehicle.create(
-          v.vehicle.id,
           v.vehicle.plate,
           LocationMapper.toDomain(v.vehicle.location as string),
         ),

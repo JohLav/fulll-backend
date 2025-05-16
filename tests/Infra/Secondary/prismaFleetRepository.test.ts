@@ -10,7 +10,7 @@ function sortFleetVehicles(fleet: Fleet | undefined): Fleet {
   }
 
   const sortedVehicles = [...fleet.vehicles].sort((a, b) =>
-    a.id.localeCompare(b.id),
+    a.plateNumber.localeCompare(b.plateNumber),
   );
   return Fleet.create(fleet.id, fleet.userId, sortedVehicles);
 }

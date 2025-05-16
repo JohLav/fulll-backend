@@ -69,7 +69,6 @@ Then(
   "I should be informed that my vehicle is already parked at this location",
   function (): void {
     const expected = new VehicleAlreadyParkedAtThisLocationError(
-      this.context.vehicle.id,
       this.context.vehicle.plateNumber,
       this.context.fleetId,
       this.context.location.latitude,

@@ -4,7 +4,6 @@ import { Location } from "../../Domain/Models/Location";
 
 export class VehicleMapper {
   static fromPrisma(vehicle: {
-    id: string;
     plate: string;
     location: string | null;
   }): Vehicle {
@@ -12,6 +11,6 @@ export class VehicleMapper {
       vehicle.location === ""
         ? undefined
         : LocationMapper.toDomain(vehicle.location);
-    return Vehicle.create(vehicle.id, vehicle.plate, domainLocation);
+    return Vehicle.create(vehicle.plate, domainLocation);
   }
 }

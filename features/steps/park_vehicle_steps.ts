@@ -71,9 +71,7 @@ Then(
     const expected = new VehicleAlreadyParkedAtThisLocationError(
       this.context.vehicle.plateNumber,
       this.context.fleetId,
-      this.context.location.latitude,
-      this.context.location.longitude,
-      this.context.location.altitude,
+      this.context.location,
     );
 
     expect(this.context.parkingAttemptError).to.deep.equal(expected);

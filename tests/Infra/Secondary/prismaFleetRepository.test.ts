@@ -4,17 +4,6 @@ import { PrismaFleetRepository } from "../../../src/Secondary/Repositories/Prism
 import { fleet, updatedFleet } from "../../Domain/fleetFixtures";
 import { resetDB } from "./resetDB";
 
-function sortFleetVehicles(fleet: Fleet | undefined): Fleet {
-  if (!fleet) {
-    throw new Error("Fleet is undefined");
-  }
-
-  const sortedVehicles = [...fleet.vehicles].sort((a, b) =>
-    a.plateNumber.localeCompare(b.plateNumber),
-  );
-  return Fleet.create(fleet.id, fleet.userId, sortedVehicles);
-}
-
 describe("PrismaFleetRepository", () => {
   beforeEach(async () => {
     await resetDB();
@@ -44,4 +33,15 @@ describe("PrismaFleetRepository", () => {
       sortFleetVehicles(updatedFleet()),
     );
   });
+
+  function sortFleetVehicles(fleet: Fleet | undefined): Fleet {
+    if (!fleet) {
+      throw new Error("Fleet is undefined");
+    }
+
+    const sortedVehicles = [...fleet.vehicles].sort((a, b) =>
+      a.plateNumber.localeCompare(b.plateNumber),
+    );
+    return Fleet.create(fleet.id, fleet.userId, sortedVehicles);
+  }
 });

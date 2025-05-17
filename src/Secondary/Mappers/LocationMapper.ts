@@ -11,25 +11,9 @@ export class LocationMapper {
 
   static toDomain(prismaString: string | null): Location | undefined {
     if (prismaString === null || prismaString === "") return undefined;
-    try {
-      const parsed = JSON.parse(prismaString);
 
-      if (
-        typeof parsed.latitude === "number" &&
-        typeof parsed.longitude === "number" &&
-        typeof parsed.altitude === "number"
-      ) {
-        return Location.create(
-          parsed.latitude,
-          parsed.longitude,
-          parsed.altitude,
-        );
-      }
+    const parsed = JSON.parse(prismaString);
 
-      console.warn("Invalid location format:", parsed);
-    } catch (error) {
-      console.warn("Failed to parse location:", prismaString, error);
-      return undefined;
-    }
+    return Location.create(parsed.latitude, parsed.longitude, parsed.altitude);
   }
 }

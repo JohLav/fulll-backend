@@ -11,16 +11,21 @@ export class Vehicle {
     return new Vehicle(plateNumber, location);
   }
 
-  parkVehicle(other: Location, fleetId: string): void {
-    if (this.location && this.location.equals(other))
+  parkVehicle(location: Location, fleetId: string): void {
+    this.ensureVehicleIsNotAlreadyParkedAt(location, fleetId);
+
+    this.location = location;
+  }
+
+  private ensureVehicleIsNotAlreadyParkedAt(
+    location: Location,
+    fleetId: string,
+  ): void {
+    if (this.location && this.location.equals(location))
       throw new VehicleAlreadyParkedAtThisLocationError(
         this.plateNumber,
         fleetId,
-        other.latitude,
-        other.longitude,
-        other.altitude,
+        location,
       );
-
-    this.location = other;
   }
 }

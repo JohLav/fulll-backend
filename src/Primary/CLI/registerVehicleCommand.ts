@@ -7,7 +7,7 @@ import {
 
 export const registerVehicleCommand: CommandModule = {
   command: "register-vehicle <fleetId> <vehiclePlateNumber>",
-  describe: "Register a vehicle into a fleet",
+  describe: "Register a vehicle in a fleet",
   builder: (yargs) =>
     yargs
       .positional("fleetId", {

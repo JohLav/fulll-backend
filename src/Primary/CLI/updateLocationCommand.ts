@@ -7,9 +7,8 @@ import {
 } from "../../App/Commands/parkVehicle.js";
 
 export const updateLocationCommand: CommandModule = {
-  command:
-    "update-location <fleetId> <vehiclePlateNumber> <latitude> <longitude> [altitude]",
-  describe: "Update the GPS position of a vehicle in a fleet",
+  command: "update-location <fleetId> <vehiclePlateNumber> <lat> <lng> [alt]",
+  describe: "Update vehicle's GPS location in a fleet",
   builder: (yargs) => {
     return yargs
       .positional("fleetId", {
@@ -20,29 +19,29 @@ export const updateLocationCommand: CommandModule = {
         type: "string",
         describe: "Plate number of the vehicle",
       })
-      .positional("latitude", {
+      .positional("lat", {
         type: "number",
         describe: "Latitude of the vehicle's location",
       })
-      .positional("longitude", {
+      .positional("lng", {
         type: "number",
         describe: "Longitude of the vehicle's location",
       })
-      .positional("altitude", {
+      .positional("alt", {
         type: "number",
         describe: "Altitude (optional)",
         default: 0,
       });
   },
   handler: async (argv) => {
-    const { fleetId, vehiclePlateNumber, latitude, longitude, altitude } = argv;
+    const { fleetId, vehiclePlateNumber, lat, lng, alt } = argv;
 
     const repository = new PrismaFleetRepository();
 
     const location = Location.create(
-      latitude as number,
-      longitude as number,
-      altitude as number,
+      lat as number,
+      lng as number,
+      alt as number,
     );
 
     try {
@@ -54,7 +53,7 @@ export const updateLocationCommand: CommandModule = {
       const handler = new ParkVehicleHandler(repository);
       await handler.handle(parkVehicleCommand);
       console.log(
-        `Updated vehicle with plate number ${vehiclePlateNumber} from fleet ID ${fleetId} to (latitude: ${latitude}, longitude: ${longitude}, altitude: ${altitude})`,
+        `Updated vehicle with plate number ${vehiclePlateNumber} from fleet ID ${fleetId} to (latitude: ${lat}, longitude: ${lng}, altitude: ${alt})`,
       );
     } catch (error) {
       console.log(error);

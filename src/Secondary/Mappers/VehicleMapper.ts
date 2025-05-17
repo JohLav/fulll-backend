@@ -1,6 +1,6 @@
+import { Location } from "../../Domain/Models/Location.js";
 import { Vehicle } from "../../Domain/Models/Vehicle.js";
 import { LocationMapper } from "./LocationMapper.js";
-import { Location } from "../../Domain/Models/Location";
 
 export class VehicleMapper {
   static fromPrisma(vehicle: {

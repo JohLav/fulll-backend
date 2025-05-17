@@ -58,49 +58,75 @@ You can access PhpMyAdmin at http://localhost:8090 with the following credential
 
 ### Prisma
 
-To create the database:
+Create the database:
 ```shell
 prisma migrate dev
 ```
 
-Then generate the prisma client:
+Generate the prisma client:
 ```shell
 npx prisma generate
 ```
 
-If you need to reset the database:
+To reset the database (if any):
 ```shell
 prisma migrate reset
 ```
 
 ### Command-Line Interface (CLI)
 
-You can interact with the fleet management system using the following commands to modify the database.
+Interact with the fleet management system using the following commands:
 
-- **Create a fleet**: Returns a `<fleetId>` along with a `<userId>`:
+- **Create a new fleet**: creates a fleet associated with a user. Returns a `<fleetId>`:
+
 ```shell
+# Syntax
 npm run fleet create <userId>
-```
-```shell
+
+# Example
 npm run fleet create 1234
 ```
 
-- **Register a vehicle**: Adds a vehicle to the specified `<fleetId>` with a provided `<vehiclePlateNumber>`:
+- **Register a vehicle to a fleet**: adds a vehicle to an existing fleet:
+
 ```shell
+# Syntax
 npm run fleet register-vehicle <fleetId> <vehiclePlateNumber>
-```
-```shell
+
+# Example
 npm run fleet register-vehicle 58394350-99b9-4764-8423-8fcda3223d3f AB-123-CD
 ```
 
-- **Update vehicle's location**: Updates the GPS position of a vehicle in a fleet with the specified `<fleetId>`, `<vehiclePlateNumber>`, `<latitude>`, `<longitude>`, and optional `[altitude]`:
+- **Update a vehicle’s location**: updates the GPS position of a vehicle in a fleet:
+
 ```shell
+# Syntax
+npm run fleet update-location <fleetId> <vehiclePlateNumber> <latitude> <longitude> [altitude]
+
+# Example (without altitude)
 npm run fleet update-location 58394350-99b9-4764-8423-8fcda3223d3f AB-123-CD 48.8566 2.3522
+
+# Example (with altitude)
+npm run fleet update-location 58394350-99b9-4764-8423-8fcda3223d3f AB-123-CD 48.8566 2.3522 35
 ```
 
-- **Localize a vehicle**: Updates the location of a vehicle with the specified `<fleetId>` and `<vehiclePlateNumber>`:
+- **Localize a vehicle**: retrieves the last known location of a vehicle in a fleet:
+
 ```shell
+# Syntax
+npm run fleet localize-vehicle <fleetId> <vehiclePlateNumber>
+
+# Example
 npm run fleet localize-vehicle 58394350-99b9-4764-8423-8fcda3223d3f AB-123-CD
+```
+
+#### 🆘 View Help Menu
+
+Displays a list of all available fleet CLI commands with their usage and descriptions.
+
+```shell
+# Syntax
+npm run fleet -- --help
 ```
 
 ## Code Quality

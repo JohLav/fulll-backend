@@ -7,7 +7,7 @@ import {
 
 export const localizeVehicleCommand: CommandModule = {
   command: "localize-vehicle <fleetId> <vehiclePlateNumber>",
-  describe: "Retrieve the GPS position of a vehicle in a fleet",
+  describe: "Retrieve last known vehicle location of the given fleet",
   builder: (yargs) => {
     return yargs
       .positional("fleetId", {

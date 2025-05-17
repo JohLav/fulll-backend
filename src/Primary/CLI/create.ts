@@ -7,7 +7,7 @@ import {
 
 export const createFleetCommand: CommandModule = {
   command: "create <userId>",
-  describe: "Create a fleet for a user",
+  describe: "Create a fleet for the given user ID",
   builder: (yargs) =>
     yargs.positional("userId", {
       type: "string",

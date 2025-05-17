@@ -9,7 +9,7 @@ export class Fleet {
   private constructor(
     public readonly id: string,
     public readonly userId: string,
-    public vehicles: Vehicle[],
+    public readonly vehicles: Vehicle[],
   ) {}
 
   static create(id: string, userId: string, vehicles: Vehicle[]): Fleet {
@@ -17,35 +17,50 @@ export class Fleet {
   }
 
   registerVehicle(vehiclePlateNumber: string): void {
-    const existingVehicle = this.vehicles.find(
-      (v: Vehicle) => v.plateNumber === vehiclePlateNumber,
-    );
+    this.ensureVehicleIsNotAlreadyRegistered(vehiclePlateNumber);
 
-    if (existingVehicle)
-      throw new VehicleAlreadyRegisteredError(existingVehicle.plateNumber);
-
-    const vehicle = Vehicle.create(vehiclePlateNumber);
-
-    this.vehicles.push(vehicle);
+    this.addVehicle(vehiclePlateNumber);
   }
 
-  parkVehicle(plateNumber: string, location: Location) {
-    const vehicle = this.findVehicleByPlateNumber(plateNumber);
+  parkVehicle(plateNumber: string, location: Location): void {
+    const vehicle = this.findVehicleByPlateNumberOrThrow(plateNumber);
 
     vehicle.parkVehicle(location, this.id);
   }
 
   localizeVehicle(plateNumber: string): Location {
-    const vehicle = this.findVehicleByPlateNumber(plateNumber);
+    const vehicle = this.findVehicleByPlateNumberOrThrow(plateNumber);
+
+    return this.findLocationOrThrow(vehicle, plateNumber);
+  }
+
+  private findLocationOrThrow(vehicle: Vehicle, plateNumber: string): Location {
     if (!vehicle.location) throw new LocationNotFoundError(plateNumber);
 
     return vehicle.location;
   }
 
-  private findVehicleByPlateNumber(plateNumber: string): Vehicle {
-    const vehicle = this.vehicles.find((v) => v.plateNumber === plateNumber);
+  private addVehicle(vehiclePlateNumber: string): void {
+    const vehicle = Vehicle.create(vehiclePlateNumber);
+
+    this.vehicles.push(vehicle);
+  }
+
+  private ensureVehicleIsNotAlreadyRegistered(vehiclePlateNumber: string) {
+    const existingVehicle = this.findVehicleByPlateNumber(vehiclePlateNumber);
+
+    if (existingVehicle)
+      throw new VehicleAlreadyRegisteredError(existingVehicle.plateNumber);
+  }
+
+  private findVehicleByPlateNumberOrThrow(plateNumber: string): Vehicle {
+    const vehicle = this.findVehicleByPlateNumber(plateNumber);
     if (!vehicle) throw new VehiclePlateNotFoundError(plateNumber);
 
     return vehicle;
+  }
+
+  private findVehicleByPlateNumber(plateNumber: string): Vehicle | undefined {
+    return this.vehicles.find((v) => v.plateNumber === plateNumber);
   }
 }

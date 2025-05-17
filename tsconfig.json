@@ -1,21 +1,20 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "outDir": "build",
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "outDir": "./build",
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
 //      "@/*": ["./*"]
     },
-    "allowImportingTsExtensions": false,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
+//    "allowImportingTsExtensions": false,
+//    "resolveJsonModule": true,
+    "esModuleInterop": true, // OK
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "build", "tests"]
+  "exclude": ["node_modules", "build", "tests", "features"]
 }

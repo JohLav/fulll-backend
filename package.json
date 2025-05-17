@@ -31,7 +31,7 @@
     "build": "tsc",
     "prepare": "npm run generate && npm run build",
     "fleet": "npm run prepare && tsx ./build/src/cli.js",
-    "cucumber": "cucumber-js --config cucumber.json",
+    "cucumber": "cucumber-js --config /cucumber.json",
     "cucumber:critical": "cucumber-js --tags \"@critical\"",
     "lint": "eslint .",
     "test": "vitest"

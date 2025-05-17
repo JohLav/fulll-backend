@@ -1,23 +1,21 @@
 {
   "compilerOptions": {
-    "module": "esnext",
-    "moduleResolution": "node",
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "outDir": "build",
     "rootDir": ".",
-    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "allowImportingTsExtensions": false,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "paths": {
-      "@prisma/client": ["./node_modules/@prisma/client"]
-    }
+    "strict": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "features/**/*",
-    "tests/**/*",
-    "src/**/*",
-    "generated/**/*",
-    "./node_modules/@prisma/client/index.d.ts"
-  ],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "build", "tests"]
 }

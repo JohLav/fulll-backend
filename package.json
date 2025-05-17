@@ -27,10 +27,10 @@
     "vitest": "^3.1.2"
   },
   "scripts": {
-    "generate": "prisma generate",
-    "build": "tsc --build",
+    "generate": "prisma generate --no-hints",
+    "build": "tsc",
     "prepare": "npm run generate && npm run build",
-    "fleet": "npm run prepare && ts-node ./build/src/cli.js",
+    "fleet": "npm run prepare && tsx ./build/src/cli.js",
     "cucumber": "cucumber-js --config cucumber.json",
     "cucumber:critical": "cucumber-js --tags \"@critical\"",
     "lint": "eslint .",

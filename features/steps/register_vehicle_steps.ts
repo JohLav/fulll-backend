@@ -15,10 +15,9 @@ import {
   RegisterVehicle,
   RegisterVehicleHandler,
 } from "../../src/App/Commands/registerVehicle.js";
-import { generateRandomId } from "../../tests/Utils/generateRandomId.js";
 
 Given("the fleet of another user", async function (): Promise<void> {
-  this.context.otherUser = User.create(generateRandomId());
+  this.context.otherUser = User.create(crypto.randomUUID());
   this.context.otherFleetId = await initializeFleetForUser(
     this.context.repository,
     this.context.otherUser,

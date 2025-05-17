@@ -8,7 +8,13 @@ import { registerVehicleCommand } from "./Primary/CLI/registerVehicleCommand.js"
 import { updateLocationCommand } from "./Primary/CLI/updateLocationCommand.js";
 import { localizeVehicleCommand } from "./Primary/CLI/localizeVehicleCommand.js";
 
-const logo = chalk.black.bold(`
+const rawArgs = hideBin(process.argv);
+
+// Show the banner only if `--help` is explicitly requested or no args are passed
+const showBanner = rawArgs.includes("--help") || rawArgs.length === 0;
+
+if (showBanner) {
+  const logo = chalk.black.bold(`
 ███████╗██╗  ██╗██╗     ██╗     ██╗     ██╗     
 ██╔════╝██║  ██║██║     ██║     ██║     ██║     
 █████╗  ██║  ██║██║     ██║     ██║     ██║     
@@ -19,9 +25,10 @@ const logo = chalk.black.bold(`
 ${chalk.white("Fleet Management CLI")}
 `);
 
-console.log(logo);
+  console.log(logo);
+}
 
-yargs(hideBin(process.argv))
+yargs(rawArgs)
   .scriptName(chalk.cyan("fleet"))
   .usage(chalk.green("Usage: npm run fleet <command> [options]"))
   .command(createFleetCommand)

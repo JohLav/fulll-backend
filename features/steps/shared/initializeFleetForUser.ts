@@ -1,4 +1,4 @@
-import { FleetRepository } from "../../../src/Domain/Repositories/FleetRepository.js";
+import { FleetRepository } from "../../../src/Domain/Ports/FleetRepository.js";
 import { User } from "../../../src/Domain/Models/User.js";
 import {
   InitializeFleet,

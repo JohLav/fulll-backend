@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { Fleet } from "../../../src/Domain/Models/Fleet";
-import { PrismaFleetRepository } from "../../../src/Secondary/Repositories/PrismaFleetRepository";
+import { PrismaFleetRepository } from "../../../src/Infra/Secondary/Repositories/PrismaFleetRepository";
 import { fleet, updatedFleet } from "../../Domain/fleetFixtures";
 import { resetDB } from "./resetDB";
 

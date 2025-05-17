@@ -7,7 +7,7 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+//      "@/*": ["./*"]
     },
     "allowImportingTsExtensions": false,
     "resolveJsonModule": true,

@@ -1,4 +1,4 @@
-import { prisma } from "../../../src/Secondary/client";
+import { prisma } from "../../../src/Infra/Secondary/client";
 
 export async function resetDB() {
   console.log("Resetting database...");

@@ -3,7 +3,7 @@ import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetR
 import {
   InitializeFleet,
   InitializeFleetHandler,
-} from "../../App/Commands/initializeFleet.js";
+} from "../../../App/Commands/initializeFleet.js";
 
 export const createFleetCommand: CommandModule = {
   command: "create <userId>",

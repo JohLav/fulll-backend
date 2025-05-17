@@ -1,5 +1,5 @@
 import { Fleet } from "../../../src/Domain/Models/Fleet.js";
-import { FleetRepository } from "../../../src/Domain/Repositories/FleetRepository.js";
+import { FleetRepository } from "../../../src/Domain/Ports/FleetRepository.js";
 import {
   GetFleet,
   GetFleetHandler,

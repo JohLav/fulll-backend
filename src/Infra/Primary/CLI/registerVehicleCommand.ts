@@ -3,7 +3,7 @@ import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetR
 import {
   RegisterVehicle,
   RegisterVehicleHandler,
-} from "../../App/Commands/registerVehicle.js";
+} from "../../../App/Commands/registerVehicle.js";
 
 export const registerVehicleCommand: CommandModule = {
   command: "register-vehicle <fleetId> <vehiclePlateNumber>",

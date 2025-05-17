@@ -1,5 +1,5 @@
 import { Location } from "../../../src/Domain/Models/Location.js";
-import { FleetRepository } from "../../../src/Domain/Repositories/FleetRepository.js";
+import { FleetRepository } from "../../../src/Domain/Ports/FleetRepository.js";
 import {
   GetLocation,
   GetLocationHandler,

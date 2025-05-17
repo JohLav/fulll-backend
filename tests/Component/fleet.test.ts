@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { execSync } from "node:child_process";
-import { resetDB } from "../Infra/Secondary/resetDB.js";
+import { resetDB } from "../Infra/Secondary/resetDB";
 
 const test = (args: string) => {
   return execSync(`node ./build/src/cli.js ${args}`).toString();

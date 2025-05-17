@@ -3,7 +3,7 @@ import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetR
 import {
   GetLocation,
   GetLocationHandler,
-} from "../../App/Queries/getLocation.js";
+} from "../../../App/Queries/getLocation.js";
 
 export const localizeVehicleCommand: CommandModule = {
   command: "localize-vehicle <fleetId> <vehiclePlateNumber>",

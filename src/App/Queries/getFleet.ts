@@ -1,7 +1,7 @@
-import { Query, QueryHandler } from "./query.js";
-import { Fleet } from "../../Domain/Models/Fleet.js";
-import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
-import { FleetNotFoundError } from "../../Domain/Errors/FleetNotFoundError.js";
+import { Query, QueryHandler } from "./query";
+import { Fleet } from "../../Domain/Models/Fleet";
+import { FleetNotFoundError } from "../../Domain/Errors/FleetNotFoundError";
+import { FleetRepository } from "../../Domain/Ports/FleetRepository";
 
 export class GetFleet implements Query {
   constructor(public readonly fleetId: string) {}

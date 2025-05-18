@@ -4,17 +4,17 @@ import { World } from "cucumber";
 import { expect } from "chai";
 
 // Second group: Domain
-import { User } from "../../src/Domain/Models/User.js";
-import { Vehicle } from "../../src/Domain/Models/Vehicle.js";
-import { VehicleAlreadyRegisteredError } from "../../src/Domain/Errors/VehicleAlreadyRegisteredError.js";
+import { User } from "../../src/Domain/Models/User";
+import { Vehicle } from "../../src/Domain/Models/Vehicle";
+import { VehicleAlreadyRegisteredError } from "../../src/Domain/Errors/VehicleAlreadyRegisteredError";
 
 // Third group: Helpers
-import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
-import { retrieveFleet } from "./shared/retrieveFleet.js";
+import { initializeFleetForUser } from "./shared/initializeFleetForUser";
+import { retrieveFleet } from "./shared/retrieveFleet";
 import {
   RegisterVehicle,
   RegisterVehicleHandler,
-} from "../../src/App/Commands/registerVehicle.js";
+} from "../../src/App/Commands/registerVehicle";
 
 Given("the fleet of another user", async function (): Promise<void> {
   this.context.otherUser = User.create(crypto.randomUUID());

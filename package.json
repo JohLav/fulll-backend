@@ -1,16 +1,15 @@
 {
-  "type": "module",
   "name": "fulll-backend",
   "version": "1.0.0",
   "license": "ISC",
   "dependencies": {
+    "@eslint/js": "^9.27.0",
     "@prisma/client": "^6.8.2",
     "chalk": "^5.4.1",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^11.2.0",
-    "@eslint/js": "^9.25.1",
     "@types/chai": "^5.2.1",
     "@types/cucumber": "^6.0.1",
     "@types/node": "^22.14.1",
@@ -21,7 +20,6 @@
     "prettier": "^3.5.3",
     "prisma": "^6.8.2",
     "ts-node": "^10.9.2",
-    "tsx": "^4.19.4",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.31.0",
     "vitest": "^3.1.2"
@@ -29,9 +27,9 @@
   "scripts": {
     "generate": "prisma generate --no-hints",
     "build": "tsc",
-    "prepare": "npm run generate && npm run build",
-    "fleet": "npm run prepare && tsx ./build/src/cli.js",
-    "cucumber": "cucumber-js --config cucumber.json",
+    "prepare": "rm -rf dist/ && npm run generate && npm run build",
+    "fleet": "npm run prepare && ts-node ./dist/src/cli.js",
+    "cucumber": "cucumber-js",
     "cucumber:critical": "cucumber-js --tags \"@critical\"",
     "lint": "eslint .",
     "test": "vitest"

@@ -1,6 +1,6 @@
-import { Command, CommandHandler } from "./command.js";
-import { Fleet } from "../../Domain/Models/Fleet.js";
-import { FleetRepository } from "../../Domain/Repositories/FleetRepository.js";
+import { Command, CommandHandler } from "./command";
+import { Fleet } from "../../Domain/Models/Fleet";
+import { FleetRepository } from "../../Domain/Ports/FleetRepository";
 
 export class InitializeFleet implements Command {
   constructor(public readonly userId: string) {}

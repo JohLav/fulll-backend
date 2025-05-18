@@ -1,4 +1,4 @@
-import { Fleet } from "../Models/Fleet.js";
+import { Fleet } from "../Models/Fleet";
 
 // Secondary Port
 export interface FleetRepository {

@@ -1,9 +1,6 @@
-import { Fleet } from "../../../src/Domain/Models/Fleet.js";
-import { FleetRepository } from "../../../src/Domain/Repositories/FleetRepository.js";
-import {
-  GetFleet,
-  GetFleetHandler,
-} from "../../../src/App/Queries/getFleet.js";
+import { Fleet } from "../../../src/Domain/Models/Fleet";
+import { FleetRepository } from "../../../src/Domain/Ports/FleetRepository";
+import { GetFleet, GetFleetHandler } from "../../../src/App/Queries/getFleet";
 
 export async function retrieveFleet(
   repository: FleetRepository,

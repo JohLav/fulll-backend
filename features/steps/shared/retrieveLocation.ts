@@ -1,9 +1,9 @@
-import { Location } from "../../../src/Domain/Models/Location.js";
-import { FleetRepository } from "../../../src/Domain/Repositories/FleetRepository.js";
+import { Location } from "../../../src/Domain/Models/Location";
+import { FleetRepository } from "../../../src/Domain/Ports/FleetRepository";
 import {
   GetLocation,
   GetLocationHandler,
-} from "../../../src/App/Queries/getLocation.js";
+} from "../../../src/App/Queries/getLocation";
 
 export async function retrieveLocation(
   repository: FleetRepository,

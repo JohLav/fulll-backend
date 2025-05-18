@@ -1,4 +1,4 @@
-import { Fleet } from "../../../Domain/Models/Fleet";
+import { Fleet } from "../../../Domain/Models/Fleet.js";
 import { FleetRepository } from "../../../Domain/Ports/FleetRepository.js";
 
 // Secondary Adapter

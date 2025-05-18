@@ -29,7 +29,7 @@
   "scripts": {
     "generate": "prisma generate --no-hints",
     "build": "tsc",
-    "prepare": "npm run generate && npm run build",
+    "prepare": "rm -rf build/ && npm run generate && npm run build",
     "fleet": "npm run prepare && tsx ./build/src/cli.js",
     "cucumber": "cucumber-js --config /cucumber.json",
     "cucumber:critical": "cucumber-js --tags \"@critical\"",

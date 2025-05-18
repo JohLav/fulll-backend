@@ -1,4 +1,4 @@
-import { Location } from "../../../../Domain/Models/Location.js";
+import { Location } from "../../../../Domain/Models/Location";
 
 export class LocationMapper {
   static toPrisma(location: Location): string {

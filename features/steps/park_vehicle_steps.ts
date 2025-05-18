@@ -3,12 +3,12 @@ import { Given, Then, When } from "@cucumber/cucumber";
 import { expect } from "chai";
 
 // Second group: Domain
-import { Location } from "../../src/Domain/Models/Location.js";
-import { VehicleAlreadyParkedAtThisLocationError } from "../../src/Domain/Errors/VehicleAlreadyParkedAtThisLocationError.js";
+import { Location } from "../../src/Domain/Models/Location";
+import { VehicleAlreadyParkedAtThisLocationError } from "../../src/Domain/Errors/VehicleAlreadyParkedAtThisLocationError";
 
 // Third group: Helpers
-import { parkVehicleAtLocation } from "./shared/parkVehicleAtLocation.js";
-import { retrieveLocation } from "./shared/retrieveLocation.js";
+import { parkVehicleAtLocation } from "./shared/parkVehicleAtLocation";
+import { retrieveLocation } from "./shared/retrieveLocation";
 
 Given("a location", async function (): Promise<void> {
   this.context.location = Location.create(48.8566, 2.3522);

@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "fulll-backend",
   "version": "1.0.0",
   "license": "ISC",
@@ -29,9 +28,9 @@
   "scripts": {
     "generate": "prisma generate --no-hints",
     "build": "tsc",
-    "prepare": "rm -rf build/ && npm run generate && npm run build",
-    "fleet": "npm run prepare && tsx ./build/src/cli.js",
-    "cucumber": "cucumber-js --config /cucumber.json",
+    "prepare": "rm -rf dist/ && npm run generate && npm run build",
+    "fleet": "npm run prepare && tsx ./dist/src/cli.js",
+    "cucumber": "cucumber-js",
     "cucumber:critical": "cucumber-js --tags \"@critical\"",
     "lint": "eslint .",
     "test": "vitest"

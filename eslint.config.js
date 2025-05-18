@@ -4,7 +4,7 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: ["build/**"],
+    ignores: ["dist/**"],
   },
   eslint.configs.recommended,
   tseslint.configs.recommended,

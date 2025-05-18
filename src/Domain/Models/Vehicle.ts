@@ -1,5 +1,5 @@
-import { Location } from "./Location.js";
-import { VehicleAlreadyParkedAtThisLocationError } from "../Errors/VehicleAlreadyParkedAtThisLocationError.js";
+import { Location } from "./Location";
+import { VehicleAlreadyParkedAtThisLocationError } from "../Errors/VehicleAlreadyParkedAtThisLocationError";
 
 export class Vehicle {
   private constructor(

@@ -1,10 +1,10 @@
 import { CommandModule } from "yargs";
-import { Location } from "../../../Domain/Models/Location.js";
-import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetRepository.js";
+import { Location } from "../../../Domain/Models/Location";
+import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetRepository";
 import {
   ParkVehicle,
   ParkVehicleHandler,
-} from "../../../App/Commands/parkVehicle.js";
+} from "../../../App/Commands/parkVehicle";
 
 export const updateLocationCommand: CommandModule = {
   command: "update-location <fleetId> <vehiclePlateNumber> <lat> <lng> [alt]",

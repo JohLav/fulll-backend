@@ -3,10 +3,10 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import chalk from "chalk";
 
-import { createFleetCommand } from "./Infra/Primary/CLI/create.js";
-import { registerVehicleCommand } from "./Infra/Primary/CLI/registerVehicleCommand.js";
-import { updateLocationCommand } from "./Infra/Primary/CLI/updateLocationCommand.js";
-import { localizeVehicleCommand } from "./Infra/Primary/CLI/localizeVehicleCommand.js";
+import { createFleetCommand } from "./Infra/Primary/CLI/create";
+import { registerVehicleCommand } from "./Infra/Primary/CLI/registerVehicleCommand";
+import { updateLocationCommand } from "./Infra/Primary/CLI/updateLocationCommand";
+import { localizeVehicleCommand } from "./Infra/Primary/CLI/localizeVehicleCommand";
 
 const rawArgs = hideBin(process.argv);
 

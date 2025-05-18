@@ -1,6 +1,6 @@
 node_modules/
 reports/
-build/
+dist/
 generated/prisma/
 
 ### JetBrains template

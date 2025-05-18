@@ -1,9 +1,9 @@
 import { CommandModule } from "yargs";
-import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetRepository.js";
+import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetRepository";
 import {
   GetLocation,
   GetLocationHandler,
-} from "../../../App/Queries/getLocation.js";
+} from "../../../App/Queries/getLocation";
 
 export const localizeVehicleCommand: CommandModule = {
   command: "localize-vehicle <fleetId> <vehiclePlateNumber>",

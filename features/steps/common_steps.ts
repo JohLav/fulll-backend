@@ -1,10 +1,10 @@
 import { Given } from "@cucumber/cucumber";
-import { User } from "../../src/Domain/Models/User.js";
-import { Vehicle } from "../../src/Domain/Models/Vehicle.js";
-import { InMemoryFleetRepository } from "../../src/Infra/Secondary/Repositories/InMemoryFleetRepository.js";
-import { initializeFleetForUser } from "./shared/initializeFleetForUser.js";
-import { registerVehicleInUserFleet } from "./register_vehicle_steps.js";
-import { generateFrenchPlateNumber } from "../../tests/Utils/generateFrenchPlateNumber.js";
+import { User } from "../../src/Domain/Models/User";
+import { Vehicle } from "../../src/Domain/Models/Vehicle";
+import { InMemoryFleetRepository } from "../../src/Infra/Secondary/Repositories/InMemoryFleetRepository";
+import { initializeFleetForUser } from "./shared/initializeFleetForUser";
+import { registerVehicleInUserFleet } from "./register_vehicle_steps";
+import { generateFrenchPlateNumber } from "../../tests/Utils/generateFrenchPlateNumber";
 
 Given("my fleet", async function (): Promise<void> {
   const user: User = User.create(crypto.randomUUID());

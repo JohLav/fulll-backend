@@ -1,9 +1,9 @@
-import { FleetRepository } from "../../../src/Domain/Ports/FleetRepository.js";
-import { User } from "../../../src/Domain/Models/User.js";
+import { FleetRepository } from "../../../src/Domain/Ports/FleetRepository";
+import { User } from "../../../src/Domain/Models/User";
 import {
   InitializeFleet,
   InitializeFleetHandler,
-} from "../../../src/App/Commands/initializeFleet.js";
+} from "../../../src/App/Commands/initializeFleet";
 
 export async function initializeFleetForUser(
   repository: FleetRepository,

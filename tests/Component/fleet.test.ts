@@ -3,7 +3,7 @@ import { execSync } from "node:child_process";
 import { resetDB } from "../Infra/Secondary/resetDB";
 
 const test = (args: string) => {
-  return execSync(`node ./build/src/cli.js ${args}`).toString();
+  return execSync(`node ./dist/src/cli.js ${args}`).toString();
 };
 
 describe("Fleet", () => {

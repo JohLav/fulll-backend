@@ -1,9 +1,9 @@
 import { CommandModule } from "yargs";
-import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetRepository.js";
+import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetRepository";
 import {
   RegisterVehicle,
   RegisterVehicleHandler,
-} from "../../../App/Commands/registerVehicle.js";
+} from "../../../App/Commands/registerVehicle";
 
 export const registerVehicleCommand: CommandModule = {
   command: "register-vehicle <fleetId> <vehiclePlateNumber>",

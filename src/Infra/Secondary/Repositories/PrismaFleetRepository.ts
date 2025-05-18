@@ -1,9 +1,9 @@
-import { prisma } from "../client.js";
+import { prisma } from "../client";
 import { Vehicle as PrismaVehicle } from "@prisma/client";
-import { Fleet } from "../../../Domain/Models/Fleet.js";
-import { Vehicle } from "../../../Domain/Models/Vehicle.js";
-import { FleetRepository } from "../../../Domain/Ports/FleetRepository.js";
-import { LocationMapper } from "./Mappers/LocationMapper.js";
+import { Fleet } from "../../../Domain/Models/Fleet";
+import { Vehicle } from "../../../Domain/Models/Vehicle";
+import { FleetRepository } from "../../../Domain/Ports/FleetRepository";
+import { LocationMapper } from "./Mappers/LocationMapper";
 
 // Secondary Adapter
 export class PrismaFleetRepository implements FleetRepository {

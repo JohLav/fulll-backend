@@ -1,9 +1,9 @@
 import { CommandModule } from "yargs";
-import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetRepository.js";
+import { PrismaFleetRepository } from "../../Secondary/Repositories/PrismaFleetRepository";
 import {
   InitializeFleet,
   InitializeFleetHandler,
-} from "../../../App/Commands/initializeFleet.js";
+} from "../../../App/Commands/initializeFleet";
 
 export const createFleetCommand: CommandModule = {
   command: "create <userId>",

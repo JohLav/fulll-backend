@@ -1,6 +1,6 @@
-import { Command, CommandHandler } from "./command.js";
-import { FleetNotFoundError } from "../../Domain/Errors/FleetNotFoundError.js";
-import { FleetRepository } from "../../Domain/Ports/FleetRepository.js";
+import { Command, CommandHandler } from "./command";
+import { FleetNotFoundError } from "../../Domain/Errors/FleetNotFoundError";
+import { FleetRepository } from "../../Domain/Ports/FleetRepository";
 
 export class RegisterVehicle implements Command {
   constructor(

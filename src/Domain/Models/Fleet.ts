@@ -1,8 +1,8 @@
-import { Location } from "./Location.js";
-import { Vehicle } from "./Vehicle.js";
-import { VehicleAlreadyRegisteredError } from "../Errors/VehicleAlreadyRegisteredError.js";
-import { VehiclePlateNotFoundError } from "../Errors/VehiclePlateNotFoundError.js";
-import { LocationNotFoundError } from "../Errors/LocationNotFoundError.js";
+import { Location } from "./Location";
+import { Vehicle } from "./Vehicle";
+import { VehicleAlreadyRegisteredError } from "../Errors/VehicleAlreadyRegisteredError";
+import { VehiclePlateNotFoundError } from "../Errors/VehiclePlateNotFoundError";
+import { LocationNotFoundError } from "../Errors/LocationNotFoundError";
 
 // Aggregate root
 export class Fleet {

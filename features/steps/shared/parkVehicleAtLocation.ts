@@ -1,9 +1,9 @@
-import { Location } from "../../../src/Domain/Models/Location.js";
-import { FleetRepository } from "../../../src/Domain/Ports/FleetRepository.js";
+import { Location } from "../../../src/Domain/Models/Location";
+import { FleetRepository } from "../../../src/Domain/Ports/FleetRepository";
 import {
   ParkVehicle,
   ParkVehicleHandler,
-} from "../../../src/App/Commands/parkVehicle.js";
+} from "../../../src/App/Commands/parkVehicle";
 
 export async function parkVehicleAtLocation(
   repository: FleetRepository,

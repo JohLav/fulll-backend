@@ -17,14 +17,14 @@ import {
 import { GetFleet, GetFleetHandler } from "../../src/App/Queries/getFleet";
 
 // Fourth group: Helpers
-import { initializeFleetForUser } from "./shared/initializeFleetForUser";
+import {
+  InitializeFleet,
+  InitializeFleetHandler,
+} from "../../src/App/Commands/initializeFleet";
 
 Given("the fleet of another user", async function (): Promise<void> {
-  this.context.otherUser = User.create(crypto.randomUUID());
-  this.context.otherFleetId = await initializeFleetForUser(
-    this.context.repository,
-    this.context.otherUser,
-  );
+  await initializeOtherUser(this.context);
+  await initializeFleetForOtherUser(this.context);
 });
 
 Given(
@@ -74,6 +74,16 @@ Then(
     expect(this.context.registrationError).to.deep.equal(expected);
   },
 );
+
+async function initializeOtherUser(context: World): Promise<void> {
+  context.otherUser = User.create(crypto.randomUUID());
+}
+
+async function initializeFleetForOtherUser(context: World): Promise<void> {
+  const initializeFleet = new InitializeFleet(context.otherUser.id);
+  const handler = new InitializeFleetHandler(context.repository);
+  context.otherFleetId = await handler.handle(initializeFleet);
+}
 
 export async function registerVehicleInUserFleet(
   context: World,

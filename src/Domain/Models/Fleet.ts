@@ -46,7 +46,9 @@ export class Fleet {
     this.vehicles.push(vehicle);
   }
 
-  private ensureVehicleIsNotAlreadyRegistered(vehiclePlateNumber: string) {
+  private ensureVehicleIsNotAlreadyRegistered(
+    vehiclePlateNumber: string,
+  ): void {
     const existingVehicle = this.findVehicleByPlateNumber(vehiclePlateNumber);
 
     if (existingVehicle)

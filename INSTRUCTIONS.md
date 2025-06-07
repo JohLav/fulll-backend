@@ -101,8 +101,7 @@ We use Domain Driven Design (DDD) and encourage its application, but all archite
 - Ask yourself: how many entities do I have?
 - Ask yourself: how many Commands? Queries?
 - At this stage, you don't need to persist data anywhere other than **in memory**.
-- Here's an indication of the expected number of line of codes for implementations
-  in **PHP** and **JavaScript**:
+- Here's an indication of the expected number of line of codes for implementations in **PHP** and **JavaScript**:
 
 ### Step 2
 

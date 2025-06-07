@@ -7,11 +7,13 @@ import { registerVehicleInUserFleet } from "./register_vehicle_steps";
 import { generateFrenchPlateNumber } from "../../tests/Utils/generateFrenchPlateNumber";
 
 Given("my fleet", async function (): Promise<void> {
-  const user: User = User.create(crypto.randomUUID());
-  this.context = { user, repository: new InMemoryFleetRepository() };
+  this.context = {
+    user: User.create(crypto.randomUUID()),
+    repository: new InMemoryFleetRepository(),
+  };
   this.context.fleetId = await initializeFleetForUser(
     this.context.repository,
-    user,
+    this.context.user,
   );
 });
 

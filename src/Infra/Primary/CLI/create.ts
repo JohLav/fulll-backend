@@ -22,6 +22,6 @@ export const createFleetCommand: CommandModule = {
     const handler = new InitializeFleetHandler(repository);
     const fleetId = await handler.handle(initializeFleet);
 
-    console.log(fleetId); // TODO: Add a sentence to successfully created fleet
+    console.log(fleetId);
   },
 };

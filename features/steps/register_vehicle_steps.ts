@@ -8,13 +8,15 @@ import { User } from "../../src/Domain/Models/User";
 import { Vehicle } from "../../src/Domain/Models/Vehicle";
 import { VehicleAlreadyRegisteredError } from "../../src/Domain/Errors/VehicleAlreadyRegisteredError";
 
-// Third group: Helpers
-import { initializeFleetForUser } from "./shared/initializeFleetForUser";
-import { retrieveFleet } from "./shared/retrieveFleet";
+// Third group: App
 import {
   RegisterVehicle,
   RegisterVehicleHandler,
 } from "../../src/App/Commands/registerVehicle";
+
+// Fourth group: Helpers
+import { initializeFleetForUser } from "./shared/initializeFleetForUser";
+import { retrieveFleet } from "./shared/retrieveFleet";
 
 Given("the fleet of another user", async function (): Promise<void> {
   this.context.otherUser = User.create(crypto.randomUUID());

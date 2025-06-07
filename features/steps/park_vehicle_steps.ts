@@ -12,8 +12,10 @@ import {
   ParkVehicle,
   ParkVehicleHandler,
 } from "../../src/App/Commands/parkVehicle";
-
-import { retrieveLocation } from "./shared/retrieveLocation";
+import {
+  GetLocation,
+  GetLocationHandler,
+} from "../../src/App/Queries/getLocation";
 
 Given("a location", async function (): Promise<void> {
   this.context.location = Location.create(48.8566, 2.3522);
@@ -46,11 +48,7 @@ When(
 Then(
   "the known location of my vehicle should verify this location",
   async function (): Promise<void> {
-    const actualLocation = await retrieveLocation(
-      this.context.repository,
-      this.context.fleetId,
-      this.context.vehicle.plateNumber,
-    );
+    const actualLocation = await getLocation(this.context);
 
     expect(actualLocation).to.deep.equal(this.context.location);
   },
@@ -77,4 +75,13 @@ async function parkVehicleInFleetAtThisLocation(context: World) {
   );
   const handler = new ParkVehicleHandler(context.repository);
   await handler.handle(parkVehicleCommand);
+}
+
+async function getLocation(context: World): Promise<Location> {
+  const getLocationQuery = new GetLocation(
+    context.fleetId,
+    context.vehicle.plateNumber,
+  );
+  const handler = new GetLocationHandler(context.repository);
+  return await handler.handle(getLocationQuery);
 }

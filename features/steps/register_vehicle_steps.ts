@@ -14,10 +14,10 @@ import {
   RegisterVehicle,
   RegisterVehicleHandler,
 } from "../../src/App/Commands/registerVehicle";
+import { GetFleet, GetFleetHandler } from "../../src/App/Queries/getFleet";
 
 // Fourth group: Helpers
 import { initializeFleetForUser } from "./shared/initializeFleetForUser";
-import { GetFleet, GetFleetHandler } from "../../src/App/Queries/getFleet";
 
 Given("the fleet of another user", async function (): Promise<void> {
   this.context.otherUser = User.create(crypto.randomUUID());
@@ -97,7 +97,7 @@ async function registerVehicleInOtherUserFleet(context: World): Promise<void> {
   await handler.handle(registerVehicleCommand);
 }
 
-async function getFleet(context: World) {
+async function getFleet(context: World): Promise<Fleet> {
   const getFleetQuery = new GetFleet(context.fleetId);
   const handler = new GetFleetHandler(context.repository);
   return await handler.handle(getFleetQuery);

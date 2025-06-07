@@ -11,16 +11,14 @@ import { VehicleAlreadyRegisteredError } from "../../src/Domain/Errors/VehicleAl
 
 // Third group: App
 import {
+  InitializeFleet,
+  InitializeFleetHandler,
+} from "../../src/App/Commands/initializeFleet";
+import {
   RegisterVehicle,
   RegisterVehicleHandler,
 } from "../../src/App/Commands/registerVehicle";
 import { GetFleet, GetFleetHandler } from "../../src/App/Queries/getFleet";
-
-// Fourth group: Helpers
-import {
-  InitializeFleet,
-  InitializeFleetHandler,
-} from "../../src/App/Commands/initializeFleet";
 
 Given("the fleet of another user", async function (): Promise<void> {
   await initializeOtherUser(this.context);

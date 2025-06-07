@@ -1,5 +1,5 @@
 // First group: Testing
-import { Given } from "@cucumber/cucumber";
+import { Before, Given } from "@cucumber/cucumber";
 import { World } from "cucumber";
 import { registerVehicleInUserFleet } from "./register_vehicle_steps";
 
@@ -16,15 +16,18 @@ import {
 // Fourth group: Infra
 import { InMemoryFleetRepository } from "../../src/Infra/Secondary/Repositories/InMemoryFleetRepository";
 
+Before(function (): void {
+  this.context = {};
+});
+
 Given("my fleet", async function (): Promise<void> {
-  this.context ??= {};
   this.context.repository = new InMemoryFleetRepository();
   await initializeUser(this.context);
   await initializeFleetForUser(this.context);
 });
 
 Given("a vehicle", async function (): Promise<void> {
-  this.context.vehicle = Vehicle.create(generateFrenchPlateNumber());
+  await initializeVehicle(this.context);
 });
 
 Given(
@@ -42,6 +45,10 @@ export async function initializeFleetForUser(context: World): Promise<void> {
   const initializeFleet = new InitializeFleet(context.user.id);
   const handler = new InitializeFleetHandler(context.repository);
   context.fleetId = await handler.handle(initializeFleet);
+}
+
+async function initializeVehicle(context: World): Promise<void> {
+  context.vehicle = Vehicle.create(generateFrenchPlateNumber());
 }
 
 function generateFrenchPlateNumber(): string {

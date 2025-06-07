@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it } from "vitest";
+import { fleet, updatedFleet } from "../../Domain/fleetFixtures";
+import { resetDB } from "./resetDB";
 import { Fleet } from "../../../src/Domain/Models/Fleet";
 import { Vehicle } from "../../../src/Domain/Models/Vehicle";
 import { PrismaFleetRepository } from "../../../src/Infra/Secondary/Repositories/PrismaFleetRepository";
-import { fleet, updatedFleet } from "../../Domain/fleetFixtures";
-import { resetDB } from "./resetDB";
 
 describe("PrismaFleetRepository", (): void => {
   beforeEach(async (): Promise<void> => {

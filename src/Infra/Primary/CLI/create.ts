@@ -13,7 +13,7 @@ export const createFleetCommand: CommandModule = {
       type: "string",
       describe: "User ID",
     }),
-  handler: async (argv) => {
+  handler: async (argv): Promise<void> => {
     const { userId } = argv;
 
     const repository = new PrismaFleetRepository();

@@ -4,6 +4,7 @@ import { World } from "cucumber";
 import { expect } from "chai";
 
 // Second group: Domain
+import { Fleet } from "../../src/Domain/Models/Fleet";
 import { User } from "../../src/Domain/Models/User";
 import { Vehicle } from "../../src/Domain/Models/Vehicle";
 import { VehicleAlreadyRegisteredError } from "../../src/Domain/Errors/VehicleAlreadyRegisteredError";
@@ -16,7 +17,7 @@ import {
 
 // Fourth group: Helpers
 import { initializeFleetForUser } from "./shared/initializeFleetForUser";
-import { retrieveFleet } from "./shared/retrieveFleet";
+import { GetFleet, GetFleetHandler } from "../../src/App/Queries/getFleet";
 
 Given("the fleet of another user", async function (): Promise<void> {
   this.context.otherUser = User.create(crypto.randomUUID());
@@ -53,14 +54,9 @@ When(
 Then(
   "this vehicle should be part of my vehicle fleet",
   async function (): Promise<void> {
-    const fleet = await retrieveFleet(
-      this.context.repository,
-      this.context.fleetId,
-    );
+    const fleet = await getFleet(this.context);
 
-    const vehiclePlateNumber: string = fleet.vehicles
-      .map((v: Vehicle): string => v.plateNumber)
-      .toString();
+    const vehiclePlateNumber = getVehiclePlateNumber(fleet);
 
     expect(vehiclePlateNumber).to.deep.include(
       this.context.vehicle.plateNumber,
@@ -99,4 +95,14 @@ async function registerVehicleInOtherUserFleet(context: World): Promise<void> {
   );
   const handler = new RegisterVehicleHandler(context.repository);
   await handler.handle(registerVehicleCommand);
+}
+
+async function getFleet(context: World) {
+  const getFleetQuery = new GetFleet(context.fleetId);
+  const handler = new GetFleetHandler(context.repository);
+  return await handler.handle(getFleetQuery);
+}
+
+function getVehiclePlateNumber(fleet: Fleet): string {
+  return fleet.vehicles.map((v: Vehicle): string => v.plateNumber).toString();
 }

@@ -9,9 +9,11 @@ export const fizzBuzz = (input: number): string => {
   return input.toString();
 };
 
-const isMultipleOf = (divisor: number) => (input: number) =>
-  input % divisor === 0;
+const isMultipleOf =
+  (divisor: number) =>
+  (input: number): boolean =>
+    input % divisor === 0;
 const isMultipleOf3 = isMultipleOf(3);
 const isMultipleOf5 = isMultipleOf(5);
-const isMultipleOf15 = (input: number) =>
+const isMultipleOf15 = (input: number): boolean =>
   isMultipleOf3(input) && isMultipleOf5(input);
